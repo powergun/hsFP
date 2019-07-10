@@ -1,0 +1,31 @@
+#!/usr/bin/env stack runghc
+
+myMap :: (a -> b) -> [a] -> [b]
+--     a func     a list  another list
+-- read as "myMap takes a function, and a list then returns a
+-- another list"
+myMap _ [] = []
+myMap f (a : as) = f a : myMap f as
+
+myFilter :: (a -> Bool) -> [a] -> [a]
+-- similarly, "myFilter takes a function, and a list then
+-- returns another list"
+myFilter _ [] = []
+myFilter f (a : as) =
+    if f a then
+        a : myFilter f as
+    else
+        myFilter f as
+
+myFold :: (a -> b -> b) -> b -> [a] -> b
+-- myFold takes an aggregation function (a -> b -> b), which
+-- takes a, b then returns another b, an initial value b,
+-- a list of a then returns b
+myFold _ b [] = b
+myFold f b (a : as) = myFold f (f a b) as
+
+main :: IO ()
+main = do
+    print $ myMap show [10, 20, 30]
+    print $ myFilter (< 25) [10, 20, 30]
+    print $ myFold (+) 100 [10, 20, 30]
