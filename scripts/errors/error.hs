@@ -17,10 +17,16 @@
 -- use the Nothing ctor. Otherwise we wrap the value with Just
 -- NOTE: this is similar to Rust's Option: some(v), error("msg")
 
-main :: IO ()
-main = do
+demoErrorFunction :: IO ()
+demoErrorFunction = do
   error "wrong!"
   print 1
 
+-- haskell cookbook L3007
+-- 
+
+main :: IO ()
+main = do
+  demoErrorFunction
 
 
