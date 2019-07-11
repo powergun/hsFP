@@ -13,18 +13,23 @@ data State s a = State {
   runState :: s -> (a, s)
 }
 
-instance Functor (State func) where 
-         -- remember this is the type def (of data ctor), 
-         -- func is a type
-         -- also note that this is a concrete type, not the 
-         -- parameterized State s a; "a" and "s" are not known
+instance Functor (State s) where 
+         -- remember this is parameterized State
+         -- s corresponds to s in the type param list
+         -- if there were t, k .... in the type param list
+         -- they may appear here as well
+         -- the goal is to leave "a" as the uncertain param, 
+         -- and it is also why a is the last elem of the param 
+         -- list
+         -- the param here does not clash with the variable
+         -- in the function body (they both can be called s)
   fmap f (State stateFunc) =
     let nextStateFunc s =
           let (xa, s1) = stateFunc s
           in (f xa, s1)
     in State nextStateFunc
 
-instance Applicative (State func) where
+instance Applicative (State s) where
   pure x = 
     State (\s -> (x, s))
   sf <*> sa =
@@ -34,7 +39,7 @@ instance Applicative (State func) where
           in (f a, s2)
     in State stateFunc
     
-instance Monad (State func) where
+instance Monad (State s) where
   return = pure
   -- f :: a -> m b
   -- L3267: monadic bind

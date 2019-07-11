@@ -9,14 +9,14 @@ data State s a = State {
                           -- do not mix it up with lambda
 }
 
-instance Functor (State func) where
+instance Functor (State s) where
   fmap f (State stateFunc) =
     let newStateFunc s =
           let (x, s') = stateFunc s
           in (f x, s')
     in State newStateFunc
 
-instance Applicative (State func) where
+instance Applicative (State s) where
   pure x = State $ \s -> (x, s)
   sf <*> sa =
     let newStateFunc s =
@@ -25,7 +25,7 @@ instance Applicative (State func) where
           in (f x, s'')
     in State newStateFunc
 
-instance Monad (State func) where
+instance Monad (State s) where
   return = pure
   sa >>= f =
     let newStateFunc s =
