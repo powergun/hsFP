@@ -1,6 +1,6 @@
 #!/usr/bin/env stack runghc
 
-import StateMonadV2
+import StateMonadV3
 
 assert :: Bool -> IO ()
 assert True = do
