@@ -1,33 +1,35 @@
-module FibMonadV1 
-  ( getFib
+module FibMonadV2 
+  ( fibWithState
+  , getFib
   , putFib
-  , fibWithState
   ) where
-
--- haskell cookbook L3349
 
 import qualified Control.Monad.State as S
 import qualified Data.Map.Strict as M
 
+-- keys and values are of the same type
 type FibMap a = M.Map a a
--- recall: State s a
+
+-- state type, compute value type
 type FibState a b = S.State (FibMap a) b
 
+-- return a state and a Maybe value
 getFib :: Integral a => a -> FibState a (Maybe a)
-getFib i = M.lookup i <$> S.get
+getFib n =
+  M.lookup n <$> S.get
 
--- putFib <key> <value>
+-- return a (modified) state and the given value
 putFib :: Integral a => a -> a -> FibState a a
-putFib i v = do
-  mp <- (pure (M.insert i v)) <*> S.get
-  S.put mp
+putFib n v = do
+  fm <- (return (M.insert n v)) <*> S.get
+  S.put fm
   return v
 
 fibWithState :: Integral a => a -> FibState a a
-fibWithState n = 
-  case (n > 0) of
-    True -> fibWithState' n
-    False -> fibWithState' 0
+fibWithState n =
+  case (n < 0) of
+    True -> fibWithState' 0
+    False -> fibWithState' n
 
 fibWithState' :: Integral a => a -> FibState a a
 fibWithState' n = 
@@ -42,8 +44,8 @@ fibWithState' n =
       n_2 <- getFibOr (n - 2)
       putFib n (n_1 + n_2)
       where 
-        getFibOr m = do
-          fm <- getFib m
-          case fm of
-            Just fv -> return fv
-            Nothing -> fibWithState m
+        getFibOr n = do
+          f <- getFib n
+          case f of
+            Just v -> return v
+            Nothing -> fibWithState' n

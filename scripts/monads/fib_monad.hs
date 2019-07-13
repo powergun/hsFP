@@ -2,7 +2,7 @@
 
 import qualified Control.Monad.State as S
 import qualified Data.Map.Strict as M
-import FibMonadV1
+import FibMonadV3
 
 assert :: Bool -> IO ()
 assert True = do
