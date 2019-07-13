@@ -12,6 +12,11 @@ import Control.Monad.Writer
 -- mappend: combine two values
 -- see also: monoid.hs
 
+-- a writer monad hence starts with an empty (or scratch) value
+-- As we use the function tell() the context of Writer monad,
+-- the Writer monad keeps combining the existing value with a new
+-- value and updates the writer state
+
 newtype Transaction = Transaction Double deriving Show
 
 -- how to resolve "No instance for (Semigroup...)" error
