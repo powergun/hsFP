@@ -5,12 +5,21 @@ module StateMonadTransformerV1
   , lift
   ) where
 
-import Data.Functor ((<$>))
-
 -- haskell cookbook L3364
 -- embed another monad into a state monad, hence all actions are
 -- performed in the embedded monad, whereas the state transformer
 -- is responsible for keeping state
+-- L3425
+-- remember that all the actions are performed in the internal 
+-- monad... we took advantage of the do... syntax for the monad
+-- all the internal monadic actions are modified from m a to 
+-- m (a, s)
+-- all monad transformers follow a similar strategy
+
+-- in the mtl implementation of state transformer you will see
+-- two impls, lazy and strict. 
+-- In the strict version, the state actions are sequenced using 
+-- seq
 
 -- note how we embed middle m (monad) in the type
 newtype StateT s m a = StateT {
@@ -18,8 +27,9 @@ newtype StateT s m a = StateT {
 }
 
 instance Functor m => Functor (StateT s m) where
-  fmap f (StateT stateFunc) =
-    let newStateFunc s = (\(xa, xs) -> (f xa, xs)) <$> stateFunc s
+  fmap f sta =
+    let newStateFunc s = 
+          ( \(xa, xs) -> (f xa, xs) ) <$> ( runStateT sta s )
     in StateT newStateFunc
 
 -- we make use of the fact taht the embedded monad is also an 
@@ -45,10 +55,10 @@ instance Applicative m => Applicative (StateT s m) where
   --                     ^^^^^^^^^^^^^^^^^
   -- State s m a to produce State s m b
   -- ^^^^^^^^^^^            ^^^^^^^^^^^
-  f <*> fa = 
+  f <*> (StateT stateFunc) = 
     let newStateFunc s = 
           let sf = runStateT f s
-              sa = runStateT fa s
+              sa = stateFunc s
               func (f_a_b, _) = \(xa, st) -> (f_a_b xa, st)
           in (func <$> sf) <*> sa
     in StateT newStateFunc
@@ -56,12 +66,14 @@ instance Applicative m => Applicative (StateT s m) where
 instance Monad m => Monad (StateT s m) where
   return = pure
 
+  -- st m a -> (a -> st m b) -> st m b
   sma >>= smfab =
     let newStateFunc s =
-          let ma = runStateT sma s 
+          let ma = runStateT sma s -- m (a, s)
           in do
             (a, s1) <- ma
-            runStateT (smfab a) s1
+            runStateT (smfab a) s1 -- smfab a produces st m b
+                                   -- smb with state updated to s1
     in StateT newStateFunc
 
 get :: Monad m => StateT s m s

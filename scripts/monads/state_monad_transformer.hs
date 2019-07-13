@@ -1,6 +1,6 @@
 #!/usr/bin/env stack runghc
 
-import StateMonadTransformerV1
+import StateMonadTransformerV2
 
 assert :: Bool -> IO ()
 assert True = do
@@ -8,6 +8,12 @@ assert True = do
 assert False = do
   error "fail"
 
+-- embed IO monad in the state transformer
+-- get the current state and modify it with the supplied argument
+-- recall:
+-- all actions are
+-- performed in the embedded monad, whereas the state transformer
+-- is responsible for keeping state
 example :: Int -> StateT Int IO ()
 example j = do
   i <- get
