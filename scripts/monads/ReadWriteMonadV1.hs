@@ -75,7 +75,12 @@ moveCursor ms = do -- in Reader monad
   -- monad
 
   c <- R.ask -- get the position from the environment
-  R.lift $ W.tell c -- operates in Writer monad
+
+  -- apply some logic to the cursor before calling into the 
+  -- writer monad; this is still inside reader monad
+  let c' = c <> (Cursor 0 0)
+
+  R.lift $ W.tell c' -- operates in Writer monad
                     -- update the position
   R.lift $ moveCursor' ms -- keep moving cursor
                           -- the Writer's state is updated but
