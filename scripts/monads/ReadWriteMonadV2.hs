@@ -9,10 +9,10 @@ import qualified Control.Monad.Reader as R
 import qualified Control.Monad.Writer as W
 
 data Cursor = Cursor Int Int deriving (Eq, Show)
-data Move = North Int
-          | South Int
-          | West Int
-          | East Int
+data Move = North { dist :: Int }
+          | South { dist :: Int }
+          | West { dist :: Int }
+          | East { dist :: Int }
           deriving (Eq, Show)
 
 instance Semigroup Cursor where
@@ -23,14 +23,21 @@ instance M.Monoid Cursor where
   mappend = (<>)
 
 moveCursor :: [Move] -> R.ReaderT Cursor (W.WriterT Cursor IO) ()
+moveCursor [] = return ()
 moveCursor ms = do
   -- in reader monad
   c <- R.ask
   R.lift (W.tell c)
-  R.lift (moveCursor' ms)
+
+  -- apply some logic inside reader monad
+  let ms' = filter ((< 100) . dist) ms
+
+  R.lift (moveCursor' ms')
 
   where
+    -- in writer monad
     moveCursor' [] = return ()
+
     moveCursor' (m:ms) = do
       W.lift (print $ "applying move " ++ (show m))
       updateCursor m
