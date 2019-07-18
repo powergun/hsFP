@@ -13,11 +13,20 @@ demoProveListIsMonoid = do
   print (([] :: [String]) `mappend` ["there"])
   print (["there", "is"] `mappend` ["a", "cow"])
 
-log_ :: String -> S.State [String] ()
-log_ str = do
+log_ :: [String] -> S.State [String] ()
+log_ [] = do
   return ()
+log_ (n:ns) = do
+  s <- S.get
+  S.put (s ++ [n])
+  log_ ns
+
+demoLogCommands :: IO ()
+demoLogCommands = do
+  let a = S.execState (log_ ["there", "is", "a", "cow"]) []
+  print a
 
 main :: IO ()
 main = do
-  let a = S.execState (log_ "asd") []
-  print a
+  demoProveListIsMonoid
+  demoLogCommands
