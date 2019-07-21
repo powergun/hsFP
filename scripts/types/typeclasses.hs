@@ -1,5 +1,26 @@
 #!/usr/bin/env stack runghc
 
+-- haskell first principles P/602
+-- in haskell these algebras can be implemented with typeclasses
+-- the typeclasses define the set of operations; when we talk
+-- about operations over a set, the set is the type the operations
+-- are for. The instance defines how each operation will perform
+-- for a given type or set
+
+-- P/603
+-- typeclasses give us a way to recognize, organize and use
+-- common functionalities and patterns across types that differ
+-- in some ways but also have things in common
+
+-- the typeclass abstracts and generalizes the pattern so that
+-- you write code in terms of any type that can be monoidally
+-- combined
+
+-- P/604
+-- in haskell we think of types as having an instance of a
+-- typeclass;
+-- \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 -- real world haskell P/176
 -- by having a generic function that can compare anything,
 -- we can also make our code generic:
@@ -26,23 +47,23 @@ class BasicEq a where
   superEqual x y = isEqual x y
 
 instance BasicEq Bool where
-  isEqual True True = True
+  isEqual True True   = True
   isEqual False False = True
-  isEqual _ _ = False
+  isEqual _ _         = False
 
 -- real world haskell P/192
 -- haskell's typeclasses are intentionally designed to let us create
 -- new instance of a typeclass whenever we see fit
--- NOTE: I had some issue with this instance function, but it 
+-- NOTE: I had some issue with this instance function, but it
 -- turned out that I need to use parentesse for numeric literal
 -- such as (3 :: Double) at the callsites
 instance BasicEq Double where
   isEqual lhs rhs = abs (lhs - rhs) < 0.00001
 
--- P/192 
--- we can add new instances anywhere; they are not confined to 
+-- P/192
+-- we can add new instances anywhere; they are not confined to
 -- the module where we define a typeclass
--- this feature of the typeclass system is referred to as its 
+-- this feature of the typeclass system is referred to as its
 -- open world assumption
 
 main :: IO ()
