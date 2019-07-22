@@ -30,6 +30,12 @@ demoListAsMonoid = do
 -- "integers form a monoid under summation and multiplication"
 -- "lists form a monoid under concatenation"
 
+-- P/609
+-- a common use of monoids is to structure and describe common 
+-- modes of processing data
+-- sometimes this is to describe an API for incrementally 
+-- processing a large dataset
+
 main :: IO ()
 main = do
   demoListAsMonoid
