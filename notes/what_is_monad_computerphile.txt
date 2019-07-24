@@ -1,0 +1,40 @@
+notes taken from What is a Monad - Computerphile
+(youtube video)
+
+5:55
+Maybe's value constructor: Just x, Nothing make the effect of the 
+computation explicit, there are two effects that can result in
+Just or Nothing
+Therefore the total variants of the computation is clear 
+(also recall the IO monad is the a bin of sins metaphor, because 
+it allows any effect - N effects )
+
+16:20
+return :: a -> Maybe a
+a bridge from the pure world (a) to the impure world (Maybe a), 
+where things can go wrong
+
+>>= :: Maybe a -> (a -> Maybe b)
+sequencing operator
+provides a way to sequence things 
+"you give it something that can fail, Maybe a, and a function
+that tells you what to do, with that a, if it succeeds, and 
+finally it gives you back another Maybe value"
+
+17:13
+four points as the conclusion of this video
+
+1. same idea works for other effects 
+not just failure as shown in Maybe, but also input output, 
+mutable state, reading from environment, writing to log files, 
+non-determinism ...... 
+Monad gives you a uniform framework to deal with effects
+
+2. supports pure programming with effects
+
+3. the use of effects is explicit in the types
+
+4. writing functions that work for any effect - effect polymorphism
+e.g. take a sequence of Monads of any type and sequence them 
+together; generic effect library in Haskell
+

@@ -1,0 +1,4 @@
+notes taken from youtube video: don't fear monad by Brian Beckman
+
+
+

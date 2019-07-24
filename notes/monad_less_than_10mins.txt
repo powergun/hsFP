@@ -1,0 +1,44 @@
+notes taken from an intuitive introduction to monad in under 10 mins
+(youtube video)
+
+
+0:55
+monads in one sentence
+A monad is the minimal amount of structure needed to overload 
+function composition in a way that "performs an extra computation"
+on the intermediate value
+
+01:25
+consider:
+int f (int x) {
+    int result = 0;
+    // ... extra computation
+    return result;
+}
+int g (int y) {
+    int result = 0;
+    // ... extra computation
+    return result;
+}
+int main (void) {
+    int input = 1;
+    int result = g(f(input));
+    return result;
+}
+
+how to log function call + input
+how to pass around a token
+if function f() throw an exception, return it instead of running g
+
+05:12
+the real power of monads
+the specific monad M being used is explicit in the type system, 
+but when we write our code, we don't always need to specify which 
+version of function composition we are using
+
+we can write code that is polymorphic in our choice of Monad
+common example:
+foldM
+(also forM, forM_)
+
+
