@@ -1,4 +1,137 @@
 notes taken from youtube video: don't fear monad by Brian Beckman
 
+01:34
+three phases of learning a foreign language:
+1. it's an alien language
+2. can understand words, can read a little bit 
+3. can use it creatively, use it freely
+the same concept applies in learning a computer programming language
+
+05:30
+"proof of function is just like data"
+function can be replaced by table-lookups 
+the act of doing lookups is universal 
+you can convert theoretically any function to table-lookups
+
+08:17
+four steps to get to monads:
+functions
+monoids
+functions
+monads
+
+12:55
+function application = calling a function
+g a
+(calling function g with input a)
+it looks multiplication which is on purpose: g is a linear
+ function therefore it IS multiplication
+
+15:35
+(f . g) = h :: a -> a
+we take two existing functions, and create a new function of the same type
+//// this is the essence of monoid ////
+take two things of the same type and create another thing 
+of the same type
+
+16:55
+this (monoid) is the way to build complexity - 
+controlling complexity is the big problem in software industry
+the way of controlling complexity is composition
+build new things from what we already have
+
+19:28
+(to use composition effectively) need to make sure the type (of each small building block) line up and need a 
+generic "composition operator" 
+
+21:25
+a monoid is a collection of things;
+plus a rule for combining the things;
+and that rule has to obey some rule
+
+23:14
+the monoid combinator rule must obey associativity rule
+the monoid must provide a special member (identity)
+
+26:08
+in full generality, we allow f : a -> b and g : b -> c
+therefore we can only combine them in one way
+in this case they don't form a monoid but they form a 
+monoid of category (category math)
+"all we need to know is that the type must line up!"
+
+34:10
+f : a -> M a
+g : a -> M a
+h : a -> M a
+...
+"we don't know what M does; we don't have to say; as long
+as it is the same type for f, g, h"
+"M a could go to a database, could go to IO ... it could 
+have arbitrary side effects"
+"we bring the world of side effects under control - what is the control? composition"
+
+linq (.net library) is based on monad
+
+35:51
+the composition with monoid is similar to that with monad
+the total understanding of "function under composition is
+a monoid" put you in a position to make no mistake
+
+36:24
+comparing to composition in monoid (f . g), composing functions in monad is:
+\a -> f a >>= \a -> g a
+      ^^^ M a       ^^^ M a
+    [                  ] : a -> M a
+we combined f a and g a
+
+40:19
+>>= operator has asymmetrical lhs (M a) and rhs (\a)
+otherwise it is almost the same as monoid
+these functions, f, g live in monoid
+and the data lives in monad
+
+41:33
+"you have to implement >>=" so that the above statements 
+become true; when you create a monad you have to design and implement the bind operator 
+
+42:28
+>>= is a composition operator
+
+44:00
+>>= must satisfy associativity rule
+* recall that Programming Haskell and other books also 
+mention the monadic laws - but it is the implementer's 
+responsibility to make sure the impl of >>= and return 
+meet this law requirement
+
+44:32
+implementer must design and impl the unit function
+the return function
+example is Linq library's SelectMany/Select that works with IEnumerable object
+
+47:01
+the simplest monad to implement is the Identity monad, which does nothing (it changes the type of a but not its 
+content)
+
+47:46
+how can Linq works in different languages? xml, sql etc..
+the answer is, it is a monad, the M changes (the data type changes), but the mechanics of composing function remains unchanged
+
+55:30
+if type does not line up (f, g return different types) then
+f, g do not form a true monoid, but the ability to compose 
+function remains 
+
+56:12
+"the kind (meta-type) of this (f . g) guy, is just like
+the kind of g and f guys; they are functions from thing
+to thing, and you don't fall out of the universe if you 
+compose them together"
+
+1:01:34
+introduction to F# and these two "devoiced" camps:
+bottom-up (machine to abstraction, performance-oriented, C) v.s. top-down (abstraction to machine, math-oriented, lambda calculus, haskell)
+
 
 
