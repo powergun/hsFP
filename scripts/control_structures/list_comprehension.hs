@@ -44,6 +44,17 @@ demoGuards = do
     print $ primes 3412 3531
     print $ find 't' [('t', 1), ('h', 2), ('e', 3), ('r', 5)]
 
+demoCreateGrid :: IO ()
+demoCreateGrid = do
+    let grid2 = do
+        i <- [0..4]
+        -- this return is a standard expression that can be passed
+        -- other functions
+        return $ do
+            j <- [0..4]
+            return (i, j)
+    print $ show grid2
+
 main :: IO ()
 main = do
     putStrLn $ show $ foo 6
@@ -51,3 +62,4 @@ main = do
     demo
     demoPairing
     demoGuards
+    demoCreateGrid

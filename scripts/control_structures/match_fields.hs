@@ -1,6 +1,7 @@
 #!/usr/bin/env stack runghc
 
-data Colour = RGB Int Int Int deriving Show
+data Colour = RGB Int Int Int 
+                deriving (Eq, Show)
 
 red :: Colour -> Int
 red (RGB r _ _ ) = r
@@ -21,7 +22,10 @@ pixelRed (Pixel _ _ _ (RGB r _ _)) = r
 -- return different value depending on the number of
 -- fields
 -- can be useful to implement runtime type checking
-data TrueColor = SRGB Int Int Int | CMYK Float Float Float Float deriving Show
+data TrueColor = SRGB Int Int Int 
+               | CMYK Float Float Float Float 
+               deriving (Eq, Show)
+
 colorModel :: TrueColor -> String
 colorModel (SRGB _ _ _) = "RGB"
 -- colorModel (CMYK _ _ _ _) = "CMYK"
