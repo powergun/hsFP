@@ -5,19 +5,19 @@
 -- taken from real world haskell P/247
 
 -- programming haskell L1286
--- | is read as such that, and the guard otherwise is defined in the 
--- standard prelude simply by otherwise = True
+-- | is read as such that, and the guard "otherwise" is defined in the 
+-- standard prelude simply by "otherwise" = True
 
-abs_ n | n >= 0 = n
+abs_ n | n >= 0    = n
        | otherwise = -n
 
 -- the main benefit of guarded equations over conditional expressions
 -- is that definitions with multiple guards are easier to read
 
-cap_ n | n > 123 = 123
+cap_ n | n > 123           = 123
        | n < 10 && n > -10 = 4
-       | n < (-123) = (-123)
-       | otherwise = n
+       | n < (-123)        = (-123)
+       | otherwise         = n
 
 -- real world haskell P/108
 -- use pattern match to ensure that we are looking at values of 
