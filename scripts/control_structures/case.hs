@@ -17,10 +17,10 @@ demoCaseDoBlock x = do
       print "1";
       print "one";
     }
-    x -> do {
-      print "n1, n2 .... n";
-      print "all";
-    }
+    -- without { }; this is prefered notation
+    x -> do
+      print "n1, n2 .... n"
+      print "all"
 
 -- real world haskell P/106
 -- the case construct lets us match patterns within an expr
@@ -37,7 +37,7 @@ canFailWithGuard x
   | x == 0    = Nothing
   | x <  0    = Just (-x)
   -- real world haskell P/109
-  -- otherwise is simply a variable bound to the value True
+  -- "otherwise" is simply a variable bound to the value True
   -- that aids readability (if everything above fails, this is
   -- what gets evaluated)
   | otherwise = Just x
@@ -56,7 +56,7 @@ fromMaybe defval wrapped =
   -- ^^^^^^^^^^
   -- real world haskell P/108
   -- pattern matching limits us to performing fixed tests of 
-  -- a value's shape
+  -- a value's shape (value constructor)
   -- (meaning that I CAN NOT DO x < 0 sort of matching; I 
   -- need to use Guards; see guarded_equations)
 
@@ -87,7 +87,7 @@ toUpper c = case c `lookup` lcChars of
 demoToUpper :: IO ()
 demoToUpper = do
   print "//// demo toUpper"
-  print $ map toUpper "var iddqd = true"
+  print $ map toUpper "VAR iddqd = true"
 
 demoCanFail :: IO ()
 demoCanFail = do
