@@ -96,6 +96,13 @@ proveInterchangeable = do
   -- ($ "$$") "absorbs" the f encapsulated by treef and calls it
   -- with its hardcoded value (it provides the right operand, 
   -- whereas the f in treef provides the left operand)
+  -- MY NOTES:
+  -- I can verify this in ghci
+  -- f = ($ "asd")
+  -- Prelude> :t f
+  -- f :: ([Char] -> b) -> b 
+  -- f consumes a function 
+  -- therefore pure ($ "$$") consumes a function
   print $ (treef <*> pure "$$") == (pure ($ "$$") <*> treef)
 
 proveComposition :: IO ()

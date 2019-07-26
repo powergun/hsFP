@@ -24,6 +24,10 @@ data ParseState = ParseState {
 , offset :: Int
 } deriving (Show)
 
+-- recall Brian Beckman's video:
+-- monad is to compose small functions to create complex function
+-- compose parsers that deal with different characters to a complex
+-- parser
 newtype Parse a = Parse {
   runParse :: ParseState -> Either ErrMsg (a, ParseState)
 }
@@ -34,6 +38,7 @@ parse parser initState =
     Left errMsg       -> Left errMsg
     Right (result, _) -> Right result
 
+-- a in this case stands for "anything"
 identity :: a -> Parse a
 identity anything = Parse $ 
   \state -> Right (anything, state)
@@ -164,6 +169,7 @@ demoChainParsers = do
   -- putState successfully changes it to (iddqd, 12)
   -- it is useless but demonstrates the gist of state manipulation
   print $ parse ((putState (ParseState "iddqd" 12)) ==> (\_ -> getState)) "thereisacow"
+  print $ parse (parseChar ==> \_ -> parseChar) "iddqd"
   
 demoParseChar :: IO ()
 demoParseChar = do
@@ -201,7 +207,7 @@ demoPeekChar = do
 demoParseWhile :: IO ()
 demoParseWhile = do
   print "//// demo parseWhile()"
-  print $ parse (parseWhile (\_ -> True)) "thereisacow"
+  print $ parse (parseWhile (\c -> True)) "thereisacow"
   -- give it a string with invalid character (space char), expect
   -- the error to propagate
   print $ parse (parseWhile (\_ -> True)) "there isacow"

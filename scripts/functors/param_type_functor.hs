@@ -1,13 +1,13 @@
 #!/usr/bin/env stack runghc
 
--- to mystify the meaning of instance Functor (State s t k)
+-- to demystify the meaning of instance Functor (State s t k)
 -- s t k are type parameters
 
 data State s t k a = State {
     runState :: s -> (a, s)
   }
 
-instance Functor (State s t k) where
+instance Functor (State s t k) where -- type constructor
   fmap f (State stateFunc) =
     let newStateFunc s =
           let (x, s') = stateFunc s
