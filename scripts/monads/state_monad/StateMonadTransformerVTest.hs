@@ -1,5 +1,8 @@
 #!/usr/bin/env stack runghc
 
+-- source
+-- haskell cookbook
+
 import StateMonadTransformerV2
 
 assert :: Bool -> IO ()
