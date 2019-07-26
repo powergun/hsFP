@@ -44,6 +44,8 @@ instance Functor Bean where
 instance Applicative Bean where
   pure x = Bean {value = x}
   (Bean f) <*> bean = Bean { value = f (value bean) }
+  -- this also works (some books prefer this form)
+  -- bf <*> ba = Bean { value = (value bf) $ (value ba) }
 
 recapFunctor :: IO ()
 recapFunctor = do
