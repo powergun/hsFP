@@ -28,8 +28,10 @@ demoApplicativeFunctor = do
   -- haskell design pattern P/110
   let x = pure (,) <*> Just' 2 <*> Just' 3
       y = Just' (.) <*> Just' (+2) <*> Just' (+3) <*> Just' 1
+      z = (,) <$> Just' 2 <*> Just' 3 -- same effect as x's 
   print x
   print y
+  print z
 
 main :: IO ()
 main = do

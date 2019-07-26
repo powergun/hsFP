@@ -12,7 +12,7 @@
 -- as useful as it is, fmap isn't much help if we want to apply
 -- a function of two arguments to functorial values, for instance
 -- how could we sum Just 2 and Just 3?
--- 
+
 -- to have an operator with a type: f (a -> b) -> f a -> f b
 -- to apply functions in the context of a functor, 
 -- (+) <$> Just 2 <*> Just 3
@@ -29,6 +29,7 @@
 -- to regular function application while working with a functor
 -- (+) <$> Just 2 <*> Just 3
 -- (+)     2          3
+-- pure (+) <*> Just 2 <*> Just 3
 
 -- recall: functor offers a generalized way to map over a 
 -- parameterized type; this parameterized type must take one and 
