@@ -7,6 +7,14 @@
 -- curried functon with less than its full complement of 
 -- arguments
 
+-- f (x, y) = x + y
+-- g = curry f
+-- h = g 23
+-- h 23
+-- 46
+-- f (23, 23)
+-- 46
+
 curriedFunction :: String -> String -> String
 curriedFunction x y = x ++ y
 uncurriedFunction :: (String, String) -> String

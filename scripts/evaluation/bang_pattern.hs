@@ -13,3 +13,7 @@ f1 :: Int -> Int -> Int
 f1 x  y  = x * y
 f2 :: Int -> Int -> Int
 f2 !x y = x * y
+
+main :: IO ()
+main = do
+  print 1
