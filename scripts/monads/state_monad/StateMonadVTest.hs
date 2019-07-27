@@ -3,7 +3,7 @@
 -- source
 -- haskell cookbook
 
-import StateMonadV3
+import StateMonadV4
 
 assert :: Bool -> IO ()
 assert True = do
@@ -28,7 +28,11 @@ testStateAsApplicative = do
       f n = n * 100 + n * 10 + 1
       sf = State (\s -> (f, s))
       sb = sf <*> sa
+      -- applicative's power is sequencing and chaining functionalities
+      g n m = n * 2 + m
+      sc = (pure g) <*> (pure 10 :: State Int Int) <*> (pure 25 :: State Int Int)
   assert $ (111, 0) == (runState sb 0)
+  assert $ (45, 1) == (runState sc 1)
 
 testStateMonad :: IO ()
 testStateMonad = do
