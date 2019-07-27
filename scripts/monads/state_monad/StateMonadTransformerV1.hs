@@ -29,7 +29,9 @@ newtype StateT s m a = StateT {
 instance Functor m => Functor (StateT s m) where
   fmap f sta =
     let newStateFunc s = 
-          ( \(xa, xs) -> (f xa, xs) ) <$> ( runStateT sta s )
+          let t (xa, xs) = (f xa, xs)
+              ma = runStateT sta s
+          in t <$> ma
     in StateT newStateFunc
 
 -- we make use of the fact taht the embedded monad is also an 
@@ -55,25 +57,27 @@ instance Applicative m => Applicative (StateT s m) where
   --                     ^^^^^^^^^^^^^^^^^
   -- State s m a to produce State s m b
   -- ^^^^^^^^^^^            ^^^^^^^^^^^
-  f <*> (StateT stateFunc) = 
+  stf <*> sta = 
     let newStateFunc s = 
-          let sf = runStateT f s
-              sa = stateFunc s
-              func (f_a_b, _) = \(xa, st) -> (f_a_b xa, st)
-          in (func <$> sf) <*> sa
+          let mf = runStateT stf s
+              ma = runStateT sta s
+              -- t for transform
+              t (fab, _) = \(a, s) -> (fab a, s)
+          -- in the inner monad
+          in (t <$> mf) <*> ma
     in StateT newStateFunc
 
 instance Monad m => Monad (StateT s m) where
   return = pure
 
   -- st m a -> (a -> st m b) -> st m b
-  sma >>= smfab =
+  sta >>= stf =
     let newStateFunc s =
-          let ma = runStateT sma s -- m (a, s)
+          let ma = runStateT sta s -- m (a, s)
           in do
             (a, s1) <- ma
-            runStateT (smfab a) s1 -- smfab a produces st m b
-                                   -- smb with state updated to s1
+            runStateT (stf a) s1 -- stf a produces st m b
+                                 -- smb with state updated to s1
     in StateT newStateFunc
 
 get :: Monad m => StateT s m s
