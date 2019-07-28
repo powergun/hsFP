@@ -35,7 +35,7 @@ instance Functor m => Functor (StateT s m) where
     in StateT newStateFunc
 
 -- we make use of the fact taht the embedded monad is also an 
--- insatnce of Applicative and use it to life the embedded
+-- insatnce of Applicative and use it to lift the embedded
 -- Applicative instance, that is, m (a -> b) -> m a -> m b
 -- to our state related 
 -- m ( (a, s) -> (b, s) ) -> m (a, s) -> m (b, s)
