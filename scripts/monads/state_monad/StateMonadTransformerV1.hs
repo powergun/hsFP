@@ -75,9 +75,11 @@ instance Monad m => Monad (StateT s m) where
     let newStateFunc s =
           let ma = runStateT sta s -- m (a, s)
           in do
-            (a, s1) <- ma
-            runStateT (stf a) s1 -- stf a produces st m b
-                                 -- smb with state updated to s1
+              (a, s1) <- ma
+              let stb = stf a -- stf a produces st m b
+                              -- this is the "sequencing" part in 
+                              -- standard Monad bind operator
+              runStateT stb s1 -- smb with state updated to s1
     in StateT newStateFunc
 
 get :: Monad m => StateT s m s
