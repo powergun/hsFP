@@ -3,7 +3,7 @@
 -- source
 -- haskell cookbook
 
-import StateMonadTransformerV5
+import StateMonadTransformerV6
 
 assert :: Bool -> IO ()
 assert True = do

@@ -22,8 +22,15 @@ put s =
 lift :: (Monad m) => m a -> StateT s m a
 lift ma = 
   let newStateFunc s = do
-        (a, s') <- ma
-        return ((a, s'), s)
+        -- the type of ma is unknown (ma is merely known to be
+        -- a monad, and I can use <- or >>= operator with it)
+        -- therefore I can not decompose "anything" to the tuple
+        -- unlike in the definition of >>= 
+        -- also recall that, what (<-) really does is to simplify 
+        -- >>= 
+        -- ma >>= (\anything -> ...)
+        anything <- ma
+        return (anything, s)
   in StateT { runStateT = newStateFunc }
 
 instance Functor m => Functor (StateT s m) where
@@ -52,6 +59,8 @@ instance Monad m => Monad (StateT s m) where
   sta >>= f =
     -- sequencing of actions
     let newStateFunc s =
+          -- since the type of `runStateT sta` is `s -> m (a, s)`
+          -- I can write (a, s) <- ma
           let ma = runStateT sta s -- action 1
           in do
               (a, s') <- ma
