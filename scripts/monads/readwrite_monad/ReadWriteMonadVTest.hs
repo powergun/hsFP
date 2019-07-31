@@ -4,7 +4,7 @@
 
 import qualified Control.Monad.Reader as R
 import qualified Control.Monad.Writer as W
-import ReadWriteMonadV3
+import ReadWriteMonadV4
 
 assert :: Bool -> IO ()
 assert True = do
