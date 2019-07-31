@@ -23,31 +23,25 @@ instance M.Monoid Cursor where
   mappend = (<>)
 
 moveCursor :: [Move] -> R.ReaderT Cursor (W.WriterT Cursor IO) ()
-moveCursor [] = return ()
 moveCursor ms = do
   -- in reader monad
   c <- R.ask
   R.lift (W.tell c)
 
   -- apply some logic inside reader monad
-  let ms' = filter ((< 100) . dist) ms
-
-  R.lift (moveCursor' ms')
+  R.lift (moveCursor' $ filter ((< 100) . dist) ms)
 
   where
     -- in writer monad
+    moveCursor' :: [Move] -> W.WriterT Cursor IO ()
     moveCursor' [] = return ()
-
     moveCursor' (m:ms) = do
       W.lift (print $ "applying move " ++ (show m))
-      updateCursor m
+      W.tell $ toCursor m
       moveCursor' ms
 
-    updateCursor :: Move -> W.WriterT Cursor IO ()
-    updateCursor = W.tell . toCursor
-
-    toCursor :: Move -> Cursor
-    toCursor (North n) = Cursor 0 (-n)
-    toCursor (South n) = Cursor 0 n
-    toCursor (West n) = Cursor (-n) 0
-    toCursor (East n) = Cursor n 0 
+toCursor :: Move -> Cursor
+toCursor (North n) = Cursor 0 (-n)
+toCursor (South n) = Cursor 0 n
+toCursor (West n) = Cursor (-n) 0
+toCursor (East n) = Cursor n 0 

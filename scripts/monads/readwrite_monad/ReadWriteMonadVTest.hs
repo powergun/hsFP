@@ -4,7 +4,7 @@
 
 import qualified Control.Monad.Reader as R
 import qualified Control.Monad.Writer as W
-import ReadWriteMonadV2
+import ReadWriteMonadV3
 
 assert :: Bool -> IO ()
 assert True = do
@@ -23,8 +23,9 @@ demoMoves = do
   -- L3604
   -- we need to run the outer most monad (Reader Monad) first
   -- and then run the inner monad (Writer Monad)
-  (_, c1) <- W.runWriterT (R.runReaderT (moveCursor ms) (Cursor 10 10)) 
-  -- assert $ Cursor 10 10 == c1
+  let mw = R.runReaderT (moveCursor ms) (Cursor 10 10)
+  (_, c1) <- W.runWriterT (mw) 
+  assert $ Cursor 40 0 == c1
   print c1
 
 main :: IO ()
