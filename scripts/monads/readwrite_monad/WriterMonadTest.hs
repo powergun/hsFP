@@ -1,6 +1,6 @@
 #!/usr/bin/env stack runghc
 
-import WriterMonadV2
+import WriterMonadV3
 
 import Control.Monad.Writer (runWriterT)
 
