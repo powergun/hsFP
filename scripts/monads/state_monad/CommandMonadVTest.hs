@@ -1,6 +1,6 @@
 #!/usr/bin/env stack runghc
 
-import           CommandMonadV2
+import           CommandMonadV3
 
 assert :: Bool -> IO ()
 assert True  = return ()
