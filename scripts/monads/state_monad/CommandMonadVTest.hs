@@ -1,13 +1,18 @@
 #!/usr/bin/env stack runghc
 
-import           CommandMonadV1
+import           CommandMonadV2
 
 assert :: Bool -> IO ()
 assert True  = return ()
 assert False = error "fail"
 
+testOne cmd expected = do
+  let oStr = execute cmd
+  assert $ oStr == expected
+  print oStr
+
 main :: IO ()
 main = do
-  let oStr = execute "n(t)(n)*nn(9)*"
-  assert $ oStr == "tttnnn|*|999|*|"
-  print oStr
+  testOne "n(t)(n)*nn(9)*" "tttnnn|*|999|*|"
+  testOne "nnnnnn" ""
+  testOne "(o)*nnn" "ooo|*|"
