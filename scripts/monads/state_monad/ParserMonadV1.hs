@@ -31,3 +31,6 @@ instance Functor Parser where
                     [(v, out)] -> [(f v, out)]
 
 charUpper c = toUpper <$> char c
+
+instance Applicative Parser where
+  pure v = Parser (\string -> [(v, string)])
