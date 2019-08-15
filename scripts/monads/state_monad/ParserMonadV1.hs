@@ -61,3 +61,16 @@ string4 [a, b, c, d] =
     f :: Char -> Char -> Char -> Char -> String
     f a b c d = [a, b, c, d]
 string4 _ = pure ""
+
+{-
+programming haskell L5167
+- >>= fails if the application of the parser p to the input string
+  fails
+- otherwise applies the function fp to the result value v to give
+  another parser f v,
+- which is then applied to the output string out that was produced
+  by the first parser to give the final result
+-}
+instance Monad Parser where
+  return = pure
+  p >>= fp = return p
