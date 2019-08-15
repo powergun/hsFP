@@ -34,3 +34,10 @@ charUpper c = toUpper <$> char c
 
 instance Applicative Parser where
   pure v = Parser (\string -> [(v, string)])
+  pf <*> p = Parser f'
+    where
+      f' string =
+        case parse pf string of
+          []         -> []
+          [(f, out)] -> parse (f <$> p) out
+
