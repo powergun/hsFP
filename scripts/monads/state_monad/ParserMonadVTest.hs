@@ -24,7 +24,9 @@ testApplicative :: IO ()
 testApplicative = do
   assert $ parse (pure 'X') "there" == [('X', "there")]
   assert $ parse (pure toUpper <*> char 'x') "xxd" == [('X', "xd")]
-
+  assert $ parse (string4 "id") "iddqd" == [("", "iddqd")]
+  assert $ parse (string4 "idfa") "idfa-iddqd" == [("idfa", "-iddqd")]
+  assert $ null (parse (string4 "1337") "ad")
 
 main :: IO ()
 main = do
