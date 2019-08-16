@@ -70,6 +70,12 @@ programming haskell L5167
   another parser f v,
 - which is then applied to the output string out that was produced
   by the first parser to give the final result
+
+L5167
+because Parser is a monadic type, the do notation can be used
+to sequence parsers together and process their result values
+(use return/pure to inject the result value so that caller
+can receive it)
 -}
 instance Monad Parser where
   return = pure
@@ -80,3 +86,10 @@ instance Monad Parser where
                   []         -> []
                   [(v, out)] -> parse (fp v) out
 
+{-
+generally avoid using the the functorial fmap and applicative
+<*> primitives on parsers. However, some users prefer writing
+parsers in applicative style, and using an applicative approach
+can sometimes be beneficial for optimising the performance of
+  parsers.
+-}
