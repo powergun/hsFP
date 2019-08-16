@@ -1,5 +1,6 @@
 #!/usr/bin/env stack runghc
 
+import           Control.Monad
 import           Data.Char
 
 import           ParserMonadV1
@@ -37,9 +38,36 @@ testMonadCharChain = do
         return "invincible"
   assert $ parse cheatcode "iddqd" == [("invincible","qd")]
 
+testAlternative :: IO ()
+testAlternative = do
+  let cheatcodes = do
+        char 'i'
+        char 'd'
+        char 'd' <|> char 'k'
+        return "cheats"
+  assert $ parse cheatcodes "iddqd" == [("cheats","qd")]
+  assert $ parse cheatcodes "idkfa" == [("cheats","fa")]
+
+testCharPredicate :: IO ()
+testCharPredicate = do
+  assert $ parse (sat isDigit) "0x1" == [('0', "x1")]
+  assert $ null (parse (sat isDigit) "abc")
+
+testString :: IO ()
+testString = do
+  -- let parsers = mapM ["iddaf", "iddqd", "idkfa", "idclip"] $ \s -> do
+  --                 string "idd" <|> string "idk" <|> string "idc"
+  --                 return "1"
+  let parsers = (string "idd" <|> string "idk" <|> string "idc") >> return "1"
+  assert $ null (parse parsers "idfa")
+  assert $ parse parsers "iddqd" == [("1", "qd")]
+
 main :: IO ()
 main = do
   testParsingOneChar
   testFunctor
   testApplicative
   testMonadCharChain
+  testAlternative
+  testCharPredicate
+  testString

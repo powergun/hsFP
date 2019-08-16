@@ -3,13 +3,22 @@ module ParserMonadV1
   , char
   , charUpper
   , string4
+  , (<|>)
+  , sat
+  , string
   ) where
 
-import           Data.Char (toUpper)
-
+import           Control.Applicative (Alternative, empty, (<|>))
+import           Data.Char           (toUpper)
 -- programming haskell L5122
 
 newtype Parser a = Parser { parse :: String -> [(a, String)] }
+
+nextChar :: Parser Char
+nextChar = Parser f
+  where
+    f []       = []
+    f (x : xs) = [(x, xs)]
 
 char :: Char -> Parser Char
 char c = Parser f
@@ -92,4 +101,47 @@ generally avoid using the the functorial fmap and applicative
 parsers in applicative style, and using an applicative approach
 can sometimes be beneficial for optimising the performance of
   parsers.
+-}
+
+{-
+programming haskell L5221
+-}
+instance Alternative Parser where
+  empty = Parser $ const []
+  lhs <|> rhs =
+    Parser f
+    where
+      f string = case parse lhs string of
+                  []         -> parse rhs string
+                  [(v, out)] -> [(v, out)]
+
+sat :: (Char -> Bool) -> Parser Char
+sat predicate = do
+  c <- nextChar
+  case predicate c of
+    True  -> return c
+    False -> empty
+
+string :: String -> Parser String
+string str =
+  case str of
+    []     -> return []
+    (x:xs) -> do char x
+                 string xs
+                 return (x:xs)
+
+{-
+programming haskell L5284
+some vs many
+the difference between these two repetition primitives is that
+many permits zero or more applications of p, whereas some requires
+at least one successful application
+MY NOTE:
+if many gets zero application, it returns an empty set as a legit
+  output;
+if some gets zero application, it returns an error
+
+L5295
+the default implementation of many and some are provided by
+Alternative instance
 -}
