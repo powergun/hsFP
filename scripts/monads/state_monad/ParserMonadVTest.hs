@@ -72,6 +72,24 @@ testSomeP = do
   assert $ parse (some $ sat isDigit) "1234abc" == [("1234", "abc")]
   assert $ parse (some $ sat isAlphaNum) "&^%@#" == []
 
+testToken :: IO ()
+testToken = do
+  assert $ parse integer " 0x1337  " == [(4918, "")]
+
+testPythonList :: IO ()
+testPythonList = do
+  let parser = do
+        token (string "[")
+        n <- integer
+        val <- many $ do
+                token (string ",")
+                n' <- integer
+                return n'
+        token (string "]")
+        return (n : val)
+  print $ parse parser "[ 1 , 2 , 3 , 4 ]"
+  print $ parse parser "[1, 2, 3, 4]"
+
 main :: IO ()
 main = do
   testParsingOneChar
@@ -83,3 +101,4 @@ main = do
   testString
   testManyP
   testSomeP
+  testPythonList

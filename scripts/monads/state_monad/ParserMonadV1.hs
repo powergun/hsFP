@@ -8,10 +8,12 @@ module ParserMonadV1
   , some
   , sat
   , string
+  , integer
+  , token
   ) where
 
 import           Control.Applicative (Alternative, empty, many, some, (<|>))
-import           Data.Char           (isDigit, toUpper)
+import           Data.Char           (isAlphaNum, isDigit, isSpace, toUpper)
 -- programming haskell L5122
 
 newtype Parser a = Parser { parse :: String -> [(a, String)] }
@@ -147,3 +149,19 @@ L5295
 the default implementation of many and some are provided by
 Alternative instance
 -}
+
+-- programming haskell L5321
+space :: Parser ()
+space = do many (sat isSpace)
+           return ()
+
+token :: Parser a -> Parser a
+token p = do space
+             t <- p
+             space
+             return t
+
+integer :: Parser Int
+integer = do let parser = some $ sat isAlphaNum
+             t <- token parser
+             return (read t :: Int)
