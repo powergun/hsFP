@@ -73,4 +73,10 @@ programming haskell L5167
 -}
 instance Monad Parser where
   return = pure
-  p >>= fp = return p
+  p >>= fp =
+    Parser f
+    where
+      f string = case parse p string of
+                  []         -> []
+                  [(v, out)] -> parse (f v) out
+
