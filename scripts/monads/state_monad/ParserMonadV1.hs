@@ -4,12 +4,14 @@ module ParserMonadV1
   , charUpper
   , string4
   , (<|>)
+  , many
+  , some
   , sat
   , string
   ) where
 
-import           Control.Applicative (Alternative, empty, (<|>))
-import           Data.Char           (toUpper)
+import           Control.Applicative (Alternative, empty, many, some, (<|>))
+import           Data.Char           (isDigit, toUpper)
 -- programming haskell L5122
 
 newtype Parser a = Parser { parse :: String -> [(a, String)] }

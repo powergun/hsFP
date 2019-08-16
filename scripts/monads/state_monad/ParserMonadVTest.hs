@@ -62,6 +62,16 @@ testString = do
   assert $ null (parse parsers "idfa")
   assert $ parse parsers "iddqd" == [("1", "qd")]
 
+testManyP :: IO ()
+testManyP = do
+  assert $ parse (many $ sat isDigit) "1234abc" == [("1234", "abc")]
+  assert $ parse (many $ sat isAlphaNum) "&^%@#" == [("", "&^%@#")]
+
+testSomeP :: IO ()
+testSomeP = do
+  assert $ parse (some $ sat isDigit) "1234abc" == [("1234", "abc")]
+  assert $ parse (some $ sat isAlphaNum) "&^%@#" == []
+
 main :: IO ()
 main = do
   testParsingOneChar
@@ -71,3 +81,5 @@ main = do
   testAlternative
   testCharPredicate
   testString
+  testManyP
+  testSomeP
