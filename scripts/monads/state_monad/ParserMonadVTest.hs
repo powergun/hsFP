@@ -28,8 +28,18 @@ testApplicative = do
   assert $ parse (string4 "idfa") "idfa-iddqd" == [("idfa", "-iddqd")]
   assert $ null (parse (string4 "1337") "ad")
 
+testMonadCharChain :: IO ()
+testMonadCharChain = do
+  let cheatcode = do
+        char 'i'
+        char 'd'
+        char 'd'
+        return "invincible"
+  assert $ parse cheatcode "iddqd" == [("invincible","qd")]
+
 main :: IO ()
 main = do
   testParsingOneChar
   testFunctor
   testApplicative
+  testMonadCharChain

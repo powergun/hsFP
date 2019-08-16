@@ -78,5 +78,5 @@ instance Monad Parser where
     where
       f string = case parse p string of
                   []         -> []
-                  [(v, out)] -> parse (f v) out
+                  [(v, out)] -> parse (fp v) out
 
