@@ -1,4 +1,4 @@
-module ParserMonadV1
+module ParserMonad.ImplV1
   ( Parser(..)
   , char
   , charUpper
@@ -10,26 +10,36 @@ module ParserMonadV1
   , string
   , integer
   , token
-  ) where
+  )
+where
 
-import           Control.Applicative (Alternative, empty, many, some, (<|>))
-import           Data.Char           (isAlphaNum, isDigit, isSpace, toUpper)
+import           Control.Applicative            ( Alternative
+                                                , empty
+                                                , many
+                                                , some
+                                                , (<|>)
+                                                )
+import           Data.Char                      ( isAlphaNum
+                                                , isDigit
+                                                , isSpace
+                                                , toUpper
+                                                )
 -- programming haskell L5122
 
 newtype Parser a = Parser { parse :: String -> [(a, String)] }
 
 nextChar :: Parser Char
 nextChar = Parser f
-  where
-    f []       = []
-    f (x : xs) = [(x, xs)]
+ where
+  f []       = []
+  f (x : xs) = [(x, xs)]
 
 char :: Char -> Parser Char
 char c = Parser f
-  where
-    f [] = []
-    f (x : xs) | x == c    = [(x, xs)]
-               | otherwise = []
+ where
+  f [] = []
+  f (x : xs) | x == c    = [(x, xs)]
+             | otherwise = []
 
 {-
 recall Brian Beckman's video: functor and monad is to enable
@@ -39,10 +49,10 @@ othorgnal way
 
 instance Functor Parser where
   fmap f p = Parser f'
-    where
-      f' string = case parse p string of
-                    []         -> []
-                    [(v, out)] -> [(f v, out)]
+   where
+    f' string = case parse p string of
+      []         -> []
+      [(v, out)] -> [(f v, out)]
 
 charUpper c = toUpper <$> char c
 
@@ -56,11 +66,10 @@ all the components succeeds.
 instance Applicative Parser where
   pure v = Parser (\string -> [(v, string)])
   pf <*> p = Parser f'
-    where
-      f' string =
-        case parse pf string of
-          []         -> []
-          [(f, out)] -> parse (f <$> p) out
+   where
+    f' string = case parse pf string of
+      []         -> []
+      [(f, out)] -> parse (f <$> p) out
 
 {-
 programming haskell L5167
@@ -68,11 +77,10 @@ the applicative machinary automatically ensures that this parser
 fails if the input string is too short.
 -}
 string4 :: String -> Parser String
-string4 [a, b, c, d] =
-  pure f <*> char a <*> char b <*> char c <*> char d
-  where
-    f :: Char -> Char -> Char -> Char -> String
-    f a b c d = [a, b, c, d]
+string4 [a, b, c, d] = pure f <*> char a <*> char b <*> char c <*> char d
+ where
+  f :: Char -> Char -> Char -> Char -> String
+  f a b c d = [a, b, c, d]
 string4 _ = pure ""
 
 {-
@@ -92,12 +100,11 @@ can receive it)
 -}
 instance Monad Parser where
   return = pure
-  p >>= fp =
-    Parser f
-    where
-      f string = case parse p string of
-                  []         -> []
-                  [(v, out)] -> parse (fp v) out
+  p >>= fp = Parser f
+   where
+    f string = case parse p string of
+      []         -> []
+      [(v, out)] -> parse (fp v) out
 
 {-
 generally avoid using the the functorial fmap and applicative
@@ -112,12 +119,11 @@ programming haskell L5221
 -}
 instance Alternative Parser where
   empty = Parser $ const []
-  lhs <|> rhs =
-    Parser f
-    where
-      f string = case parse lhs string of
-                  []         -> parse rhs string
-                  [(v, out)] -> [(v, out)]
+  lhs <|> rhs = Parser f
+   where
+    f string = case parse lhs string of
+      []         -> parse rhs string
+      [(v, out)] -> [(v, out)]
 
 sat :: (Char -> Bool) -> Parser Char
 sat predicate = do
@@ -127,12 +133,12 @@ sat predicate = do
     False -> empty
 
 string :: String -> Parser String
-string str =
-  case str of
-    []     -> return []
-    (x:xs) -> do char x
-                 string xs
-                 return (x:xs)
+string str = case str of
+  []       -> return []
+  (x : xs) -> do
+    char x
+    string xs
+    return (x : xs)
 
 {-
 programming haskell L5284
@@ -152,16 +158,19 @@ Alternative instance
 
 -- programming haskell L5321
 space :: Parser ()
-space = do many (sat isSpace)
-           return ()
+space = do
+  many (sat isSpace)
+  return ()
 
 token :: Parser a -> Parser a
-token p = do space
-             t <- p
-             space
-             return t
+token p = do
+  space
+  t <- p
+  space
+  return t
 
 integer :: Parser Int
-integer = do let parser = some $ sat isAlphaNum
-             t <- token parser
-             return (read t :: Int)
+integer = do
+  let parser = some $ sat isAlphaNum
+  t <- token parser
+  return (read t :: Int)
