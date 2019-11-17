@@ -1,4 +1,4 @@
 module Main where
 
 main :: IO ()
-main = putStrLn "idnoclip"
+main = putStrLn "map6/hellknight"
