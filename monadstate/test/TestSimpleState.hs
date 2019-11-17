@@ -9,6 +9,8 @@ import           Test.Hspec
 import qualified SimpleState.ImplV4            as SSI
 
 import qualified SimpleState.FromScratch
+import qualified SimpleState.Stateless
+import qualified SimpleState.Resource
 
 runSpecTests :: IO ()
 runSpecTests = hspec $ describe "Test Simple State" $ do
@@ -82,3 +84,8 @@ runSpec = do
   runSpecTests
 
   SimpleState.FromScratch.demo
+
+  SimpleState.Stateless.demo
+
+  SimpleState.Resource.demo
+

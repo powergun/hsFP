@@ -1,6 +1,13 @@
-#!/usr/bin/env stack runghc
+module SimpleState.Stateless
+  ( demo
+  )
+where
 
-import Control.Monad (ap, liftM)
+--
+
+import           Control.Monad                  ( ap
+                                                , liftM
+                                                )
 
 -- degenerated case where State Monad does not book
 -- keep a state at all
@@ -38,11 +45,9 @@ app (ST st) = st -- pattern matching works because the data ctor
 -- using the "shortcuts" (ap, liftM)
 instance Monad ST where
   return x = ST (x)
-  st >>= f =
-    let x = app st
-    in ST (app (f x))
+  st >>= f = let x = app st in ST (app (f x))
 instance Applicative ST where
-  pure = return
+  pure  = return
   (<*>) = ap
 instance Functor ST where
   fmap = liftM
@@ -53,10 +58,10 @@ demoStateless s = do
       st2 = do
         s <- st1
         s <- return $ case (length s < 5) of
-          True -> s ++ "_I"
+          True  -> s ++ "_I"
           False -> s
         s <- return $ case (length s < 7) of
-          True -> s ++ "_II"
+          True  -> s ++ "_II"
           False -> s
         return s
   print $ app st2
@@ -64,7 +69,7 @@ demoStateless s = do
   -- there is no benefit of using State Transformer the Monad
   print $ app $ fmap (\s -> s ++ "_functor") st1
 
-main :: IO ()
-main = do
+demo :: IO ()
+demo = do
   demoStateless "IDD"
   demoStateless "IDNOCLIP"
