@@ -1,9 +1,10 @@
-module StateMonadTransformerV1
+module SimpleTransformer.ImplV1
   ( StateT(..)
   , get
   , put
   , lift
-  ) where
+  )
+where
 
 -- haskell cookbook L3364
 -- embed another monad into a state monad, hence all actions are
@@ -29,10 +30,10 @@ newtype StateT s m a = StateT {
 instance Functor m => Functor (StateT s m) where
   fmap f sta =
     let newStateFunc s =
-          let t (xa, xs) = (f xa, xs)
-              ma = runStateT sta s
-          in t <$> ma
-    in StateT newStateFunc
+            let t (xa, xs) = (f xa, xs)
+                ma = runStateT sta s
+            in  t <$> ma
+    in  StateT newStateFunc
 
 -- we make use of the fact taht the embedded monad is also an
 -- insatnce of Applicative and use it to lift the embedded
@@ -52,45 +53,43 @@ instance Applicative m => Applicative (StateT s m) where
   -- rewrite to follow the State Monad (v3) pattern
   pure x = StateT (\s -> pure (x, s))
 
-  -- L3383
-  -- get a function from State s m (a -> b) and apply it to
-  --                     ^^^^^^^^^^^^^^^^^
-  -- State s m a to produce State s m b
-  -- ^^^^^^^^^^^            ^^^^^^^^^^^
+-- L3383
+-- get a function from State s m (a -> b) and apply it to
+--                     ^^^^^^^^^^^^^^^^^
+-- State s m a to produce State s m b
+-- ^^^^^^^^^^^            ^^^^^^^^^^^
   stf <*> sta =
     let newStateFunc s =
-          let mf = runStateT stf s
-              ma = runStateT sta s
-              -- t for transform
-              t (fab, _) = \(a, s) -> (fab a, s)
-          -- in the inner monad
-          in (t <$> mf) <*> ma
-    in StateT newStateFunc
+            let mf = runStateT stf s
+                ma = runStateT sta s
+                -- t for transform
+                -- in the inner monad
+                -- NOTE: simplified from:
+                -- t (fab, _) = \(a, s) -> (fab a, s)
+                t (fab, _) (a, s) = (fab a, s)
+            in  (t <$> mf) <*> ma
+    in  StateT newStateFunc
 
 instance Monad m => Monad (StateT s m) where
   return = pure
 
-  -- st m a -> (a -> st m b) -> st m b
+-- st m a -> (a -> st m b) -> st m b
   sta >>= stf =
     let newStateFunc s =
-          let ma = runStateT sta s -- m (a, s)
-          in do
-              (a, s1) <- ma
-              let stb = stf a -- stf a produces st m b
-                              -- this is the "sequencing" part in
-                              -- standard Monad bind operator
-              runStateT stb s1 -- smb with state updated to s1
-    in StateT newStateFunc
+            let ma = runStateT sta s -- m (a, s)
+            in  do
+                  (a, s1) <- ma
+                  let stb = stf a -- stf a produces st m b
+                                  -- this is the "sequencing" part in
+                                  -- standard Monad bind operator
+                  runStateT stb s1 -- smb with state updated to s1
+    in  StateT newStateFunc
 
 get :: Monad m => StateT s m s
-get =
-  let newStateFunc s = pure (s, s)
-  in StateT newStateFunc
+get = let newStateFunc s = pure (s, s) in StateT newStateFunc
 
 put :: Monad m => s -> StateT s m ()
-put s =
-  let newStateFunc _ = pure ((), s)
-  in StateT newStateFunc
+put s = let newStateFunc _ = pure ((), s) in StateT newStateFunc
 
 -- L3399
 -- we should allow an operation in the embedded monad in the
@@ -100,4 +99,4 @@ lift ma =
   let newStateFunc s = do
         a <- ma
         return (a, s)
-  in StateT newStateFunc
+  in  StateT newStateFunc
