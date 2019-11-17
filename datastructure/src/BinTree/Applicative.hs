@@ -66,8 +66,7 @@ proveIdentityLaw = do
 
 -- Homomorphism can be proved by the definition of <*>
 proveHomomorphism :: IO ()
-proveHomomorphism = do
-  print 1
+proveHomomorphism = print 1
 
 -- f (a -> b) -> f a == f b, which should be equivalent to
 -- f ((a -> b) -> b) -> f (a -> b) == f b
