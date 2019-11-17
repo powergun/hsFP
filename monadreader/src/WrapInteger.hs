@@ -1,6 +1,9 @@
-#!/usr/bin/env stack runghc
+module WrapInteger
+  ( demo
+  )
+where
 
-import Control.Monad.Reader
+import           Control.Monad.Reader
 
 -- haskell cookbook L3463
 -- reader monad is a monad transformer with the purpose of 
@@ -31,6 +34,6 @@ cover = do
   example
   local (const 10) example
 
-main :: IO ()
-main = do
+demo :: IO ()
+demo = do
   runReaderT cover 100
