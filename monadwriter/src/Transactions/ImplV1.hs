@@ -1,11 +1,12 @@
-module WriterMonadV1 
+module Transactions.ImplV1
   ( Transaction(..)
   , printTransaction
   , balanceSheet
-  ) where
+  )
+where
 
-import Data.Monoid
-import Control.Monad.Writer
+import           Data.Monoid
+import           Control.Monad.Writer
 
 -- haskell cookbook L3482, 3530
 
@@ -30,22 +31,20 @@ instance Semigroup Transaction where
   (Transaction x) <> (Transaction y) = Transaction (x + y)
 
 instance Monoid Transaction where
-  mempty = Transaction 0
+  mempty  = Transaction 0
   mappend = (<>)
 
 -- to classify the transaction
 printTransaction :: Transaction -> IO ()
-printTransaction (Transaction x) 
-                 | x < 0 = putStrLn $ "debiting " ++ (show x)
-                 | x > 0 = putStrLn $ "crediting " ++ (show x)
-                 | otherwise = putStrLn "no change"
+printTransaction (Transaction x) | x < 0 = putStrLn $ "debiting " ++ (show x)
+                                 | x > 0 = putStrLn $ "crediting " ++ (show x)
+                                 | otherwise = putStrLn "no change"
 
 -- given a list of transactions, write a function to keep
 -- balancing using the Writer transformer
 balanceSheet :: [Transaction] -> WriterT Transaction IO ()
-balanceSheet [] =
-  lift $ putStrLn "finished balancing"
-balanceSheet (b:bs) = do
+balanceSheet []       = lift $ putStrLn "finished balancing"
+balanceSheet (b : bs) = do
   tell b
   lift $ printTransaction b
   balanceSheet bs
