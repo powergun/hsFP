@@ -8,8 +8,10 @@ where
 import           Test.Hspec
 import qualified SimpleState.ImplV4            as SSI
 
-runSpec :: IO ()
-runSpec = hspec $ describe "Test Simple State" $ do
+import qualified SimpleState.FromScratch
+
+runSpecTests :: IO ()
+runSpecTests = hspec $ describe "Test Simple State" $ do
 
   it "create initial state" $ do
     let state = SSI.State (\s -> (1, 1))
@@ -74,3 +76,9 @@ runSpec = hspec $ describe "Test Simple State" $ do
           -- defined in "sa = return 1") as it is
           return x
     SSI.runState sb 1 `shouldBe` (1, 101)
+
+runSpec :: IO ()
+runSpec = do
+  runSpecTests
+
+  SimpleState.FromScratch.demo

@@ -1,4 +1,9 @@
-#!/usr/bin/env stack runghc
+module SimpleState.FromScratch
+  ( demo
+  )
+where
+
+-- See: state_monad_diagram.png
 
 -- programming haskell P168
 -- the state monad
@@ -38,9 +43,8 @@ app (StateTransformer st) x =
 -- of the tuple returned by "app", but the code is not as short
 instance Functor StateTransformer where
   fmap g st =
-    StateTransformer $ \s -> 
-      let (x, s') = app st s -- remove dummy ctor; unwrap
-      in (g x, s')
+    StateTransformer $ \s -> let (x, s') = app st s -- remove dummy ctor; unwrap
+                                                    in (g x, s')
       -- in the relabelling tree example, the return type here 
       -- is ((Leaf x), s') or a recursion
 
@@ -55,14 +59,14 @@ instance Functor StateTransformer where
 -- see the use of app function to unwrap
 instance Applicative StateTransformer where
   pure x = StateTransformer (\s -> (x, s))
-  -- MY NOTE:
-  -- DO not mix up applicative and monad
-  -- function f comes at different position
-  -- f (a -> b) -> f a -> f b
-  stf <*> stx = StateTransformer $ \s -> 
-    let (f, s') = app stf s
+-- MY NOTE:
+-- DO not mix up applicative and monad
+-- function f comes at different position
+-- f (a -> b) -> f a -> f b
+  stf <*> stx = StateTransformer $ \s ->
+    let (f, s' ) = app stf s
         (x, s'') = app stx s'
-    in (f x, s'')
+    in  (f x, s'')
 
 -- programming haskell P170
 -- st >>= f applies the state transformer st to an initial state 
@@ -82,18 +86,16 @@ instance Monad StateTransformer where
   -- (>>=)  :: m a -> (a -> m b) -> m b
   -- ST a -> (a -> ST b) -> ST b
   st >>= f =
-    -- MY NOTES:
-    -- recall that the function StateTransformer wraps is of type
-    -- S -> (a, S); therefore the lambda definition here must
-    -- use app to yield to result as (some-value, s')
-    StateTransformer $ \s ->
-      let (x, s') = app st s
-      in app (f x) s'
+  -- MY NOTES:
+  -- recall that the function StateTransformer wraps is of type
+  -- S -> (a, S); therefore the lambda definition here must
+  -- use app to yield to result as (some-value, s')
+    StateTransformer $ \s -> let (x, s') = app st s in app (f x) s'
 
 demoSTAsFunctor :: IO ()
 demoSTAsFunctor = do
   let stA = (StateTransformer (\s -> (11, s)) :: StateTransformer Int)
-      f = \_ -> 15
+      f   = \_ -> 15
       stB = fmap f stA
   -- replace encapsulated value 11 with 15
   print $ app stA 0
@@ -103,16 +105,16 @@ demoSTAsApplicative :: IO ()
 demoSTAsApplicative = do
   let st1 = pure "iddqd" :: StateTransformer String
       st2 = pure "idkfa" :: StateTransformer String
-      f = \str1 str2 -> str1 ++ "_called_" ++ str2
+      f   = \str1 str2 -> str1 ++ "_called_" ++ str2
   print $ app (f <$> st1 <*> st2) 0
 
 demoST :: IO ()
 demoST = do
   let st1 = pure "iddqd" :: StateTransformer String
       useBind =
-        st1 >>= 
-          (\s -> return $ s ++ "_called") >>=
-            (\s -> return $ "received_" ++ s)
+        st1
+          >>= (\s -> return $ s ++ "_called")
+          >>= (\s -> return $ "received_" ++ s)
       -- A gentle introduction to Monad - Monadic class
       -- MY NOTES
       -- note how do syntax saves the use of lambda and the anonymous
@@ -124,8 +126,8 @@ demoST = do
   print $ app useBind 0
   print $ app useDo 0
 
-main :: IO ()
-main = do
+demo :: IO ()
+demo = do
   demoSTAsFunctor
   demoSTAsApplicative
   demoST
