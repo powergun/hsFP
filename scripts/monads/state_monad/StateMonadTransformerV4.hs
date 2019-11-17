@@ -1,9 +1,9 @@
-module StateMonadTransformerV3
+module StateMonadTransformerV4 
   ( StateT(..)
   , get
   , put
   , lift
-  , runStateT
+  , runStateT 
   ) where
 
 data StateT s m a = StateT { stateFunc :: s -> m (a, s) }
@@ -16,7 +16,7 @@ get =
   in StateT { stateFunc = newStateFunc }
 
 put :: Monad m => s -> StateT s m ()
-put s =
+put s = 
   let newStateFunc _ = pure ((), s)
   in StateT { stateFunc = newStateFunc }
 
@@ -24,7 +24,7 @@ lift :: Monad m => m a -> StateT s m a
 lift ma = 
   let newStateFunc s = do
         a <- ma
-        pure (a, s)
+        return (a, s)
   in StateT { stateFunc = newStateFunc }
 
 instance Monad m => Functor (StateT s m) where
@@ -36,14 +36,11 @@ instance Monad m => Functor (StateT s m) where
     in StateT { stateFunc = newStateFunc }
 
 instance Monad m => Applicative (StateT s m) where
-  -- x is substituted to (a, s) 
-  -- in the definition of lift()
-  pure x = StateT { stateFunc = (\s -> pure (x, s)) }
+  pure x = 
+    let newStateFunc s = pure (x, s)
+    in StateT { stateFunc = newStateFunc }
   stf <*> sta = 
     let newStateFunc s = 
-          -- the outer monad is to manage and provide the state
-          -- to the inner monad, therefore the same s is passed
-          -- to both stateFunc
           let mf = stateFunc stf s
               ma = stateFunc sta s
               t (fab, _) = \(a, s) -> (fab a, s)
@@ -56,7 +53,6 @@ instance Monad m => Monad (StateT s m) where
     let newStateFunc s = 
           let ma = stateFunc sta s
           in do
-                (a, s') <- ma
-                stateFunc (f a) s' 
-    in StateT { stateFunc = newStateFunc }  
-   
+                (a, s') <- ma 
+                stateFunc (f a) s'
+    in StateT { stateFunc = newStateFunc }

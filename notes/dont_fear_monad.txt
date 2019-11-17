@@ -130,7 +130,7 @@ to thing, and you don't fall out of the universe if you
 compose them together"
 
 1:01:34
-introduction to F# and these two "devoiced" camps:
+introduction to F# and these two "devorced" camps:
 bottom-up (machine to abstraction, performance-oriented, C) v.s. top-down (abstraction to machine, math-oriented, lambda calculus, haskell)
 
 

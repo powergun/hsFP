@@ -1,9 +1,13 @@
-#!/usr/bin/env stack runghc
-
--- haskell cookbook L3482, 3530
+module WriterMonadV1 
+  ( Transaction(..)
+  , printTransaction
+  , balanceSheet
+  ) where
 
 import Data.Monoid
 import Control.Monad.Writer
+
+-- haskell cookbook L3482, 3530
 
 -- L3530
 -- a writer monad works with an assumption that the writer state 
@@ -45,18 +49,3 @@ balanceSheet (b:bs) = do
   tell b
   lift $ printTransaction b
   balanceSheet bs
-
-demoTransactions :: IO ()
-demoTransactions = do
-  let transactions = [ Transaction (-10.0)
-                     , Transaction 5
-                     , Transaction 17
-                     , Transaction (-29)
-                     , Transaction 10]
-  (_, Transaction b) <- runWriterT (balanceSheet transactions)
-  putStrLn $ "balance is " ++ (show b)
-
-main :: IO ()
-main = do
-  demoTransactions
-

@@ -1,7 +1,5 @@
 module FibMonadV3 
-  ( getFib
-  , putFib
-  , fibWithState
+  ( fibWithState
   ) where
 
 import qualified Control.Monad.State as S
