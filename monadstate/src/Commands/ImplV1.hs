@@ -1,17 +1,19 @@
-module Commands.ImplV1 
+module Commands.ImplV1
   ( execute
-  ) where
+  )
+where
 
-import           Control.Monad.State as Ms
-import           Data.List           (intercalate)
+import           Control.Monad.State           as Ms
+import           Data.List                      ( intercalate )
 import           Text.Parsec
-import           Text.Parsec.String  (Parser)
+import           Text.Parsec.String             ( Parser )
 
 data ExeState = ExeState { position :: Int
                           , haystack :: String
                           , output   :: [String] }
 
-createState s = ExeState { position = 0, haystack = s, output = [] :: [String] }
+createState s =
+  ExeState { position = 0, haystack = s, output = [] :: [String] }
 
 data Command = Noop
               | Tripplet Char
@@ -21,7 +23,7 @@ data Command = Noop
 parseCommands :: String -> [Command]
 parseCommands cmdStr =
   let doParse = many (parseNoop <|> parseTripplet <|> parseMarker)
-  in case parse doParse [] cmdStr of
+  in  case parse doParse [] cmdStr of
         Right cmds -> cmds
         Left  err  -> error (show err)
 
@@ -48,15 +50,14 @@ runCommands cmds = do
   Ms.gets output
 
 runCommand :: Command -> Ms.State ExeState ()
-runCommand Noop = return ()
-runCommand Marker =
-  Ms.modify $ \es -> es { output = output es ++ ["|*|"] }
+runCommand Noop   = return ()
+runCommand Marker = Ms.modify $ \es -> es { output = output es ++ ["|*|"] }
 runCommand (Tripplet elem) =
   Ms.modify $ \es -> es { output = output es ++ [[elem, elem, elem]] }
 
 execute :: String -> String
 execute cmdStr =
   let cmds = parseCommands cmdStr
-      o = Ms.evalState (runCommands cmds) (createState "")
+      o    = Ms.evalState (runCommands cmds) (createState "")
       oStr = intercalate "" o
-  in oStr
+  in  oStr
