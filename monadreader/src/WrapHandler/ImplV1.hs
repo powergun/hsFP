@@ -3,12 +3,12 @@ module WrapHandler.ImplV1
   )
 where
 
-import qualified Control.Monad.Reader          as Mr
-import qualified System.IO                     as IO
+import qualified Control.Monad.Reader as Mr
+import qualified System.IO            as IO
 
--- motivation: 
+-- motivation:
 -- apply the knowledge of reader/writer monad to do something useful
--- I want to do something similar to creating a Python class that 
+-- I want to do something similar to creating a Python class that
 -- wraps a file handle and then writes to it
 
 writeToHandle :: [String] -> Mr.ReaderT IO.Handle IO ()
