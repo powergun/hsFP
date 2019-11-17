@@ -1,10 +1,11 @@
 import           Test.Hspec
+import           WrapHandle
 
 runSpec :: IO ()
 runSpec = hspec $ do
-  describe "Test nothing" $ do
-    it "placeholder" $ do
-      1 `shouldBe` 1
+  describe "Test WrapHandle" $ do
+    it "write to file" $ do
+      WrapHandle.demo
 
 main :: IO ()
 main = do
