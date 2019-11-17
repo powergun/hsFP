@@ -1,4 +1,3 @@
-import           Test.Hspec
 import qualified TestWrapHandler
 import qualified TestWrapInteger
 import qualified TestMoveCursor
