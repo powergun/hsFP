@@ -1,19 +1,20 @@
-module ReadWriteMonadV3
+module MoveCursor.ImplV3
   ( Cursor(..)
   , Move(..)
   , moveCursor
-  ) where
+  )
+where
 
-import qualified Control.Monad.Reader as R
-import qualified Control.Monad.Writer as W
+import qualified Control.Monad.Reader          as R
+import qualified Control.Monad.Writer          as W
 
 data Cursor = Cursor Int Int deriving (Eq, Show)
-data Move = North { dist :: Int } 
+data Move = North { dist :: Int }
           | South { dist :: Int }
           | East { dist :: Int }
           | West { dist :: Int }
           deriving (Show)
-  
+
 -- the purpose of `R.ReaderT Cursor` is to provide an initial 
 -- state (Cursor) so that WriterT can modify this initial state
 -- instead of the `empty` state (scratch value)
@@ -23,8 +24,8 @@ moveCursor ms = do
   R.lift $ W.tell c
   moveCursor' $ filter ((< 100) . dist) ms
 moveCursor' :: [Move] -> R.ReaderT Cursor (W.WriterT Cursor IO) ()
-moveCursor' [] = return ()
-moveCursor' (m:ms) = do
+moveCursor' []       = return ()
+moveCursor' (m : ms) = do
   R.lift $ moveCursorW m
   moveCursor' ms
 
@@ -34,10 +35,10 @@ moveCursorW m = do
   W.tell $ newCursor m
 
 newCursor :: Move -> Cursor
-newCursor (North v) = Cursor 0 (-v) 
+newCursor (North v) = Cursor 0 (-v)
 newCursor (South v) = Cursor 0 v
-newCursor (West v) = Cursor (-v) 0 
-newCursor (East v) = Cursor v 0
+newCursor (West  v) = Cursor (-v) 0
+newCursor (East  v) = Cursor v 0
 
 instance Semigroup Cursor where
   (<>) = mappend

@@ -1,4 +1,4 @@
-module WrapInteger
+module WrapInteger.ImplV1
   ( demo
   )
 where

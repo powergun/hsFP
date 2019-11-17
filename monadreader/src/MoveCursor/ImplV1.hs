@@ -1,12 +1,13 @@
-module ReadWriteMonadV1 
+module MoveCursor.ImplV1
   ( Cursor(..)
   , Move(..)
   , moveCursor
-  ) where
+  )
+where
 
-import qualified Control.Monad.Reader as R
-import qualified Control.Monad.Writer as W
-import qualified Data.Monoid as M
+import qualified Control.Monad.Reader          as R
+import qualified Control.Monad.Writer          as W
+import qualified Data.Monoid                   as M
 
 data Cursor = Cursor Int Int deriving (Eq, Show)
 
@@ -14,10 +15,10 @@ instance Semigroup Cursor where
   (Cursor x1 y1) <> (Cursor x2 y2) = Cursor (x1 + x2) (y1 + y2)
 
 instance M.Monoid Cursor where
-  mempty = Cursor 0 0
+  mempty  = Cursor 0 0
   mappend = (<>)
 
-data Move = North Int 
+data Move = North Int
           | South Int
           | West Int
           | East Int
@@ -28,8 +29,8 @@ data Move = North Int
 toCursor :: Move -> Cursor
 toCursor (North n) = Cursor 0 (-n)
 toCursor (South n) = Cursor 0 n
-toCursor (West n) = Cursor (-n) 0
-toCursor (East n) = Cursor n 0 
+toCursor (West  n) = Cursor (-n) 0
+toCursor (East  n) = Cursor n 0
 
 -- use tell to update the state
 -- a composition of tell . toCursor converts Move to Cursor
@@ -87,13 +88,17 @@ moveCursor ms = do -- in Reader monad
                           -- there is no way to retrieve it
 
   -- return the Reader monad (a, s) when calling runReaderT
-  where
+
+
+
+
+ where
     -- called inside Writer monad
-    moveCursor' [] = 
-      -- inside IO monad
-      W.lift $ return ()
-    moveCursor' (m:ms) = do
-      -- inside IO monad
-      W.lift $ putStrLn $ "applying move " ++ (show m)
-      updateCursor m
-      moveCursor' ms
+  moveCursor' [] =
+    -- inside IO monad
+    W.lift $ return ()
+  moveCursor' (m : ms) = do
+    -- inside IO monad
+    W.lift $ putStrLn $ "applying move " ++ (show m)
+    updateCursor m
+    moveCursor' ms
