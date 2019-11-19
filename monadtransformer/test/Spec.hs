@@ -1,4 +1,8 @@
+import qualified TestDirWalker
 import qualified TestSimpleTransformer
 
 main :: IO ()
-main = TestSimpleTransformer.runSpec
+main = do
+    TestSimpleTransformer.runSpec
+    TestDirWalker.demo
+

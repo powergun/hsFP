@@ -1,12 +1,9 @@
 module DirWalker.BaseImpl (countEntriesTrad) where
 
-import           Control.Monad    (forM, liftM)
-import           System.Directory (doesDirectoryExist, getDirectoryContents)
+import           Control.Monad    (forM)
+import           DirWalker.Common
+import           System.Directory (doesDirectoryExist)
 import           System.FilePath  ((</>))
-
-listDirectory :: FilePath -> IO [String]
-listDirectory = liftM (filter notDots) . getDirectoryContents
-    where notDots p = p /= "." && p /= ".."
 
 countEntriesTrad :: FilePath -> IO [(FilePath, Int)]
 countEntriesTrad path = do
