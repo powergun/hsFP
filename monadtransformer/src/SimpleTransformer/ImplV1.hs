@@ -30,9 +30,9 @@ newtype StateT s m a = StateT {
 instance Functor m => Functor (StateT s m) where
   fmap f sta =
     let newStateFunc s =
-            let t (xa, xs) = (f xa, xs)
-                ma = runStateT sta s
-            in  t <$> ma
+            let t (xa, xs) = (f xa, xs)  -- compute()
+                ma = runStateT sta s  -- get_current_state()
+            in  t <$> ma  -- do compute() with current_state
     in  StateT newStateFunc
 
 -- we make use of the fact taht the embedded monad is also an

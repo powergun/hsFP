@@ -5,27 +5,33 @@ where
 
 -- See: state_monad_diagram.png
 
+-- UPDATE:
+-- NOTE state transformer is NOT monad transformer;
+-- state in this case is a simple type;
+-- the concept here is not too different to ./ImplV1.. hs
+-- but DO NOT mix it up with SimpleTransformer
+
 -- programming haskell P168
 -- the state monad
 -- MY NOTES:
 -- I like the book's approach in introducing Monad: Monad is a
--- generic concept that shares the characteristics of Functor and 
--- Applicative. Therefore a Monad can also be used inplace of 
--- the latters. The new GHC release enforces this so that to 
--- implement Monad typeclass, one has to also implement the Functor 
--- Applicative typeclass. The examples below demonstrate that the 
+-- generic concept that shares the characteristics of Functor and
+-- Applicative. Therefore a Monad can also be used inplace of
+-- the latters. The new GHC release enforces this so that to
+-- implement Monad typeclass, one has to also implement the Functor
+-- Applicative typeclass. The examples below demonstrate that the
 -- StateTransformer Monad can also work as <$> and <*>
 
 type State = Int
 
--- Given that StateTransformer is a parameterised type, it is 
--- natural to try and make it into a monad so that the do notion 
+-- Given that StateTransformer is a parameterised type, it is
+-- natural to try and make it into a monad so that the do notion
 -- can then be used to write stateful programs.
 -- ... redefine StateTransformer using the newtype mechanism
 -- which requires introducing a dummy ctor
 newtype StateTransformer a = StateTransformer (State -> (a, State))
 
--- it is also convenient to define a special purpose application 
+-- it is also convenient to define a special purpose application
 -- function for this type, which simply removes the dummy ctor
 app :: StateTransformer a -> State -> (a, State)
 app (StateTransformer st) x =
@@ -45,11 +51,11 @@ instance Functor StateTransformer where
   fmap g st =
     StateTransformer $ \s -> let (x, s') = app st s -- remove dummy ctor; unwrap
                                                     in (g x, s')
-      -- in the relabelling tree example, the return type here 
+      -- in the relabelling tree example, the return type here
       -- is ((Leaf x), s') or a recursion
 
 -- programming haskell P170 (great diagram in the book!!)
--- <*>: applies a StateTransformer that returns a function to a 
+-- <*>: applies a StateTransformer that returns a function to a
 --   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 -- StateTransformer that returns an argument to give a StateTransformer
 -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -69,14 +75,14 @@ instance Applicative StateTransformer where
     in  (f x, s'')
 
 -- programming haskell P170
--- st >>= f applies the state transformer st to an initial state 
--- s, then applies the function f to the resulting value x to 
--- give a new state transformer f x, which is then applied to 
+-- st >>= f applies the state transformer st to an initial state
+-- s, then applies the function f to the resulting value x to
+-- give a new state transformer f x, which is then applied to
 -- the new state s' to give the final result
--- Note that within the definition for >>= we produce a new state 
+-- Note that within the definition for >>= we produce a new state
 -- transformer f x whose behavior may depend on the result value
--- of the first argument x; whereas with <*> we are restricted to 
--- using state transformers that are explicitly supplied as 
+-- of the first argument x; whereas with <*> we are restricted to
+-- using state transformers that are explicitly supplied as
 -- arguments. As such >>= provides extra flexibility
 --                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 -- TODO: demonstrate this flexibility
