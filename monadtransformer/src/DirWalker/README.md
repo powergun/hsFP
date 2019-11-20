@@ -75,3 +75,14 @@ monad transformer stack, we usually wrap it with a newtype;
 
 as a result we rarely run into this problem in practice...
 
+## Benefit of Monad transformer stack
+
+we can write most of an application's imperative-style code in
+a monad stack;
+
+in a real program, we'd carry around more complex configuration
+data, but we'd still use ReaderT to keep it read-only and hidden,
+
+we'd have more mutable state to manage, but we'd still use StateT
+to encapsulate it
+
