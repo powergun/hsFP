@@ -1,7 +1,11 @@
-
-module MaybeTrans.ImplV1 (MaybeT(..) )where
+module MaybeTrans.ImplV1 
+ ( MaybeT(..) 
+ )
+ where
 
 import qualified Control.Monad       as M
+import Control.Applicative ((<|>))
+import qualified Control.Applicative as CA
 import qualified Control.Monad.Trans as Mt
 
 -- source:
@@ -56,6 +60,8 @@ failMT _ = MaybeT $ return Nothing
 
 -- NOTE: these definitions are taken from wikibook monad transformer
 -- (link above)
+-- must import Control.Applicative, see:
+-- https://stackoverflow.com/questions/31811149/no-instance-for-ghc-base-alternative-parser-error-running-literate-haskell-cod
 instance Monad m => Applicative (MaybeT m) where
   pure = return
   (<*>) = M.ap
@@ -63,16 +69,20 @@ instance Monad m => Applicative (MaybeT m) where
 instance Monad m => Functor (MaybeT m) where
   fmap = M.liftM
 
--- instance Monad m => Alternative (MaybeT m) where
---   empty   = MaybeT $ return Nothing
---   x <|> y = MaybeT $ do unwrapped <- runMaybeT x
---                         case unwrapped of
---                               Nothing -> runMaybeT y
---                               Just _  -> return unwrapped
+-- since Maybe is an instance of those classes:
+-- Alternative, MondPlus
+-- it makes sense to make MaybeT m an instance too
+instance Monad m => CA.Alternative (MaybeT m) where
+  empty   = MaybeT $ return Nothing
+  x <|> y = MaybeT $ do 
+    unwrapped <- runMaybeT x
+    case unwrapped of
+          Nothing -> runMaybeT y
+          Just _  -> return unwrapped
 
--- instance Monad m => MonadPlus (MaybeT m) where
---   mzero = empty
---   mplus = (<|>)
+instance Monad m => M.MonadPlus (MaybeT m) where
+  mzero = CA.empty
+  mplus = (<|>)
 
 -- The thing that we intend to make a Monad instance is the partial
 -- type MaybeT m: this has the usual single type parameter, a,
