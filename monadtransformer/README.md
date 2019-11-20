@@ -1,9 +1,9 @@
 # Monad Transformer
 
-Here are examples that show the general concept of monad transformer:
+[SimpleTransformer (haskell cookbook)](src/SimpleTransformer)
 
-a special monad that "transforms" other monads;
+[Directory walker (real world haskell)](src/DirWalker)
 
-[SimpleTransformer (haskell cookbook)](./SimpleTransformer)
+[TransformerStack: tooling for the stack](src/TransformerStack)
 
-[Directory walker (real world haskell)](./DirWalker)
+[Transformer from scratch: The Maybe Transformer](src/MaybeTrans)
