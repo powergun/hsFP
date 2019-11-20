@@ -50,3 +50,21 @@ askPassphraseMaybeT getter = do
   Mt.lift $ putStrLn "Insert your new passphrase: "
   value <- getPassphraseMaybeT getter
   Mt.lift $ putStrLn "Done. Storing in database."
+
+-- test this in ghci!!
+-- runMaybeT askPassphraseGhci 
+-- Insert your new passphrase: 
+-- 1
+-- 124
+-- 132321h!
+-- Done. Storing in database.
+-- Just ()
+-- see also:
+-- What I Wish I Knew When Learning Haskell 
+-- http://dev.stephendiehl.com/hask/
+askPassphraseGhci :: MaybeT IO ()
+askPassphraseGhci = do
+  Mt.lift $ putStrLn "Insert your new passphrase: "
+  -- keep asking until getting legit answer
+  value <- M.msum . repeat . getPassphraseMaybeT $ getLine
+  Mt.lift $ putStrLn "Done. Storing in database."
