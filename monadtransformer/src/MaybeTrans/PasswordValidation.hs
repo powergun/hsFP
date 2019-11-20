@@ -5,12 +5,15 @@ module MaybeTrans.PasswordValidation
 
 import           Data.Char
 
--- to test: stack run main
+-- to test:
+-- stack test
+-- (in ghci) getPassphraseBaseImpl getLine
 getPassphraseBaseImpl :: IO (String) -> IO (Maybe String)
 getPassphraseBaseImpl getter = do
+    -- NOT using Maybe as a monad here (but only a return type)
     s <- getter
     if isValid s then return $ Just s
-                else return Nothing
+                 else return Nothing
 
 -- The validation test could be anything we want it to be.
 isValid :: String -> Bool
