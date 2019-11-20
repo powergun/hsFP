@@ -19,6 +19,10 @@ import qualified Control.Monad.Reader as Mr
 -- the second form is what ghci :t prints out
 -- NOTE: the hackage page uses the form that supports extension
 -- (not hardcoding "a" in the type parameter list)
+
+-- See monadtransformer/DirWalker for a better explanation, which
+-- comes from read-world haskell (web version) chapter 18
+
 action :: Mr.Reader String String
 action = do
     txt <- Mr.ask

@@ -39,6 +39,39 @@ more monad transformers, IO will always be at the bottom of the stack
 there usually exist both a concrete monad and a transformer, each of which
 are instances of the typeclass that defines the monad's API
 
+## TransStackImpl
 
+This uses the concept of "Monad Transformer Stack".
 
+See also the dedicated [sub-project: TransformerStack](../TransformerStack)
+
+We use ReaderT to store config data; use StateT to record
+the maximum depth during the actual traversal
+
+In this example it does not matter whether we have ReaderT or
+WriterT on top, but IO must be at the bottom.
+
+**MY NOTE**: the order of the stack still matters
+
+### where is the missing type parameter 'a'
+
+why not write
+
+`data App a = Mr.ReaderT AppConfig (Ms.StateT AppState IO) a`
+
+the difference arises when we try to construct another type from
+one of these, say we want to add another layer to the stack, the
+compiler will allow `WriterT [String] App a` (if App does not
+carry a)
+
+Haskell does not allow us to partially apply a type synonym,
+The synonym App does not take a type parameter, so it does not
+pose a problem; however when it does take a parameter `a`, we
+must supply some type for that parameter if we want to use App
+to create another type;
+
+this restriction is limited to type synonyms; when we create a
+monad transformer stack, we usually wrap it with a newtype;
+
+as a result we rarely run into this problem in practice...
 
