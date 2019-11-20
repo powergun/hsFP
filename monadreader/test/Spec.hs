@@ -1,7 +1,8 @@
-import qualified TestWrapHandler
-import qualified TestWrapInteger
+import qualified TestLocalSimple
 import qualified TestMoveCursor
 import qualified TestWrapEnv
+import qualified TestWrapHandler
+import qualified TestWrapInteger
 
 main :: IO ()
 main = do
@@ -9,4 +10,5 @@ main = do
   TestWrapInteger.runSpec
   TestMoveCursor.runSpec
   TestWrapEnv.runSpec
+  TestLocalSimple.demo
 
