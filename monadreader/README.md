@@ -1,5 +1,9 @@
 # monadreader
 
+source:
+
+Monday morning haskell
+
 ## WrapInteger
 
 the minimal example of Reader
@@ -15,6 +19,17 @@ can be accessed via `Mr.asks`
 there are some subtles about "record type", see:
 
 https://gitlab.haskell.org/ghc/ghc/wikis/records
+
+### Monday morning haskell
+
+In order to call a reader action from pure code, all we need to do
+is call the runReader function and supply the environment as a parameter.
+All functions within the action will be able to treat it like a
+global variable.
+
+our other two functions no longer take the environment as an explicit
+parameter. They simply exist in a context where the environment is
+a global variable.
 
 ## WrapHandler
 
