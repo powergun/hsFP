@@ -14,6 +14,33 @@ Maybe in MaybeT stack), on which a transformer is based;
 **base monad** is the other monad (e.g. IO in MaybeT IO stack)
 on which the transformer is applied
 
+Since the `bind operator >>=` and `return` for the transformer
+mirror the semantics of the precursor monad, a `do block` of type
+`ReaderT Env IO String` will, from the outside, look a lot like a
+do block of the Reader monad, except that `IO` actions become
+trivial to embed by using lift
+
+In general, there is no magic formula to create a transformer
+version of a monad; the form of each transformer depends on what
+makes sens in the context of its non-transformer type
+
+## Lifting
+
+`liftM`, applies a function (a -> b) to a value within a monad m,
+we can also look at it as a **function of just one argument**
+
+`liftM :: Monad m => (a -> b) -> (m a -> m b)`
+
+liftM converts a plain function into one that acts within m
+
+allows us to apply a plain function to a monadic value
+
+lift function plays an analogous role when working with monad
+transformers. It brings (aka promotes) base monad computations
+to the combined monad. By doing so, it allows us to easily insert
+base monad computations as part of a large computation in the
+combined monad.
+
 ## Simple Transformer
 
 [SimpleTransformer (haskell cookbook)](src/SimpleTransformer)
