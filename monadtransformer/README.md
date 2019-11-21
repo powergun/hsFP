@@ -63,4 +63,3 @@ develop MaybeT from scratch and see how it dramatically simplifies
 real-world use case that relies on early termination - the passphrase problem.
 
 [Transformer from scratch: The Maybe Transformer](src/MaybeTrans)
-
