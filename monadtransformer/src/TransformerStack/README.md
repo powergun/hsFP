@@ -49,3 +49,22 @@ it can be good style to write wrapper function that does the lifting for us;
 avoid hard-wiring the details of the layout of our monad stack
 into our code, which will complicate any subsequent modifications
 
+see also **Monday morning haskell**
+
+excerpt:
+
+> It’s inconvenient to have to know how many times to call lift to
+get to a particular level of the chain. Thus helper functions are
+frequently used for this. Additionally, since monad transformers can
+run several layers deep, the types can get complicated. So it is
+typical to use type synonyms liberally.
+
+```haskell
+type TripleMonad a = MaybeT (ReaderT Env IO) a
+
+performReader :: ReaderT Env IO a -> TripleMonad a
+performReader = lift
+
+performIO :: IO a -> TripleMonad a
+performIO = lift . lift
+```

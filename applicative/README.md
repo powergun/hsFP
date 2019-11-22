@@ -29,13 +29,16 @@ we’ll get type errors:
 -- . (zip3 <$> id <*> drop 1 <*> drop 2)
 . (zip3 <*> drop 1 <*> drop 2)
 
--- id can be dropped from the definition because:
+-- id can be dropped from the definition because of functor law
 
 -- λ> f = zip3 <$> id
 -- λ> :t f
 -- f :: [a] -> [b] -> [c] -> [(a, b, c)]
 -- λ> :t zip3
 -- zip3 :: [a] -> [b] -> [c] -> [(a, b, c)]
+
+-- https://mmhaskell.com/monads/laws:
+-- fmap id `is` fmap
 ```
 
 You might be wondering how we might do parallel application of functions.

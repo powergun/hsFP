@@ -32,3 +32,9 @@ see also **Monady morning haskell** for how to use a single pattern-matching
 with runMaybeT - see `patternMatch` demo in `PasswordValidation.hs`
 
 pay attention to the robust use of `<-` and `runMaybeT`
+
+exerpt:
+
+> And this new code will have the proper short-circuiting behavior
+of the Maybe monad! If any of the read functions fail, our code will
+immediately return Nothing.
