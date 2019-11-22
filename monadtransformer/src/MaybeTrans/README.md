@@ -2,9 +2,9 @@
 
 source:
 
-realworld haskell (web version) chapter 18
+[realworld haskell (web version) chapter 18](https://en.wikibooks.org/wiki/Haskell/Monad_transformers)
 
-https://en.wikibooks.org/wiki/Haskell/Monad_transformers
+[Monday morning haskell](https://mmhaskell.com/monads/transformers)
 
 ## mechanism
 
@@ -27,3 +27,8 @@ us to do pattern matching within IO do-blocks** to extract values, something
 that Maybe monad was meant to spare us from.
 
 see PasswordValidation.hs
+
+see also **Monady morning haskell** for how to use a single pattern-matching
+with runMaybeT - see `patternMatch` demo in `PasswordValidation.hs`
+
+pay attention to the robust use of `<-` and `runMaybeT`

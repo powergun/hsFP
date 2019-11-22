@@ -29,7 +29,6 @@ demoGetPassphraseMaybeT = do
   print failed
   print success 
 
-
 demoAskPassphraseMaybeT :: IO ()
 demoAskPassphraseMaybeT = do
   let badPass = return "123"

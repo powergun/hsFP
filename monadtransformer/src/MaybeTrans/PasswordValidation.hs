@@ -68,3 +68,24 @@ askPassphraseGhci = do
   -- keep asking until getting legit answer
   value <- M.msum . repeat . getPassphraseMaybeT $ getLine
   Mt.lift $ putStrLn "Done. Storing in database."
+
+-- Test this in ghci
+patternMatch :: IO ()
+patternMatch = do
+  let readPass1 :: MaybeT IO String
+      readPass1 = do
+        s <- Mt.lift getLine
+        M.guard (isValid s)
+        return s
+      readPass2 :: MaybeT IO String
+      readPass2 = do
+        s <- Mt.lift getLine
+        M.guard (isValid s)
+        return s
+  pw <- runMaybeT $ do
+    p1 <- readPass1
+    p2 <- readPass2
+    return (p1, p2)
+  case pw of 
+    Nothing -> print "bail out!"
+    Just (p1, p2) -> print (p1 ++ " | " ++ p2) 

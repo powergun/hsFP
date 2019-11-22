@@ -43,6 +43,8 @@ combined monad.
 
 ## Simple Transformer
 
+to implement a StateT from scratch
+
 [SimpleTransformer (haskell cookbook)](src/SimpleTransformer)
 
 ## Directory Walker
