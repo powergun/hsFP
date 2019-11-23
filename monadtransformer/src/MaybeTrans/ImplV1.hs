@@ -1,12 +1,12 @@
-module MaybeTrans.ImplV1 
- ( MaybeT(..) 
- )
- where
+module MaybeTrans.ImplV1
+  ( MaybeT(..)
+  )
+where
 
-import qualified Control.Monad       as M
-import Control.Applicative ((<|>))
-import qualified Control.Applicative as CA
-import qualified Control.Monad.Trans as Mt
+import qualified Control.Monad                 as M
+import           Control.Applicative            ( (<|>) )
+import qualified Control.Applicative           as CA
+import qualified Control.Monad.Trans           as Mt
 
 -- source:
 -- realworld haskell (web version) chapter 18
@@ -25,15 +25,15 @@ bindMT :: (Monad m) => MaybeT m a -> (a -> MaybeT m b) -> MaybeT m b
 -- with the MaybeT ctor
 x `bindMT` f = MaybeT $ do
                  -- unwrapped is of Maybe a (extracted from `m (Maybe a)`)
-                 unwrapped <- runMaybeT x
-                 case unwrapped of
-                    -- with Nothing, we return Nothing into m
-                    Nothing -> return Nothing
-                    -- with Just, we apply f to y
-                    -- since f is of `a -> MaybeT m b`, we need
-                    -- an extra call to runMaybeT to put the result
-                    -- back to m
-                    Just y  -> runMaybeT (f y)
+  unwrapped <- runMaybeT x
+  case unwrapped of
+     -- with Nothing, we return Nothing into m
+    Nothing -> return Nothing
+    -- with Just, we apply f to y
+    -- since f is of `a -> MaybeT m b`, we need
+    -- an extra call to runMaybeT to put the result
+    -- back to m
+    Just y  -> runMaybeT (f y)
 
 returnMT :: (Monad m) => a -> MaybeT m a
 returnMT x = MaybeT $ return (Just x)
@@ -63,7 +63,7 @@ failMT _ = MaybeT $ return Nothing
 -- must import Control.Applicative, see:
 -- https://stackoverflow.com/questions/31811149/no-instance-for-ghc-base-alternative-parser-error-running-literate-haskell-cod
 instance Monad m => Applicative (MaybeT m) where
-  pure = return
+  pure  = return
   (<*>) = M.ap
 
 instance Monad m => Functor (MaybeT m) where
@@ -73,12 +73,12 @@ instance Monad m => Functor (MaybeT m) where
 -- Alternative, MondPlus
 -- it makes sense to make MaybeT m an instance too
 instance Monad m => CA.Alternative (MaybeT m) where
-  empty   = MaybeT $ return Nothing
-  x <|> y = MaybeT $ do 
+  empty = MaybeT $ return Nothing
+  x <|> y = MaybeT $ do
     unwrapped <- runMaybeT x
     case unwrapped of
-          Nothing -> runMaybeT y
-          Just _  -> return unwrapped
+      Nothing -> runMaybeT y
+      Just _  -> return unwrapped
 
 instance Monad m => M.MonadPlus (MaybeT m) where
   mzero = CA.empty
@@ -88,9 +88,9 @@ instance Monad m => M.MonadPlus (MaybeT m) where
 -- type MaybeT m: this has the usual single type parameter, a,
 -- that satisfies the requirements of the Monad typeclass.
 instance (Monad m) => Monad (MaybeT m) where
-  (>>=) = bindMT
+  (>>=)  = bindMT
   return = returnMT
-  fail = failMT
+  fail   = failMT
 
 -- to turn our type into a monad transformer, we must provide
 -- an instance of the MonadTrans class, so that a user can access

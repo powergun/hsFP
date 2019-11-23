@@ -1,16 +1,20 @@
 {-# LANGUAGE TemplateHaskell #-}
 
 module MaybeTrans.PasswordValidation
-    ( getPassphraseBaseImpl
-    , getPassphraseMaybeT
-    , askPassphraseMaybeT
-    )
-    where
+  ( getPassphraseBaseImpl
+  , getPassphraseMaybeT
+  , askPassphraseMaybeT
+  , runMaybeT
+  )
+where
 
-import qualified Control.Monad       as M
-import qualified Control.Monad.Trans as Mt
+import qualified Control.Monad                 as M
+import qualified Control.Monad.Trans           as Mt
 import           Data.Char
-import           MaybeTrans.ImplV1
+import qualified MaybeTrans.ImplV2             as MaybeTransformer
+
+type MaybeT = MaybeTransformer.MaybeT
+runMaybeT = MaybeTransformer.runMaybeT
 
 -- to test:
 -- stack test
@@ -18,16 +22,13 @@ import           MaybeTrans.ImplV1
 getPassphraseBaseImpl :: IO (String) -> IO (Maybe String)
 getPassphraseBaseImpl getter = do
     -- NOT using Maybe as a monad here (but only a return type)
-    s <- getter
-    if isValid s then return $ Just s
-                 else return Nothing
+  s <- getter
+  if isValid s then return $ Just s else return Nothing
 
 -- The validation test could be anything we want it to be.
 isValid :: String -> Bool
-isValid s = length s >= 8
-            && any isAlpha s
-            && any isNumber s
-            && any isPunctuation s
+isValid s =
+  length s >= 8 && any isAlpha s && any isNumber s && any isPunctuation s
 
 -- because MaybeT IO is an instance of Alternative, checking
 -- for passphrase validity can be taken care of by a guard
