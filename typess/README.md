@@ -43,3 +43,33 @@ Also whoever uses our module can't pattern match against the value
 constructors
 
 ## Type parameters
+
+type constructors can take types as parameters
+to produce new types.
+
+recall templates in C++
+
+```haskell
+data Probably a = Noway | Bingo a
+
+λ> a = Bingo 'a'
+λ> :t a
+a :: Probably Char
+```
+
+the type inference engine figures the concrete type
+must be `Maybe [Char]` because if the `a` in
+`Bingo a` is a `Char`, then the `a` in `Probably a`
+must also be a string
+
+**list as a parameterized type**: it types a parameter to produce a concrete type,
+
+values can have an `[Int]` type, a `[Char]` type, a
+`[[String]]` type, but you can't have a value that
+just has a type of `[]`
+
+notice that the type of `Nothing` is `Probably a`.
+Its type is polymorphic.
+if some function requires a `Probably Int` as a
+parameter, we can give it a `Nothing` because a `Nothing`
+doesn't contain a value anyway and so it doesn't matter
