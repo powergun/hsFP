@@ -27,7 +27,7 @@ library:
 
 tests:
   typess-test:
-    main:                Spec.hs
+    main:                RunTests.hs
     source-dirs:         test
     ghc-options:
     - -threaded

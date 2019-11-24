@@ -73,3 +73,33 @@ Its type is polymorphic.
 if some function requires a `Probably Int` as a
 parameter, we can give it a `Nothing` because a `Nothing`
 doesn't contain a value anyway and so it doesn't matter
+
+## type parameters in typeclass instance declaration
+
+
+
+## Typeclass constraint
+
+source: learn you a haskell
+
+### when using typeclass constraint is not a common practice
+
+see `src/TypeclassInstance.hs`
+
+### when I must use typeclass constraint
+
+most of the times, class constraints in class decl
+are used for making a typeclass a subclass of another
+typeclass;
+
+class constraints in instance decl are used to express
+requirements about the contents of some type,
+e.g. `src/TypeclassInstance.hs`, we require the
+contents of the `Probably` to also be part of `Eq`
+typeclass
+
+### inspect all typeclass functions
+
+in ghci, run `:info YourTypeClass`
+
+
