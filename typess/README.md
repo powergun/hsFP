@@ -76,7 +76,55 @@ doesn't contain a value anyway and so it doesn't matter
 
 ## type parameters in typeclass instance declaration
 
+Let’s say I’m writing a `Maybe` monad from scratch:
 
+```haskell
+newtype Maybe a = Nothing | Just a
+```
+
+As we know at this stage `Maybe` is an parameterized type;
+
+Then I’m going to define the functor instance for my `Maybe` by
+copying the textbook example:
+
+```haskell
+instance Functor Maybe where
+--                   ^^^ where is the 'a' going????
+    fmap = ...
+```
+
+But shouldn’t we write instead, `instance Functor (Maybe a) where`,
+considering `Maybe a` is the concrete type we can use in the
+declarations?
+
+### understand the typeclass definition of Functor
+
+https://wiki.haskell.org/Functor
+
+```haskell
+class Functor f where
+    fmap :: (a -> b) -> f a -> f b
+    (<$) :: a -> f b -> f a
+```
+
+the declaration does not ask for the "content" of `f`
+
+compare this with `Eq` typeclass:
+
+http://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Eq.html
+
+```haskell
+class Eq a where
+    ...
+```
+
+> Maybe is the Functor not Maybe a. Functor is the container without
+> the contained type specified.
+> And the f in class Functor f where .... has a kind of `* -> *`
+> if you are wondering why can Ghc know the f in “class Functor f where”
+> has a kind of `* -> *` This is because the fmap type signature says
+> “(a->b) -> f a -> f b”. f here is used as 1 arity type constructor
+> hence `* -> *`
 
 ## Typeclass constraint
 
@@ -101,5 +149,3 @@ typeclass
 ### inspect all typeclass functions
 
 in ghci, run `:info YourTypeClass`
-
-
