@@ -118,6 +118,8 @@ class Eq a where
     ...
 ```
 
+Answer from Shine@Slack
+
 > Maybe is the Functor not Maybe a. Functor is the container without
 > the contained type specified.
 > And the f in class Functor f where .... has a kind of `* -> *`
@@ -125,6 +127,19 @@ class Eq a where
 > has a kind of `* -> *` This is because the fmap type signature says
 > “(a->b) -> f a -> f b”. f here is used as 1 arity type constructor
 > hence `* -> *`
+
+Recall that all the monad transformer examples I have seen, follow
+this concept "monad/functor is the container"; (see `src/monadtransformer`)
+therefore the monad transformer's functor instance is written:
+
+```haskell
+instance Monad m => Functor (StateT s m) where
+    ...
+```
+
+StateT is a container that wraps a monad m - that's it. As to the
+content of the monad m, we don't need to know here due to the nature
+of monad transformer - it enables encapsulation.
 
 ## Typeclass constraint
 
