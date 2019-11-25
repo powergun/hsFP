@@ -1,2 +1,6 @@
+import qualified AlternativeDemo.UseCases
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = do
+  AlternativeDemo.UseCases.demo
+  return ()

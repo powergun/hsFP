@@ -68,3 +68,10 @@ It should also be mentioned that msum, available from both `Data.Foldable` and `
 ```haskell
 msum :: (MonadPlus m, Foldable t) => t (m a) -> m a
 ```
+
+## Difference to Monoid
+
+see **Relationship with Monoid** https://en.wikibooks.org/wiki/Haskell/Alternative_and_MonadPlus
+
+Monoids are not necessarily "wrappers" of anything, or parametrically
+polymorphic.
