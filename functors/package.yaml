@@ -25,17 +25,6 @@ dependencies:
 library:
   source-dirs: src
 
-executables:
-  functors-exe:
-    main:                Main.hs
-    source-dirs:         app
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - functors
-
 tests:
   functors-test:
     main:                Spec.hs
