@@ -38,6 +38,10 @@ source:
 
 https://thoughtbot.com/blog/refactoring-to-a-monad-transformer-stack
 
+ExceptT takes this further by allowing the developer to throwError;
+when using bind, if the monad throws an error, **it will halt further
+execution.**
+
 Imagine a CLI that reads two files, independently, where the reading
 of the second occurs only when the first is read successfully. Once
 both are read, the program can continue.
