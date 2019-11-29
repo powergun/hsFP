@@ -31,3 +31,15 @@ Left "-99"
 λ> first show a
 Right "iddqd"
 ```
+
+## "Reading two files problem"
+
+source:
+
+https://thoughtbot.com/blog/refactoring-to-a-monad-transformer-stack
+
+Imagine a CLI that reads two files, independently, where the reading
+of the second occurs only when the first is read successfully. Once
+both are read, the program can continue.
+
+the naive impl uses a nested approach, pattern-match the result of safeReadFile to decide what to do - print content or print error
