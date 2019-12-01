@@ -47,3 +47,9 @@ of the second occurs only when the first is read successfully. Once
 both are read, the program can continue.
 
 the naive impl uses a nested approach, pattern-match the result of safeReadFile to decide what to do - print content or print error
+
+## Exceptions best practices in Haskell
+
+source:
+
+https://www.fpcomplete.com/blog/2016/11/exceptions-best-practices-haskell
