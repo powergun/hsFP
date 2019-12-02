@@ -53,3 +53,5 @@ the naive impl uses a nested approach, pattern-match the result of safeReadFile 
 source:
 
 https://www.fpcomplete.com/blog/2016/11/exceptions-best-practices-haskell
+
+see [BestPractices](./src/BestPractices/ReadException.hs)
