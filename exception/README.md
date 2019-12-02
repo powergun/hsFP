@@ -55,3 +55,14 @@ source:
 https://www.fpcomplete.com/blog/2016/11/exceptions-best-practices-haskell
 
 see [BestPractices](./src/BestPractices/ReadException.hs)
+
+my main take-home notes here are:
+
+try . readFile (of type Either IOException String) is not a great
+pattern because of the hard-coded exception type; I can use `SomeException`
+here to loose it up but it still is not a great pattern; I can possibly
+combine what I learned from `hsSysAdmin/thecli` to further wrap
+`SomeException` with my own exception type (a sum type) for type-correct
+handling;
+
+runtime error is not a bad thing - I might just embrace it;
