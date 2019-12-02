@@ -1,0 +1,2 @@
+-- TODO:
+-- https://tech.fpcomplete.com/haskell/tutorial/exceptions
