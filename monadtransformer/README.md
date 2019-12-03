@@ -79,3 +79,15 @@ and State monad; then shows how to use ExceptT to gracefully
 handle effect.
 
 recap on `bool`, `either` and `throwError`
+
+## mtl style typeclasses
+
+source:
+
+https://tech.fpcomplete.com/haskell/tutorial/monad-transformers
+
+we've established that not only can the `State` monad itself perform
+put and get actions, but any transformer layered on top of it can do
+so as well.
+
+mtl has a philosophy around generalizing this idea using typeclasses

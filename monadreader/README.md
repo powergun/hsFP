@@ -56,3 +56,16 @@ caller can design a modifiable (although not necessarily mutable)
 environment e.g. using `Control.Monad.Writer`
 
 compare this with `monadstate/MoveCursor`
+
+## ReaderT Pattern
+
+source
+
+https://www.fpcomplete.com/blog/2017/06/readert-design-pattern
+
+Often times I'll receive or read questions online about "design patterns" in Haskell. A common response is that Haskell doesn't
+have them. What many languages address via patterns, in Haskell
+we address via language features (like built-in immutability,
+lambdas, laziness, etc). However, I believe there is still
+room for some high-level guidance on structuring programs,
+which I'll loosely refer to as a Haskell design pattern.
