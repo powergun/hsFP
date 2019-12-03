@@ -72,4 +72,10 @@ source:
 
 https://tech.fpcomplete.com/haskell/tutorial/monad-transformers
 
-a fold (left-fold) that terminates early
+a fold (left-fold) that does early-termination
+
+following the article, this example explores the use of Either
+and State monad; then shows how to use ExceptT to gracefully
+handle effect.
+
+recap on `bool`, `either` and `throwError`
