@@ -24,9 +24,12 @@ demoTerminateEarly = do
           ret = FoldStopEarly.UseState.foldState p 0 [1, 2, 0, 3, 4]
       ret `shouldBe` 10
 
+  hspec $ describe "Test fold-either-transformer (ExceptT)" $
+    it "return the result when elem is 0" $ do
+      shouldBe 3 =<< FoldStopEarly.UseEitherT.demo 0 [1, 2, 0, 3, 4]
+      shouldBe 10 =<< FoldStopEarly.UseEitherT.demo 0 [1, 2, 3, 4]
+      shouldBe 10 =<< FoldStopEarly.UseEitherT.demo 10 []
+
 demo :: IO ()
 demo = do
   demoTerminateEarly
-
-  FoldStopEarly.UseEitherT.demo
-
