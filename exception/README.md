@@ -77,3 +77,5 @@ is invalid; parsing error etc...)
 
 this demo shows that, using ExceptT pattern learned from `hsSysAdmin/thecli`, I can gracefully handle the error, without
 compromising the readability and scalability
+
+Note, the safe-read technique (learned from https://stackoverflow.com/questions/5121371/how-to-catch-a-no-parse-exception-from-the-read-function-in-haskell) is documented in `SafeRead.hs` in this directory
