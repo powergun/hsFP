@@ -63,9 +63,20 @@ source
 
 https://www.fpcomplete.com/blog/2017/06/readert-design-pattern
 
-Often times I'll receive or read questions online about "design patterns" in Haskell. A common response is that Haskell doesn't
+Often times I'll receive or read questions online about "design
+patterns" in Haskell. A common response is that Haskell doesn't
 have them. What many languages address via patterns, in Haskell
 we address via language features (like built-in immutability,
 lambdas, laziness, etc). However, I believe there is still
 room for some high-level guidance on structuring programs,
 which I'll loosely refer to as a Haskell design pattern.
+
+- a core data type, that contains all runtime conf and global
+  functions that are **mockable**
+- use mutable reference in the core data for mutability
+- app code live in `ReaderT Env IO`
+- use additional monad transformer for small subsets of app
+- (optional) use mtl-style typeclasses, like MonadReader and
+  MonadIO; can recover some purity (compensating IO and Ref)
+
+**in haskell, we'd rather face compile time rather than runtime pain!**
