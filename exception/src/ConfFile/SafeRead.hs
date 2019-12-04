@@ -2,6 +2,13 @@ module ConfFile.SafeRead (demo) where
 
 import           Data.Maybe (listToMaybe)
 
+-- listToMaybe
+-- listToMaybe :: [a] -> Maybe aSource#
+
+-- The listToMaybe function returns Nothing on an empty list or Just a where a is the first element of the list.
+
+-- worth checking other useful functions in Data.Maybe
+
 demo :: IO ()
 demo = do
   let safeParseInt :: String -> Maybe Int
