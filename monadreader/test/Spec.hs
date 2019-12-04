@@ -1,6 +1,5 @@
 import qualified TestLocalSimple
 import qualified TestMoveCursor
-import qualified TestReaderTPattern
 import qualified TestWrapEnv
 import qualified TestWrapHandler
 import qualified TestWrapInteger
@@ -12,5 +11,4 @@ main = do
   TestMoveCursor.runSpec
   TestWrapEnv.runSpec
   TestLocalSimple.demo
-  TestReaderTPattern.demo
 

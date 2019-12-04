@@ -2,6 +2,7 @@ import qualified EitherTry
 import qualified TwoFilesProblem
 
 import           BestPractices.ReadException
+import qualified TestConfFile
 
 demoReadException :: IO ()
 demoReadException = do
@@ -20,5 +21,7 @@ main = do
   EitherTry.demo
   TwoFilesProblem.demo ("./testdata/file1", "./testdata/file1")
   TwoFilesProblem.demo ("./testdata/file1", "./testdata/file12")
+
+  TestConfFile.demo
 
   demoReadException

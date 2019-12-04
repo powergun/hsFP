@@ -66,3 +66,14 @@ combine what I learned from `hsSysAdmin/thecli` to further wrap
 handling;
 
 runtime error is not a bad thing - I might just embrace it;
+
+## Config File (ConfFile) - a case study
+
+reading a config file and parsing its content to re-create the
+numeric data;
+
+this process can fail in various ways (file no exist; file content
+is invalid; parsing error etc...)
+
+this demo shows that, using ExceptT pattern learned from `hsSysAdmin/thecli`, I can gracefully handle the error, without
+compromising the readability and scalability
