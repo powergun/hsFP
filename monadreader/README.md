@@ -80,3 +80,9 @@ which I'll loosely refer to as a Haskell design pattern.
   MonadIO; can recover some purity (compensating IO and Ref)
 
 **in haskell, we'd rather face compile time rather than runtime pain!**
+
+ReaderT has a huge advantage over the other three transformers
+listed: it has no mutable state. It's simply a convenient manner
+of passing an extra parameter to all functions. And even if that
+parameter contains mutable references, that parameter itself is
+fully immutable.
