@@ -1,4 +1,4 @@
-module TypeclassInstance
+module Typeclass.Instance
   ( demo
   )
 where

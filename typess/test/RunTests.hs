@@ -1,7 +1,9 @@
 
-import qualified TypeclassInstance
+import qualified Typeclass.Constraint
+import qualified Typeclass.Instance
 
 main :: IO ()
 main = do
-  TypeclassInstance.demo
+  Typeclass.Instance.demo
+  Typeclass.Constraint.demo
 

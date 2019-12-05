@@ -145,6 +145,10 @@ of monad transformer - it enables encapsulation.
 
 source: learn you a haskell
 
+see: src/Typeclass/Constraint.hs
+
+constraint must be a typeclass (not a type!)
+
 ### when using typeclass constraint is not a common practice
 
 see `src/TypeclassInstance.hs`
