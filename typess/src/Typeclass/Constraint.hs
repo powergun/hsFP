@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances #-}
+
 module Typeclass.Constraint (demo) where
 
 data Container elem = Container elem
@@ -9,7 +11,7 @@ class DoFoo a where
 class DoBar a where
   doBar :: a -> String
 
-instance DoBar (Element a) where
+instance Monad m => DoBar (Element (m a)) where
   doBar x = "bar"
 
 instance DoBar elem => DoFoo (Container elem) where
@@ -19,6 +21,7 @@ instance DoBar elem => DoFoo (Container elem) where
 
 demo :: IO ()
 demo = do
-  let elem = Element [12]
+  let elem = Element [1]  -- list is a monad
       ctn = Container elem
+  print $ doBar elem
   print $ doFoo ctn

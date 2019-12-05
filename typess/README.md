@@ -145,10 +145,6 @@ of monad transformer - it enables encapsulation.
 
 source: learn you a haskell
 
-see: src/Typeclass/Constraint.hs
-
-constraint must be a typeclass (not a type!)
-
 ### when using typeclass constraint is not a common practice
 
 see `src/TypeclassInstance.hs`
@@ -168,3 +164,16 @@ typeclass
 ### inspect all typeclass functions
 
 in ghci, run `:info YourTypeClass`
+
+### typeclass constraint from my own understanding
+
+see: src/Typeclass/Constraint.hs
+
+this is a utterly useless example documenting my understanding
+
+- constraint must be a typeclass (not a type!)
+- the constraint could be a monad
+- calling the typeclass method using a type that does not fulfil
+  the constraint will not typecheck
+- type parameter must be respected; make a clear distinction between
+  value-constructor layout (implementation leaking) and type parameter
