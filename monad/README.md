@@ -38,3 +38,12 @@ runEitherIO :: EitherIO e a -> IO (Either e a)
 
 So already we have a way to **go between our own type and the combination**
 we used previously! That's gotta be useful somehow.
+
+### Either monad's early-termination
+
+see src/Either/Bind.hs
+
+this example documents the early-termination characteristic of Either
+monad: if the computation runs inside Either monad, any Left value
+will cause early-termination, without the caller doing any exception
+handling at all
