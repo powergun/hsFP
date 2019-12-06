@@ -1,5 +1,12 @@
 {-# LANGUAGE FlexibleInstances #-}
 
+{-
+inspired by:
+https://www.fpcomplete.com/blog/2017/07/the-rio-monad
+https://tech.fpcomplete.com/blog/2017/07/announcing-new-unliftio-library
+https://www.fpcomplete.com/blog/2017/06/readert-design-pattern
+-}
+
 module Typeclass.Constraint (demo) where
 
 data Container elem = Container elem
