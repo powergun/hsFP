@@ -4,6 +4,7 @@ module FromScratch.Monad (demo) where
 
 import qualified Control.Monad.Reader as R
 import qualified Control.Monad.State  as S
+import qualified Control.Monad.Trans  as Mt
 
 type Environment = [String]
 type State = [Int]
@@ -12,6 +13,7 @@ newtype M a = M {
   runM :: Environment -> State -> (a, State)
 }
 
+-- my so-called "simple approach"
 type MEasy a = R.ReaderT Environment (S.StateT State IO) a
 
 -- I had to review monadstate/ImplV4.hs to remember the implementation
@@ -75,6 +77,8 @@ computeT = do
   st <- R.lift $ S.get
   env <- R.ask
   R.lift $ S.put $ [length env, length st]
+  -- can perform IO here
+  Mt.liftIO $ print "there is acow"
   return 12
 
 demo :: IO ()

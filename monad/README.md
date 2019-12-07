@@ -99,5 +99,12 @@ this example also shows that (quoting the words from the article):
 > can derive all the necessary type classes in one fell swoop with the
 > `GeneralizedNewtypeDeriving` language extension
 
-(Note I didn't use the generalized-deriving approach, but a simpler
-type-alias approach)
+Note I didn't use the generalized-deriving approach, but a simpler
+type-alias approach (there are many examples) - this way I can use
+the monad transformer such as ReaderT, StateT without rolling my
+own machinary
+
+### re-discover mtl
+
+> This suggests that these lifts could be inferred by the use of type
+> classes, and this is the purpose of the monad transformer library – mtl.
