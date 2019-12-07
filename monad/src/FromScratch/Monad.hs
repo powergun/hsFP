@@ -1,4 +1,9 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+
 module FromScratch.Monad (demo) where
+
+import qualified Control.Monad.Reader as R
+import qualified Control.Monad.State  as S
 
 type Environment = [String]
 type State = [Int]
@@ -6,6 +11,8 @@ type State = [Int]
 newtype M a = M {
   runM :: Environment -> State -> (a, State)
 }
+
+type MEasy a = R.ReaderT Environment (S.StateT State IO) a
 
 -- I had to review monadstate/ImplV4.hs to remember the implementation
 -- details
@@ -59,11 +66,20 @@ getEnv =
 compute :: M Int
 compute = do
   st <- getState
-  env' <- getEnv
-  setState $ [length env', length st]
+  env <- getEnv
+  setState $ [length env, length st]
+  return 12
+
+computeT :: MEasy Int
+computeT = do
+  st <- R.lift $ S.get
+  env <- R.ask
+  R.lift $ S.put $ [length env, length st]
   return 12
 
 demo :: IO ()
 demo = do
   let ret = runM compute ["iddqd"] [1 .. 4]
   print ret
+  ret' <- S.runStateT (R.runReaderT computeT ["iddqd"]) [1 .. 4]
+  print ret'

@@ -89,3 +89,15 @@ I call this re-discovery.
 - but beware that Environment, unlike State, is purely read-only;
   there is no way to update Environment because this value is not
   part of the return value feeding to the rhs of the bind operator!
+
+this example also shows that (quoting the words from the article):
+
+> To combat this, we can make use of monad transformers. Unlike monads,
+> monad transformers compose, which means we can build larger monads by
+> stacking a collection of monad transformers together. The above monad
+> M can now be defined using off-the-shelf components, but crucially we
+> can derive all the necessary type classes in one fell swoop with the
+> `GeneralizedNewtypeDeriving` language extension
+
+(Note I didn't use the generalized-deriving approach, but a simpler
+type-alias approach)
