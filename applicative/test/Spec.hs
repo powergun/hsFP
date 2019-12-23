@@ -1,4 +1,7 @@
 import qualified TestParserMonad
+import qualified TestBasicsApFunctors
 
 main :: IO ()
-main = TestParserMonad.runSpec
+main = do
+  TestParserMonad.runSpec
+  TestBasicsApFunctors.demo
