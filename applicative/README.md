@@ -2,7 +2,7 @@
 
 source:
 
-https://mmhaskell.com/monads/applicatives
+<https://mmhaskell.com/monads/applicatives>
 
 ## ParserMonad
 
@@ -52,3 +52,10 @@ is **designed to use this behavior.**
 ZipList {getZipList = [6,50,150]}
 ```
 
+## The basics of Applicative Functors, Put to practical work
+
+source: <http://www.serpentine.com/blog/2008/02/06/the-basics-of-applicative-functors-put-to-practical-work/>
+
+> I won't attempt to describe what applicative functors actually
+> are, because the idea is easy to absorb: we will pick it up as
+> an incidental product of figuring out how to use the,
