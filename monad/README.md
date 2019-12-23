@@ -52,7 +52,7 @@ handling at all
 
 inspired by:
 
-https://ocharles.org.uk/posts/2016-01-26-transformers-free-monads-mtl-laws.html
+<https://ocharles.org.uk/posts/2016-01-26-transformers-free-monads-mtl-laws.html>
 
 > Building a concrete monad can also be a lot of work. Consider a
 > computation that needs access to some local state, a fixed environment
@@ -108,3 +108,17 @@ own machinary
 
 > This suggests that these lifts could be inferred by the use of type
 > classes, and this is the purpose of the monad transformer library – mtl.
+
+## Validation (an upgraded Either)
+
+see: <https://hackage.haskell.org/package/Validation>
+
+inspired by: hsInterview/da
+
+(this challenge contains a hand-rolled Validation type that uses a list
+monad, `[String]`, instead of a generic monadic type)
+
+see Validation.EnsureValueInList.hs for the prelimiary demo:
+
+iterate over a list A, if element 'a is NOT a member of list B,
+log an error; the resulting errors are collected in list C
