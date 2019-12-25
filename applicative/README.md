@@ -59,3 +59,27 @@ source: <http://www.serpentine.com/blog/2008/02/06/the-basics-of-applicative-fun
 > I won't attempt to describe what applicative functors actually
 > are, because the idea is easy to absorb: we will pick it up as
 > an incidental product of figuring out how to use the,
+
+## Use applicative validation to check JSON data (good article)
+
+### Use newtype to re-define the behavior of Either
+
+source: <https://blog.ploeh.dk/2018/11/05/applicative-validation/>
+
+> My motivation for introducing a new type is that the way that Either is Applicative is not quite how I'd like it to be. Introducing a newtype enables you to change how a type behaves
+
+as the article points out:
+
+> That's the reason you can't use Either. While it's Applicative, it doesn't behave like you'd like it to behave in this scenario. Particularly, the problem is that it throws away all but the first Left value it finds
+
+run this experiment in ghci: `Right (:) <*> Left 32 <*> Left 1`; the result is Left 32
+
+### Other
+
+<https://github.com/qfpl/validation/blob/master/examples/src/Email.hs>
+<https://codurance.com/2017/11/30/applicatives-validation/>
+<https://codurance.com/2018/01/11/applicatives-validation/>
+<https://haskell-at-work.com/episodes/2018-02-26-validation-with-smart-constructors.html>
+<https://ro-che.info/articles/2015-05-02-smarter-validation>
+<https://medium.com/blacklane-engineering/pure-functional-validation-64a7885d22ac>
+<https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/>

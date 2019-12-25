@@ -111,7 +111,7 @@ own machinary
 
 ## Validation (an upgraded Either)
 
-see: <https://hackage.haskell.org/package/Validation>
+see: <https://hackage.haskell.org/package/either-5.0.1.1/docs/Data-Either-Validation.html#v:validationToEither>
 
 inspired by: hsInterview/da
 
@@ -122,3 +122,13 @@ see Validation.EnsureValueInList.hs for the prelimiary demo:
 
 iterate over a list A, if element 'a is NOT a member of list B,
 log an error; the resulting errors are collected in list C
+
+see also: applicative/Validation for a case analysis of applicative
+validation
+
+### Thread Errors
+
+Validation is useful in the case of "registration form" problem:
+
+a user-submitted form may contain any number of errors; the system
+should collect all the errors and report them
