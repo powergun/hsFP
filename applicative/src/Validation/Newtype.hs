@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-module Validation.Demo where
+module Validation.Newtype where
 
 import           Data.Bool           (bool)
 import           Data.List           (elem)
@@ -29,7 +29,7 @@ data Reservation = Reservation
 
 newtype Validation e a = Validation (Either e a) deriving (Eq, Show, Functor)
 
-hasError :: Validation [String] Reservation -> String -> Bool
+hasError :: Validation [String] a -> String -> Bool
 hasError (Validation (Right _ )) _ = False
 hasError (Validation (Left es)) s  = s `elem` es
 
@@ -65,3 +65,10 @@ validate r =
               <*> validateQuantity (jsonQuantity r)
               <*> pure (jsonName r)
               <*> validateEmail (jsonEmail r)
+
+validateJson :: ReservationJson -> Validation [String] ReservationJson
+validateJson r = pure r
+               <* validateDate (jsonDate r)
+               <* validateQuantity (jsonQuantity r)
+               <* pure (jsonName r)
+               <* validateEmail (jsonEmail r)

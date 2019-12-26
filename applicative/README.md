@@ -64,6 +64,8 @@ source: <http://www.serpentine.com/blog/2008/02/06/the-basics-of-applicative-fun
 
 ### Use newtype to re-define the behavior of Either
 
+see: Validation/Newtype.hs
+
 source: <https://blog.ploeh.dk/2018/11/05/applicative-validation/>
 
 > My motivation for introducing a new type is that the way that Either is Applicative is not quite how I'd like it to be. Introducing a newtype enables you to change how a type behaves
@@ -72,11 +74,22 @@ as the article points out:
 
 > That's the reason you can't use Either. While it's Applicative, it doesn't behave like you'd like it to behave in this scenario. Particularly, the problem is that it throws away all but the first Left value it finds
 
+#### MY NOTES
+
 run this experiment in ghci: `Right (:) <*> Left 32 <*> Left 1`; the result is Left 32
 
-### Other
+if I don't care the Right value, i.e. I just want to validate the input
+value using a series of rules, use the "point to" applicative operator:
+`<*` - this also appears in the Validation package example below:
 
-<https://github.com/qfpl/validation/blob/master/examples/src/Email.hs>
+### the Validation package (data61)
+
+source: <https://github.com/qfpl/validation/blob/master/examples/src/Email.hs>
+
+it defines the instance for other popular typeclasses, such as foldable
+
+### other
+
 <https://codurance.com/2017/11/30/applicatives-validation/>
 <https://codurance.com/2018/01/11/applicatives-validation/>
 <https://haskell-at-work.com/episodes/2018-02-26-validation-with-smart-constructors.html>
