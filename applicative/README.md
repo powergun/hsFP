@@ -95,4 +95,6 @@ it defines the instance for other popular typeclasses, such as foldable
 <https://haskell-at-work.com/episodes/2018-02-26-validation-with-smart-constructors.html>
 <https://ro-che.info/articles/2015-05-02-smarter-validation>
 <https://medium.com/blacklane-engineering/pure-functional-validation-64a7885d22ac>
+-> https://www.parsonsmatt.org/2017/10/11/type_safety_back_and_forth.html
+-> https://kataskeue.com/gdp.pdf
 <https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/>
