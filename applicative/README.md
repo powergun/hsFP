@@ -92,7 +92,11 @@ it defines the instance for other popular typeclasses, such as foldable
 
 <https://codurance.com/2017/11/30/applicatives-validation/>
 <https://codurance.com/2018/01/11/applicatives-validation/>
+
 <https://haskell-at-work.com/episodes/2018-02-26-validation-with-smart-constructors.html>
+
+MY NOTES: this is really just a variation of the "factory pattern"
+
 <https://ro-che.info/articles/2015-05-02-smarter-validation>
 <https://medium.com/blacklane-engineering/pure-functional-validation-64a7885d22ac>
 -> https://www.parsonsmatt.org/2017/10/11/type_safety_back_and_forth.html
