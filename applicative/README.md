@@ -102,3 +102,9 @@ MY NOTES: this is really just a variation of the "factory pattern"
 -> https://www.parsonsmatt.org/2017/10/11/type_safety_back_and_forth.html
 -> https://kataskeue.com/gdp.pdf
 <https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/>
+
+## Implement Singleton Pattern using Applicative
+
+source: <https://github.com/thma/LtuPatternFactory>
+
+see: Singleton/Env.hs
