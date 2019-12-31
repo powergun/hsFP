@@ -28,3 +28,6 @@ see: src/TheProduct.hs
 > In a way, the comonadic implementation of the environment is more
 > natural — it follows the spirit of “computation in context.” On the
 > other hand, monads come with the convenient syntactic sugar of the do notation.
+
+see: src/TheComonad.hs and src/ComonadLib.hs for demos using a from-scratch
+implementation and the public package comonad library
