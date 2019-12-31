@@ -108,3 +108,7 @@ MY NOTES: this is really just a variation of the "factory pattern"
 source: <https://github.com/thma/LtuPatternFactory>
 
 see: Singleton/Env.hs
+
+see also: comonad/TheProduct - inspired by the "reader monad"; note
+how the shared (singleton) state is threaded in various compute()
+functions (and affect their behavior)

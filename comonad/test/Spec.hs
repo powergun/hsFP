@@ -1,2 +1,5 @@
+import qualified TestTheProduct
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = do
+  TestTheProduct.demo
