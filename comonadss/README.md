@@ -31,3 +31,9 @@ see: src/TheProduct.hs
 
 see: src/TheComonad.hs and src/ComonadLib.hs for demos using a from-scratch
 implementation and the public package comonad library
+
+## The Stream Comonad
+
+> This process of shifting the focus from one element of the container to another is best illustrated with the example of an infinite stream
+
+see src/TheStream.hs

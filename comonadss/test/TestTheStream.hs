@@ -2,4 +2,5 @@ module TestTheStream (demo) where
 
 import qualified TheStream
 
-demo = TheStream.demo
+demo = do
+  TheStream.demo
