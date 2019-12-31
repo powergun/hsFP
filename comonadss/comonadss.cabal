@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bcde1d94062d31cfbe513a64351fdb2d6b895819374db0acbba91750935b9635
+-- hash: 09cf1b28ca8ec854d76610eac7e849952ae4684912b2c730bc955a3a67369c49
 
 name:           comonadss
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       ComonadLib
       TheComonad
       TheProduct
+      TheStream
   other-modules:
       Paths_comonadss
   hs-source-dirs:
@@ -59,6 +60,7 @@ test-suite comonad-test
       TestComonadLib
       TestTheComonad
       TestTheProduct
+      TestTheStream
       Paths_comonadss
   hs-source-dirs:
       test
