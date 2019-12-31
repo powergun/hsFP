@@ -24,3 +24,7 @@ Just as a Kleisli arrow takes a value and produces some embellished result — i
 inspired by the reader monad; to return the `a` from the monad
 
 see: src/TheProduct.hs
+
+> In a way, the comonadic implementation of the environment is more
+> natural — it follows the spirit of “computation in context.” On the
+> other hand, monads come with the convenient syntactic sugar of the do notation.
