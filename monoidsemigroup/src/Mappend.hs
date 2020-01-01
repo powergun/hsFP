@@ -1,14 +1,12 @@
 {-# LANGUAGE FlexibleInstances #-}
 
-module Lib (someFunc, demo) where
+module Mappend (demo) where
 
 newtype Foo b a = Foo a deriving (Eq, Show)
 data Tag
 
 instance Semigroup a => Semigroup (Foo Tag a) where
   (<>) (Foo x1) (Foo x2) = Foo $ (<>) x1 x2
-
-someFunc = demo
 
 demo :: IO ()
 demo = do
