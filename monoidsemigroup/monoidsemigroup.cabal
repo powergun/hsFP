@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7053e258865f414a8e21218ee20d880408efc5ed1352dc11c70744142f61a46e
+-- hash: c62537967ef8fbfbbdd228d70d7337cc9bd1d330810d119195acc461874ed49f
 
 name:           monoidsemigroup
 version:        0.1.0.0
@@ -29,6 +29,7 @@ library
   exposed-modules:
       Mappend
       MaybeMonoid
+      NonEmpty
   other-modules:
       Paths_monoidsemigroup
   hs-source-dirs:

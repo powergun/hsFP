@@ -24,3 +24,8 @@ the first non-nothing value
 
 source: first principles P/615; recall "don't fear monad by Brian Beckman"
 on youtube: monoid provides a way to combine functionalities
+
+## NonEmpty - a semigroup that can not have monoidal instance
+
+see src/NonEmpty.hs; note that use of `:|` operator in the data
+constructor; it is equivalent to `data NonEmpty a = NonEmpty a [a]`
