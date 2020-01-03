@@ -40,6 +40,8 @@ Replace all locations in the input with the same value. The default definition i
 
 source: first priniciples P/649
 
+read this again and again, and again: first principles P/697, 16.18 definitions
+
 > we recall that a type constant or a fully applied type has the `kind *`.
 > A type with kind `* -> *` is awaiting application to a type constant of `kind *`
 > The `type f` was applied to a single argument in two different places: `f a`
@@ -78,6 +80,22 @@ one type argument - all but the last one **belong to the structure**!!!
 
 this fact is more prominent is the case of Tuple and Either values
 
+also: partial application (common in functions) works on the type level too,
+`* -> * -> *` can be reduced to `* -> *`
+
+P/675, further clarify the difference between type-level argument and
+term-level argument:
+
+```haskell
+instance Functor (Two a) where
+    fmap f (Two a b) = Two $ (f a) (f b)
+```
+
+> This won’t fly either, because the a is part of the functorial structure, the f. We’re not supposed to touch anything in the f referenced in the type of fmap, so we can’t apply the function (named fin our fmap definition) to the a because the a is now untouchable.
+
+MY NOTE: a in `Two a` is a type level arg; a in `fmap f (Two a b)` is to
+decompose the data ctor which uses the term level arg
+
 ### function is also structure
 
 see: src/Structures.hs; briefly mentioned in the same section in
@@ -94,3 +112,12 @@ f :: (Functor f1, Functor f2) => (a -> b) -> f1 (f2 a) -> f1 (f2 b)
 ```
 
 note how f2 is seen nested in f1
+
+### natural transformation (opposite of functor)
+
+source: first principles P/690
+
+why `nat :: (f -> g) -> f a -> g a` won't work: f, g are higher-kinded
+types
+
+> Syntactically, it lets us avoid talking about a in the type of Nat, which is what we want, we shouldn’t have any specific information about the contents of f and g because we’re supposed to be only performing a structural transformation, not a fold.
