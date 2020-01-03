@@ -112,3 +112,14 @@ see: Singleton/Env.hs
 see also: comonad/TheProduct - inspired by the "reader monad"; note
 how the shared (singleton) state is threaded in various compute()
 functions (and affect their behavior)
+
+## Rediscover Applicative (First Principles)
+
+source: first principles P/704
+
+MY NOTES: follow the foot step of ../functors/"Rediscover Functor";
+note that functor's fmap can not satisfy the computation that involves
+two (or more) operands: `fmap (+) [1] [2]`; recall that binary operation is
+curried to a unary operation (a function) then applied with the second arg/lhs;
+functor does not have the structure to hold a function - recall the
+saying, that applicative has more structure than functor
