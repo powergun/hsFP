@@ -123,3 +123,5 @@ two (or more) operands: `fmap (+) [1] [2]`; recall that binary operation is
 curried to a unary operation (a function) then applied with the second arg/lhs;
 functor does not have the structure to hold a function - recall the
 saying, that applicative has more structure than functor
+
+> So, with Applicative, we have a Monoid for our structure and function application for our values!
