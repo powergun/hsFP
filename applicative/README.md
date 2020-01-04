@@ -132,7 +132,7 @@ P/715;
 
 > So we first fmap those functions over the value inside the first Maybe context, if it’s a Just value, making it a partially applied function wrapped in a Maybe context. Then we use the tie-fighter to apply that to the second value, again wrapped in a Maybe. If either value is a Nothing, we get Nothing.
 
-MY NOTE: how to understand `f <$> g <*> h $ arg`
+#### how to understand `f <$> g <*> h $ arg`
 
 example:
 
@@ -152,3 +152,27 @@ follow the same functorial structure, meaning that it must also be a
 function of `a -> a`; the applicative operation here is to combine
 the functorial quality (i.e. function application) as well as the monoidal
 quality (i.e. ensure the resulting structure)
+
+### homomorphism
+
+> A homomorphism is a structure-preserving map between two algebraic structures. The effect of applying a function that is embedded in some structure to a value that is embedded in some structure should be the same as applying a function to a value without affecting any outside structure
+> The general idea of the homomorphism law is that applying the function doesn’t change the structure around the values.
+
+examples:
+
+```haskell
+λ> pure (+1) <*> pure 1
+2
+λ> pure ((+1) 1)
+2
+λ> pure 1
+1
+λ> pure (+1) <*> pure 1 :: Maybe Int
+Just 2
+λ> pure (+1) <*> pure 1 :: [Int]
+[2]
+```
+
+### Use QuickCheck to test law compliance
+
+see: test/DemoQuickCheckLaw.hs; source: first principles P/739

@@ -1,3 +1,5 @@
+import qualified DemoQuickCheckApplicativeLaw
+import qualified DemoQuickCheckMonoidLaw
 import qualified TestBasicsApFunctors
 import qualified TestParserMonad
 import qualified TestSingletonEnv
@@ -9,3 +11,5 @@ main = do
   TestBasicsApFunctors.demo
   TestValidation.demo
   TestSingletonEnv.demo
+  DemoQuickCheckMonoidLaw.demo
+  DemoQuickCheckApplicativeLaw.demo
