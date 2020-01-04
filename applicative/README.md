@@ -99,8 +99,8 @@ MY NOTES: this is really just a variation of the "factory pattern"
 
 <https://ro-che.info/articles/2015-05-02-smarter-validation>
 <https://medium.com/blacklane-engineering/pure-functional-validation-64a7885d22ac>
--> https://www.parsonsmatt.org/2017/10/11/type_safety_back_and_forth.html
--> https://kataskeue.com/gdp.pdf
+-> <https://www.parsonsmatt.org/2017/10/11/type_safety_back_and_forth.html>
+-> <https://kataskeue.com/gdp.pdf>
 <https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/>
 
 ## Implement Singleton Pattern using Applicative
@@ -125,3 +125,30 @@ functor does not have the structure to hold a function - recall the
 saying, that applicative has more structure than functor
 
 > So, with Applicative, we have a Monoid for our structure and function application for our values!
+
+### Re-explain: `f <$> g <*> h` and `f <$> g <*> h $ arg`
+
+P/715;
+
+> So we first fmap those functions over the value inside the first Maybe context, if it’s a Just value, making it a partially applied function wrapped in a Maybe context. Then we use the tie-fighter to apply that to the second value, again wrapped in a Maybe. If either value is a Nothing, we get Nothing.
+
+MY NOTE: how to understand `f <$> g <*> h $ arg`
+
+example:
+
+```haskell
+t = (,) <$> (+ 1) <*> (+ 10)
+
+:t t
+t :: Num a => a -> (a, a)
+
+t 1
+(2,11)
+```
+
+g, h has the same structure `a -> a` - which is a functorial structure
+rather than a data structure - therefore the resulting value must also
+follow the same functorial structure, meaning that it must also be a
+function of `a -> a`; the applicative operation here is to combine
+the functorial quality (i.e. function application) as well as the monoidal
+quality (i.e. ensure the resulting structure)
