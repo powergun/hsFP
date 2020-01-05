@@ -176,3 +176,35 @@ Just 2
 ### Use QuickCheck to test law compliance
 
 see: test/DemoQuickCheckLaw.hs; source: first principles P/739
+
+### Discard Applicative Result
+
+P/809
+
+> Basically the `(<*)` operator (like its sibling, `(*>)`, and the monadic operator, `>>`) is useful when you’re emitting effects
+
+```haskell
+λ> (,) <$> [2] <*> [3]
+[(2,3)]
+λ> (,) <$> [2] <*> [3] <* [123]
+[(2,3)]
+```
+
+Note how the result of `[123]` is ignored
+
+```haskell
+λ> (,) <$> Just 1 <*> Just 123
+Just (1,123)
+λ> (,) <$> Just 1 <*> Just 123 <* Nothing
+Nothing
+```
+
+**Note how `<* Nothing` does not participate in `(,)` but has impact
+to the end value (Nothing instead of Just)**
+
+See the source code for the implemention: <http://hackage.haskell.org/package/base-4.12.0.0/docs/src/GHC.Base.html#line-841>
+
+```haskell
+λ> -- Just _m1 *> m2 = m2
+λ> -- Nothing *> _m2 = Nothing
+```
