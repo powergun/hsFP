@@ -279,3 +279,7 @@ AKA. **3rd Foundamental Purpose of Monad**
 > function composition written in terms of `>>=` to allow us to deal with the extra structure
 
 see: src/FirstPrinciples/KleisliComposition.hs
+
+### What Monad is Not (Haskell Wiki)
+
+<https://wiki.haskell.org/What_a_Monad_is_not>
