@@ -144,6 +144,9 @@ see: test/DemoQuickCheckMonadLaw.hs
 
 the take-home notes are:
 
+- as shown in P/786, [ ] (a, b, c) is the monad under test; while in my
+  case Validation e (a, b, c) is the SUT; (a, b, c) is to satisfy the
+  TestBatch's type requirement
 - how to define Arbitrary instance for my custom types (Validation and DD)
 - ditto for EqProp instance
 - how to use `quickBatch` (use the bottom value hack to express the types)

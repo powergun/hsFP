@@ -46,5 +46,8 @@ demo = do
       v = undefined
       val' :: Validation String (String, String, DD Int)
       val' = undefined
-  -- quickBatch . monad $ v
+  quickBatch . monad $ v
+
+  quickBatch . functor $ val'
+  quickBatch . applicative $ val'
   quickBatch . monad $ val'
