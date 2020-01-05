@@ -29,3 +29,10 @@ on youtube: monoid provides a way to combine functionalities
 
 see src/NonEmpty.hs; note that use of `:|` operator in the data
 constructor; it is equivalent to `data NonEmpty a = NonEmpty a [a]`
+
+## Monoid of Functions
+
+source: first principles P/804; can be helpful in dealing with map/dict
+
+> The Monoid of the keys functions is combining all of the key maps each function produces when applied to the XConfig to produce a final canonical key map.
+> `instance Monoid b => Monoid (a -> b)`
