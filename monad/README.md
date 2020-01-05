@@ -111,6 +111,9 @@ own machinary
 
 ## Validation (an upgraded Either)
 
+UPDATE: see the RE-rediscover section below - **it is not possible to
+implement a monadic instance for the Validation type**
+
 see: <https://hackage.haskell.org/package/either-5.0.1.1/docs/Data-Either-Validation.html#v:validationToEither>
 
 inspired by: hsInterview/da
@@ -132,6 +135,19 @@ Validation is useful in the case of "registration form" problem:
 
 a user-submitted form may contain any number of errors; the system
 should collect all the errors and report them
+
+## Test Monad Law using QuickCheck (following applicative)
+
+inspired by First Principles. see also applicative/test/DemoQuickCheckApplicativeLaw.hs
+
+see: test/DemoQuickCheckMonadLaw.hs
+
+the take-home notes are:
+
+- how to define Arbitrary instance for my custom types (Validation and DD)
+- ditto for EqProp instance
+- how to use `quickBatch` (use the bottom value hack to express the types)
+- learn to use QuickCheck generator, such as `choose` and `oneof`
 
 ## RE-rediscover Monad: Monad as taught in The First Principles
 
@@ -238,3 +254,17 @@ CallStack (from HasCallStack):
   undefined, called at <interactive>:69:12 in interactive:Ghci26
 λ>
 ```
+
+> Note that Either always short-circuits on the first thing to have failed. It must because in the Monad, later values can depend on previous ones
+
+MY NOTES: **this is important** - see hsInterview/da/validation for a its
+impact to the real world solution
+
+> So, there is no Monad for Validation. Applicative and Monad instances must have the same behavior. This is usually expressed in the form:
+
+```haskell
+import Control.Monad (ap)
+(<*>) == ap
+```
+
+> The problem is you can’t make a Monad for Validation that accumulates the errors like the Applicative does. Instead, any Monad instance for Validation would be identical to the Either’s monad instance.

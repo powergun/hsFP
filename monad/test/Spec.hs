@@ -1,4 +1,5 @@
 
+import qualified DemoQuickCheckMonadLaw
 import qualified Either.Bind
 import qualified FirstPrinciples.FunctorInTermsOfMonad
 import qualified FromScratch.Monad
@@ -11,3 +12,4 @@ main = do
   Validation.EnsureValueInList.demo
 
   FirstPrinciples.FunctorInTermsOfMonad.demo
+  DemoQuickCheckMonadLaw.demo

@@ -38,3 +38,5 @@ tests:
     dependencies:
       - monad
       - hspec
+      - QuickCheck
+      - checkers

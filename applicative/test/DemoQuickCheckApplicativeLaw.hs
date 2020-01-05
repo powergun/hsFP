@@ -20,7 +20,7 @@ instance Applicative TT where
 demo :: IO ()
 demo = do
   let v :: TT (String, Char, Int)
-      v = TT ("w", 'c', 1)
+      v = TT ("w", 'c', 1) -- or TT undefined
       -- first principles P/741
       -- I can use a "bottom" value such as undefined to avoid
       -- 1's ambiguity (integer or int)
