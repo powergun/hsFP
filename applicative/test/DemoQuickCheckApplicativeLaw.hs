@@ -21,4 +21,8 @@ demo :: IO ()
 demo = do
   let v :: TT (String, Char, Int)
       v = TT ("w", 'c', 1)
+      -- first principles P/741
+      -- I can use a "bottom" value such as undefined to avoid
+      -- 1's ambiguity (integer or int)
+      -- Again, it’s not evaluating the value you pass it. That value is just to let it know what types to use.
   quickBatch $ applicative v

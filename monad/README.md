@@ -132,3 +132,109 @@ Validation is useful in the case of "registration form" problem:
 
 a user-submitted form may contain any number of errors; the system
 should collect all the errors and report them
+
+## RE-rediscover Monad: Monad as taught in The First Principles
+
+source: first principles P/755;
+
+> you can derive Applicative and Functor in terms of Monad, just as you can derive Functor in terms of Applicative.
+
+### Monad is a generalization of concat
+
+AKA. **1st Foundamental Purpose of Monad**
+
+> Monad, in a sense, is a generalization of concat! The unique part of Monad is the following function:
+
+```haskell
+import Control.Monad (join)
+join :: Monad m => m (m a) -> m a
+
+λ> import Control.Monad (join)
+λ> join $ fmap (\x -> [x, 1]) [1..10]
+[1,1,2,1,3,1,4,1,5,1,6,1,7,1,8,1,9,1,10,1]
+
+-- implement bind using the generalized concat
+-- Write bind in terms of fmap and join
+λ> bind f ma = join $ fmap f ma
+λ> :t bind
+bind :: Monad m => (a1 -> m a2) -> m a1 -> m a2
+λ> bind (return . (+ 1)) [1..10]
+[2,3,4,5,6,7,8,9,10,11]
+λ> (flip (>>=)) (return . (+ 1)) [1..10]
+[2,3,4,5,6,7,8,9,10,11]
+```
+
+### liftM is liftA; and liftM2 (when specialized to list) is zipWith
+
+liftM is for historical backward compatibility (applicative came later
+than monad); beware that liftM and liftA does have different type constraint.
+
+> Well, the types are the same, but the behavior differs. The differing behavior has to do with which list monoid is being used.
+
+```haskell
+λ> import Data.List (zipWith)
+λ> import Control.Monad (liftM, liftM2)
+λ> import Control.Applicative (liftA, liftA2)
+λ> liftM (+ 1) [1, 2]
+[2,3]
+λ> liftA (+ 1) [1, 2]
+[2,3]
+λ> liftM2 (+) [1, 2] [10, 20]
+[11,21,12,22]
+λ> zipWith (+) [1, 2] [10, 20]
+[11,22]
+λ> zipWith (,) [1, 2] [10, 20]
+[(1,10),(2,20)]
+```
+
+### IO monad and effect-merging
+
+source: P/767
+
+> What `join` did here is merge the effects of `getLine` and `putStrLn` into a single IO action. This merged IO action performs the effects in the "order" determined by the nesting of the IO actions. As it happens, the cleanest way to express "ordering" in a lambda calculus without bolting on something unpleasant is through nesting of expressions or lambdas.
+> Sometimes it is valuable to suspend or otherwise not perform an IO action until some determination is made, so types like IO (IO ()) aren’t necessarily invalid, but you should be aware of what’s needed to make this example work
+
+```haskell
+λ> getLine <$> putStrLn
+λ> putStrLn <$> getLine
+23
+λ> join $ putStrLn <$> getLine
+2341
+2341
+```
+
+### List Monad
+
+```haskell
+λ> :t (['a'] :: [ ] Char)
+(['a'] :: [ ] Char) :: [Char]
+λ>
+```
+
+the bind operation binds individual values out of the list;
+`>>= :: [a] -> (a -> [b]) -> [b]` same effect as `x <- xs`
+
+### Monad to express dependency
+
+AKA. **2nd Foundamental Purpose of Monad**
+
+P/773
+
+> With the Maybe Applicative, each Maybe computation fails or succeeds independently of each other. You’re just lifting functions that are also Just or Nothing over Maybe values. With the Maybe Monad, computations contributing to the final result can choose to return Nothing based on “previous” computations.
+
+### Monad: fail fast, like an overfudded startup
+
+P/779
+
+> the bind function will drop the entire rest of the computation on the floor the moment any of the functions participating in the Maybe Monad actions produce a Nothing value
+
+```haskell
+λ> Nothing >>= undefined
+Nothing
+λ> Just 1 >>= undefined
+*** Exception: Prelude.undefined
+CallStack (from HasCallStack):
+  error, called at libraries/base/GHC/Err.hs:78:14 in base:GHC.Err
+  undefined, called at <interactive>:69:12 in interactive:Ghci26
+λ>
+```
