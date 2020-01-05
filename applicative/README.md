@@ -208,3 +208,12 @@ See the source code for the implemention: <http://hackage.haskell.org/package/ba
 λ> -- Just _m1 *> m2 = m2
 λ> -- Nothing *> _m2 = Nothing
 ```
+
+### Use LiftA2 to compose boolean operations
+
+source: First Principles P/811; see FirstPrinciples/LiftA2ForBoolean.hs
+
+> It’s parallel application of the functions against an argument.
+
+see above: how to understand `f <$> g <*> h $ arg`;
+also recall: **Function is Structure**
