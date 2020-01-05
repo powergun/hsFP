@@ -2,6 +2,7 @@
 import qualified DemoQuickCheckMonadLaw
 import qualified Either.Bind
 import qualified FirstPrinciples.FunctorInTermsOfMonad
+import qualified FirstPrinciples.KleisliComposition
 import qualified FromScratch.Monad
 import qualified Validation.EnsureValueInList
 
@@ -13,3 +14,5 @@ main = do
 
   FirstPrinciples.FunctorInTermsOfMonad.demo
   DemoQuickCheckMonadLaw.demo
+
+  FirstPrinciples.KleisliComposition.demo

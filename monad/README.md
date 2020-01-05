@@ -271,3 +271,11 @@ import Control.Monad (ap)
 ```
 
 > The problem is you can’t make a Monad for Validation that accumulates the errors like the Applicative does. Instead, any Monad instance for Validation would be identical to the Either’s monad instance.
+
+### Kleisli Composition
+
+AKA. **3rd Foundamental Purpose of Monad**
+
+> function composition written in terms of `>>=` to allow us to deal with the extra structure
+
+see: src/FirstPrinciples/KleisliComposition.hs
