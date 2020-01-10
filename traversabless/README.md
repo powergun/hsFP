@@ -149,3 +149,5 @@ to provide Functor, Foldable and Traversable instance
 for a Binary Tree
 
 I found a reference here: <https://github.com/cwyang/haskell/blob/master/functor.hs>
+
+here is the official reference for foldable tree: <https://hackage.haskell.org/package/base-4.12.0.0/docs/Prelude.html#g:11>

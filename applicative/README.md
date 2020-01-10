@@ -132,6 +132,31 @@ P/715;
 
 > So we first fmap those functions over the value inside the first Maybe context, if it’s a Just value, making it a partially applied function wrapped in a Maybe context. Then we use the tie-fighter to apply that to the second value, again wrapped in a Maybe. If either value is a Nothing, we get Nothing.
 
+see also: P/867; Note that one should read this expression **left to right**; this is called **parallel-application**; the left-to-right evaluation can be
+explained as:
+
+`(+) <$> (* 2)`
+
+> mapping a function awaiting two args over a function awaiting one
+> produces a two arg function; this is identical to function-composition
+> `((+)) . (* 2) == \x -> (+) (2 * x)`
+> the tricky part is that even after we apply `x`, we've got (+) partially
+> applied to the first argument which was doubled by `(* 2)`
+
+`(+) <$> (* 2) <*> (+ 10)`
+
+`+ 10` is `f`, `((->) a)` as in `f (a -> b) -> f a -> f b`; while the
+first bit is still the two-arg function:
+
+```haskell
+λ> :t (<*>) :: (a -> a -> b) -> (a -> a) -> (a -> b)
+(<*>) :: (a -> a -> b) -> (a -> a) -> (a -> b)
+  :: (a -> a -> b) -> (a -> a) -> a -> b
+```
+
+> we are feeding a single argument to the `(*2)` and `(+10)` and the
+two results form the two arguments to `(+)`
+
 #### how to understand `f <$> g <*> h $ arg`
 
 example:

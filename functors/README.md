@@ -121,3 +121,23 @@ why `nat :: (f -> g) -> f a -> g a` won't work: f, g are higher-kinded
 types
 
 > Syntactically, it lets us avoid talking about a in the type of Nat, which is what we want, we shouldn’t have any specific information about the contents of f and g because we’re supposed to be only performing a structural transformation, not a fold.
+
+## Function Composition via fmap(): First Principles P/866
+
+beside normal composition via operator: `(+1) . (*2)`, composing
+two functions can be written as `fmap (+1) (*2)`
+
+```haskell
+λ> :t fmap (+1) (*2)
+fmap (+1) (*2) :: Num b => b -> b
+λ> :t (+1).(*2)
+(+1).(*2) :: Num c => c -> c
+```
+
+(explaining a (partially-applied) function is a structure, aka functorial
+context)
+
+> the (functorial) context (aka the structure) is a partially-applied
+> function. As in function composition, fmap() composes the two
+> functions before applying them to the argument.
+> this is the functor of functions
