@@ -75,7 +75,7 @@ of response? This is where Traversable can be helpful
 
 see: src/HttpQuery.hs; source: First Principles P/855
 
-## Traversable is Stronger than Functor and Foldable
+### Traversable is Stronger than Functor and Foldable
 
 P/856
 
@@ -104,3 +104,48 @@ monoidal behavior of the structure, becomes a single `Sum Int`;
 An extremely simple example of this is `traverse (\n -> [n]) [1..2]`
 which produces `[[1,2]]` instead of `[[1], [2]]` because list is an
 instance of Monoid (inner) and Applicative (outer);
+
+### Traversable Laws
+
+#### traverse()
+
+Naturalaity: `t . traverse f = traverse (t . f)`
+
+Identity: `traverse Identity = Identity`
+
+> Identity represents a structural identity for traversing data
+> this is another way of saying that a Traversable instance can not add or inject any structure or "effects"
+
+```haskell
+λ> import Data.Functor.Identity
+λ> traverse Identity [1..10]
+Identity [1,2,3,4,5,6,7,8,9,10]
+```
+
+to quick recap the Monoidal behavior on the (list) structure:
+
+```haskell
+λ> [1] `mappend` [2]
+[1,2]
+λ>
+```
+
+Composition: using `Compose` datatype, P/860
+
+#### sequenceA()
+
+Naturality: `t . sequenceA = sequenceA . fmap t`
+
+Identity: `sequenceA . fmap Identity = Identity`
+
+Composition
+
+#### Use QuickCheck to test laws
+
+see: test/DemoQuickCheckTraversableLaws.hs
+
+also implement the chapter exercise on P/862
+to provide Functor, Foldable and Traversable instance
+for a Binary Tree
+
+I found a reference here: <https://github.com/cwyang/haskell/blob/master/functor.hs>
