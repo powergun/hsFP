@@ -43,14 +43,14 @@ map f xs :: [Maybe b]
 traverse f xs :: Maybe [b]
 ```
 
-MY NOTES: on `sequenceA`:
+**MY NOTES**: on `sequenceA`:
 
 Given `a collection` of structure `f` that holds a unit value `a`, scale it to a structure (of the same type) that holds `a collection of a values`
 
 However any `Left value` in the sequence/collection will cause the final
 result to also be a `Left value`, which is the applicative nature
 
-MY NOTES: on `traverse`:
+**MY NOTES**: on `traverse`:
 
 Given a unit operation, `a -> f b` that produces a structure `f b`,
 and given a `collection of a values`, create a structure of same type
@@ -65,3 +65,42 @@ What we want here is for any Nothing values to make the final result
 Nothing. The function that gives us what we want for this is sequence.
 
 see: src/DBQueryPipeline.hs; source: First Principle P/854
+
+note how it "scale" a simple value, via a sequence/collection to a
+structure of sequence/collection of values
+
+> but what if we don't want a list of IO actions we can perform to
+get a response, but rather one big IO action that produces a list
+of response? This is where Traversable can be helpful
+
+see: src/HttpQuery.hs; source: First Principles P/855
+
+## Traversable is Stronger than Functor and Foldable
+
+P/856
+
+> because of this we can recover the functor and foldable instance
+> for a type from the Traversable
+
+see: src/RedoFunctor.hs; Note how fmap is re-implemented in terms of
+`traverse`; Note the use of Identity and `runIdentity` to make a
+dummy structure.
+
+```haskell
+λ> import Data.Monoid
+λ> [1, 2, 3] :: [Sum Int]
+[Sum {getSum = 1},Sum {getSum = 2},Sum {getSum = 3}]
+λ> import Data.Functor.Constant
+λ> xs = [1, 2, 3] :: [Sum Int]
+λ> f = (+1)
+λ> :t traverse (Constant . f) xs
+traverse (Constant . f) xs :: Constant (Sum Int) [b]
+```
+
+Recall that Traversable works with Applicative **which has monoidal
+behavior on the structure part**; `Constant (Sum Int) [b]` this is the
+result of the monoidal part so that the list of `Sum Int` via the
+monoidal behavior of the structure, becomes a single `Sum Int`;
+An extremely simple example of this is `traverse (\n -> [n]) [1..2]`
+which produces `[[1,2]]` instead of `[[1], [2]]` because list is an
+instance of Monoid (inner) and Applicative (outer);
