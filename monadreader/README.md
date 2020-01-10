@@ -16,9 +16,7 @@ add more complexity to the minimal example, this shows what the
 in this case the environment is a data structure where fields
 can be accessed via `Mr.asks`
 
-there are some subtles about "record type", see:
-
-https://gitlab.haskell.org/ghc/ghc/wikis/records
+there are some subtles about "record type", see: <https://gitlab.haskell.org/ghc/ghc/wikis/records>
 
 ### Monday morning haskell
 
@@ -59,9 +57,7 @@ compare this with `monadstate/MoveCursor`
 
 ## ReaderT Pattern
 
-source
-
-https://www.fpcomplete.com/blog/2017/06/readert-design-pattern
+source: <https://www.fpcomplete.com/blog/2017/06/readert-design-pattern>
 
 Often times I'll receive or read questions online about "design
 patterns" in Haskell. A common response is that Haskell doesn't
@@ -86,3 +82,13 @@ listed: it has no mutable state. It's simply a convenient manner
 of passing an extra parameter to all functions. And even if that
 parameter contains mutable references, that parameter itself is
 fully immutable.
+
+## Rediscover Reader from First Principles
+
+source: First Principles P/872; see: src/FirstPrinciples/Reader.hs
+
+> usually when you see or hear the team Reader, it will be referring
+> to the Monad or Applicative instances
+
+must read: P/875 - a step by step transformation from function-composition
+to function-over-Functor to Reader

@@ -3,6 +3,7 @@ import qualified TestMoveCursor
 import qualified TestWrapEnv
 import qualified TestWrapHandler
 import qualified TestWrapInteger
+import qualified FirstPrinciples.Reader
 
 main :: IO ()
 main = do
@@ -11,4 +12,6 @@ main = do
   TestMoveCursor.runSpec
   TestWrapEnv.runSpec
   TestLocalSimple.demo
+
+  FirstPrinciples.Reader.demo
 
