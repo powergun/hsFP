@@ -40,10 +40,12 @@ instance Monad (Reader r) where
           Reader rb -> rb r
     in  Reader rf
 
+-- see: First Principles P/883 for a similar process / post-process
+-- example, using abstract typing
 demoMonad :: IO ()
 demoMonad = do
-  print $ runReader process "idd"
-  print $ runReader process "idnoclip"
+  print $ runReader (process >>= postProcess) "idd"
+  print $ runReader (process >>= postProcess) "idnoclip"
  where
   process :: Reader String [Int]
   process = do
@@ -51,10 +53,32 @@ demoMonad = do
     if (> 4) . length $ env
       then return $ fmap ord env
       else return $ fmap ((* 100) . ord) env
+  postProcess :: [Int] -> Reader String [Int]
+  postProcess xs = do
+    env <- ask
+    return $ [length env, 0, 0] `mappend` xs
+
+data GameSession = GameSession
+  { gameName :: String
+  , gameMode :: String
+  } deriving (Show)
+
+demoReaderFieldAccess = print
+  $ runReader process (GameSession "nuketown" "free-for-all")
+ where
+  process :: Reader GameSession GameSession
+  process = do
+    g  <- ask
+    gn <- gameName <$> ask
+    gm <- gameMode <$> ask
+    if gm == "free-for-all"
+      then return $ GameSession gn "deathmatch"
+      else return g
 
 demo :: IO ()
 demo = do
   demoFunctor
   demoApplicative
   demoMonad
+  demoReaderFieldAccess
 

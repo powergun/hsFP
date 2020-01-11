@@ -95,10 +95,14 @@ to function-over-Functor to Reader
 
 ### Reader's Functor Instance
 
-P/876
+source: P/876; see: src/FirstPrinciples/Reader.hs
 
 > what we're doing here is
 > unpack `r -> a` out of a Reader
 > compose `f` with the function we unpacked out of `Reader`
 > put the new function made from the composition back into the `Reader`
 > without the Reader newtype, we drop steps 1 and 3 and have function composition
+
+### Reader's Applicative Instance
+
+### Reader's Monad Instance
