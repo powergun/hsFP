@@ -1,8 +1,6 @@
 # Monad Transformer
 
-source:
-
-https://en.wikibooks.org/wiki/Haskell/Monad_transformers
+source: <https://en.wikibooks.org/wiki/Haskell/Monad_transformers>
 
 haskell cookbook (web version) chapter 18
 
@@ -68,9 +66,7 @@ real-world use case that relies on early termination - the passphrase problem.
 
 ## FoldStopEarly
 
-source:
-
-https://tech.fpcomplete.com/haskell/tutorial/monad-transformers
+source: <https://tech.fpcomplete.com/haskell/tutorial/monad-transformers>
 
 a fold (left-fold) that does early-termination
 
@@ -82,12 +78,65 @@ recap on `bool`, `either` and `throwError`
 
 ## mtl style typeclasses
 
-source:
-
-https://tech.fpcomplete.com/haskell/tutorial/monad-transformers
+source: <https://tech.fpcomplete.com/haskell/tutorial/monad-transformers>
 
 we've established that not only can the `State` monad itself perform
 put and get actions, but any transformer layered on top of it can do
 so as well.
 
 mtl has a philosophy around generalizing this idea using typeclasses
+
+## Rediscover Type-Composition, First Principles P/982
+
+P/983
+
+> (on `IdentityT/Identity`'s runIdentity function) these accessor functions
+> are means of extracting the underlying value from the type.
+> there is no real difference in meaning between `run` and `get`
+
+P/984
+
+> the important thing is that monad transformers are never sum or product
+> types; they are always just a means of wrapping one extra layer of
+> (monadic) structure around the type, so there is never a reason they
+> couldn't be newtypes
+
+see: src/FirstPrinciples/TypeComposition.hs for a mental exercise
+
+P/986
+
+> (on the Functor instance of `Compose`) now the `f, g` both have to
+> be part of the structure that we are lifting over, so they both
+> have to be Functors themselves
+
+P/987
+
+> the composition of two datatypes that have a functor instance gives
+> rise to a new functor instance.
+> you will sometimes see people refer to this as **functors being "closed under composition"**
+
+### Functor, Applicative Instances of Type-Composition
+
+see: <https://wiki.haskell.org/Type_composition> for a reference impl of
+the Applicative instance of `Compose f g a` - note the use of `liftA2`;
+
+the goal is to lift `<*>` to `fga` (over the Structure of Compose), and
+leave the rest to be handled by the existing Applicative instance machinary -
+because fga (i.e. `f and g`) is Applicative;
+
+this is my ghci experiment (I was close to that reference impl):
+
+```haskell
+(liftA2 . liftA2 $ (<*>)) [Just [toUpper]] [Just ['c']]
+[Just "C"]
+```
+
+### Compose Monad instances and issues
+
+P/988
+
+> composing Maybe and List... the result of having done so does not
+> give you a Monad
+> the issues comes down to a lack of information;
+> you are trying to combine two polymorphic binds into a single combined bind
+> and this is not possible

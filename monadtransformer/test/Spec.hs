@@ -2,6 +2,8 @@ import qualified TestDirWalker
 import qualified TestFoldStopEarly
 import qualified TestMaybeTrans
 import qualified TestSimpleTransformer
+import qualified FirstPrinciples.TypeComposition
+import qualified FirstPrinciples.FoldableCompose
 
 main :: IO ()
 main = do
@@ -10,3 +12,5 @@ main = do
     TestMaybeTrans.demo
     TestFoldStopEarly.demo
 
+    FirstPrinciples.TypeComposition.demo
+    FirstPrinciples.FoldableCompose.demo
