@@ -46,3 +46,20 @@ hs> runStateT (put 1 >> get) 7
 hs> runStateT (put 1 >> (return 9001)) 7
 (9001,1)
 ```
+
+### Typeclass Parsing has Alternative as a superclass
+
+P/932
+
+```haskell
+class Alternative m => Parsing m where
+    try :: m a -> m a
+```
+
+this takes a parser that may consume input and, on failure, goes
+back to where it started ad fails if we didn't consume input
+
+> we can read `<|>` as being an `or` or disjunction, of our two parsers,
+> `many` is `zero or more` and `some` is `one or more`
+
+(recall the hand-rolled conjunction operator `<&&>`)
