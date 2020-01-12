@@ -22,6 +22,21 @@ P/916
 `>>`: value from the previous computation `m a` gets thrown away, but any
 efffect the `m a` action **had upon the monadic context remains**
 
+P/963
+
+> the act of parsing, in a sense, is a means of "necking down" the
+> cardinality of our inputs to the set of things our programs have a
+> sensible answer for.
+
+(recall the design pattern: parse-dont-validate, the two-phase parsing)
+
+> you might have a sort of AST or structured representation of what was
+> parsed, but from there, you might expect that AST or representation to
+> take a particular form. This means we want to narrow the cardinality
+> and get even more specific about how our data looks.
+> Often this second step is called `unmarshalling our data`
+> Similarly, `marshalling` is the act of preparing data for serialization
+
 ### A refresher on State
 
 > any put to the State value would be observable to the next action
