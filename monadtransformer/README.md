@@ -156,3 +156,43 @@ the concept of "Structure-Swapping" helps to find the last puzzle piece:
 
 to make sure `Compose` (the old structure) is now inside the new structure
 `f`, and to achieve that I have to use `fmap`
+
+## Rediscover Monad Transformers, First Principles P/994
+
+P/994
+
+see a **step by step break down** of the `>>=` implemention for the Monad
+instance of IdentityT transformer. This is very helpful! code:
+src/FirstPrinciples/IdentityTMonad.hs
+
+> (step 3) f has the following type `a -> Identity m b`
+> (step 5) this is different bind.... this bind is its definition
+> we know it already has a Monad instance defined for that type, all
+> we are doing here is defining how to use that bind in the presence
+> of the additional IdentityT structure
+
+P/996
+
+a good recap on `join` - see hsFP/monad/README.md - the **1st fundamental
+purpose of monad: a generalized concat**
+
+in the monad stack (in this case the stack is `IdentityT`), if the bind
+results in `m (IdentityT m b)` then there is a PROBLEM! because `join`
+can not flatten/concat the structures; I MUST find a way to unpack the
+inner structure, i.e. `IdentityT m b`; the example here uses `runIdentityT`
+as a convenient workaround.
+
+see also P/999
+
+> it doesn't typecheck because `>>=` merges structure of the same type after
+> lifting (remember it's `fmap` composed with `join` under the hood)
+
+P/1004
+
+> (explaining the essense of Monad Transformer, v.s. freely composed
+> monadic types) this is an example of why we can not just make a Monad
+> instance for the Compose type, but we can make a transformer type like
+> `IdentityT` where we leverage information specific to the type and
+> combine it with any other type that has a Monad instance.
+> In general, in order to make the types fit, we will need some way to
+> fold and reconstruct the type we have concrete information for.

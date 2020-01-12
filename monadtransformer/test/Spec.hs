@@ -3,6 +3,7 @@ import qualified TestFoldStopEarly
 import qualified TestMaybeTrans
 import qualified TestSimpleTransformer
 import qualified FirstPrinciples.TypeComposition
+import qualified FirstPrinciples.IdentityTMonad
 
 main :: IO ()
 main = do
@@ -12,3 +13,4 @@ main = do
     TestFoldStopEarly.demo
 
     FirstPrinciples.TypeComposition.demo
+    FirstPrinciples.IdentityTMonad.demo
