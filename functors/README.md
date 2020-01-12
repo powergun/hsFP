@@ -10,6 +10,8 @@ see: <https://stackoverflow.com/questions/25395091/have-ghci-list-all-possible-t
 inspired by various sources, particularly hsSysAdmin/thecli (which uses
 bifunctor to transform the Exception value inside an Either value)
 
+First Principles also briefly mentions this, P/990. It provides a reference impl of the Bifunctor instance.
+
 ## Contravariants
 
 inspired by a blogspot; this is still "on the level of useless",

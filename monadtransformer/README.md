@@ -140,3 +140,19 @@ P/988
 > the issues comes down to a lack of information;
 > you are trying to combine two polymorphic binds into a single combined bind
 > and this is not possible
+
+### Foldable and Traversable instances of Composed types
+
+foldMap implemention, see: src/FirstPrinciples/TypeComposition.hs
+
+see the reference implementation here: <https://github.com/scarvalhojr/haskellbook/blob/master/chapter25/section25.4-5-6.hs>
+
+**see the similarity to the Functor instance, nested `fmap`**
+
+traversable implemention: see: src/FirstPrinciples/TypeComposition.hs
+
+use the same problem-solving model as in the Foldable case; but note how
+the concept of "Structure-Swapping" helps to find the last puzzle piece:
+
+to make sure `Compose` (the old structure) is now inside the new structure
+`f`, and to achieve that I have to use `fmap`

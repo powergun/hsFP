@@ -1,6 +1,7 @@
-module Bifunctors where
+module FirstPrinciples.Bifunctors (demo) where
 
-import qualified Data.Bifunctor as DB
+import Data.Bifunctor
+import qualified Data.Bifunctor                as DB
 
 -- inspired by
 -- https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/profunctors
@@ -38,7 +39,26 @@ demoTuple = do
   print $ DB.first show (1, 3)
   print $ DB.second show (1, 3)
 
+
+--- these exercises come from First Principles P/991
+
+data Deux a b = Deux a b deriving (Show, Eq)
+
+instance Bifunctor Deux where
+  bimap f g = first f . second g
+  first f (Deux a b) = Deux (f a) b
+  second f (Deux a b) = Deux a (f b)
+
+demoDeuxBifunctor :: IO ()
+demoDeuxBifunctor = do
+  let d = Deux 12 24
+  print $ bimap (+ 10) (+ 100) d
+
 demo :: IO ()
 demo = do
+  putStrLn "//// Bifunctor examples"
   demoEither
   demoTuple
+  demoDeuxBifunctor
+  print $ bimap (+ 10) (+ 100) (Left 0) 
+  print $ bimap (+ 10) (+ 100) (Right 0) 
