@@ -21,3 +21,28 @@ P/916
 
 `>>`: value from the previous computation `m a` gets thrown away, but any
 efffect the `m a` action **had upon the monadic context remains**
+
+### A refresher on State
+
+> any put to the State value would be observable to the next action
+> in the same Monad
+
+put() returns a unit value, a throwaway value, so we're only
+evaluating it for effect anyway; it modifies the state but doesn't
+have any value of its own.
+
+```haskell
+hs> :set -package transformers-0.5.6.2
+package flags have changed, resetting and loading new packages...
+hs> import Control.Monad.Trans.State
+
+hs> runStateT (put 8) 7
+((),8)
+
+hs> runStateT (put 8 >> get) 7
+(8,8)
+hs> runStateT (put 1 >> get) 7
+(1,1)
+hs> runStateT (put 1 >> (return 9001)) 7
+(9001,1)
+```
