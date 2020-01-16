@@ -158,14 +158,14 @@ first bit is still the two-arg function:
 ```
 
 > we are feeding a single argument to the `(*2)` and `(+10)` and the
-two results form the two arguments to `(+)`
+> two results form the two arguments to `(+)`
 
 see also: P/874
 
 > we can determine that `r`, the argument type for functions, is part
 > of the structure being `lifted over` when we lift over a function,
 > not the value being transformed or mapped over
-> this leaves the result of the functionas the value being transformed.
+> this leaves the result of the function as the value being transformed.
 > this happens to line up neatly with what function composition is about
 
 #### how to understand `f <$> g <*> h $ arg`

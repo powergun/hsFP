@@ -2,9 +2,7 @@
 
 ## Alternative
 
-source:
-
-https://en.wikibooks.org/wiki/Haskell/Alternative_and_MonadPlus
+source: <https://en.wikibooks.org/wiki/Haskell/Alternative_and_MonadPlus>
 
 Like most general-purpose classes, Alternative and MonadPlus are
 expected to follow a handful of laws.
@@ -25,9 +23,7 @@ element. In fact, this analogy is the source of the names of the MonadPlus metho
 
 ## MonadPlus
 
-source:
-
-https://en.wikibooks.org/wiki/Haskell/Alternative_and_MonadPlus
+source: <https://en.wikibooks.org/wiki/Haskell/Alternative_and_MonadPlus>
 
 One might legitimately wonder why the seemingly redundant MonadPlus
 class exists. Part of the reason is historical: just like Monad existed
@@ -71,7 +67,7 @@ msum :: (MonadPlus m, Foldable t) => t (m a) -> m a
 
 ## Difference to Monoid
 
-see **Relationship with Monoid** https://en.wikibooks.org/wiki/Haskell/Alternative_and_MonadPlus
+see **Relationship with Monoid** <https://en.wikibooks.org/wiki/Haskell/Alternative_and_MonadPlus>
 
 Monoids are not necessarily "wrappers" of anything, or parametrically
 polymorphic.
