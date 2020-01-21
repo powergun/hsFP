@@ -1,9 +1,11 @@
-import qualified TestCommands
-import qualified TestMoveCursor
-import qualified TestFibonacci
-import qualified TestSimpleState
-import qualified TestGameState
+import qualified FirstPrinciples.IsomorphismCheck
 import qualified FirstPrinciples.Random
+import qualified FirstPrinciples.RollDiceState
+import qualified TestCommands
+import qualified TestFibonacci
+import qualified TestGameState
+import qualified TestMoveCursor
+import qualified TestSimpleState
 
 main :: IO ()
 main = do
@@ -14,3 +16,5 @@ main = do
   TestGameState.runSpec
 
   FirstPrinciples.Random.demo
+  FirstPrinciples.IsomorphismCheck.demo
+  FirstPrinciples.RollDiceState.demo

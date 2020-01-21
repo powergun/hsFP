@@ -25,8 +25,30 @@ see: src/FirstPrinciples/Random.hs to understand the design motivation
 behind the `State` newtype;
 note the similarity between `StdGen -> (a, StdGen)` and `a -> (a, s)`
 
-> Newtypes must have the same underlying representation as the type
+> (P/898) Newtypes must have the same underlying representation as the type
 > they wrap, as the newtype wrapper disappears at compile time. So
 > the function contained in the newtype must be isomorphic to the
 > type it wraps. That is, there must be a way to go from the newtype
 > to the thing it wraps and back again without losing information.
+
+### State is a function
+
+> (P/899) State is a function that takes input state and returns an output
+> value, a, tupled with the new state value.
+> The key is that the previous state value from each application is chained to
+> the next one, and this is not an uncommon pattern.
+
+see `src/FirstPrinciples/RollDiceState.hs` for an example - this also touches
+monad transformer
+
+> (P902) For our purposes, the state function is a constructor that takes
+> a State-like function and embeds it in the State monad transformer.
+
+the State-like function is `randomR (1, 6)`, which expects a State-like
+value and produces the tuple...
+
+### Repeat vs ReplicateM
+
+P/903 to implement a "roll-n" solution...
+`repeat <$> <state>` will repeat a **static value**; replicateM():
+`replicateM n act performs the action n times, gathering the results.`
