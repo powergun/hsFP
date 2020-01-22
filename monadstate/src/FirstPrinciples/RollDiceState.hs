@@ -25,6 +25,21 @@ roll3 = (,,) <$> rollDie <*> rollDie <*> rollDie
 rollN :: Int -> State StdGen [Die]
 rollN n = replicateM n rollDie
 
+rollsToGetTwenty :: StdGen -> [Int]
+rollsToGetTwenty g = rollsTill 20 g
+
+rollsTill :: Int -> StdGen -> [Int]
+rollsTill maximum g =
+    snd $ go [] 0 g
+  where
+    go :: [Int] -> Int -> StdGen -> (Int, [Int])
+    go nums count gen =
+      if (sum nums) >= maximum
+        then (count, nums)
+        else
+          let (die, nextGen) = randomR (1, 6) gen
+          in go (nums ++ [die]) (count + 1) nextGen
+
 demo :: IO ()
 demo = do
   let (d, s) = runState rollDie (mkStdGen 0)
@@ -35,4 +50,15 @@ demo = do
   print (d, d', d'')
   print d3
   print dn
-
+  print [ rollsToGetTwenty s
+        , rollsToGetTwenty s'
+        , rollsToGetTwenty s''
+        , rollsToGetTwenty s3
+        , rollsToGetTwenty s4
+        ]
+  print [ rollsTill 10 s
+        , rollsTill 10 s'
+        , rollsTill 10 s''
+        , rollsTill 10 s3
+        , rollsTill 10 s4
+        ]

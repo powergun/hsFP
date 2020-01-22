@@ -49,6 +49,17 @@ value and produces the tuple...
 
 ### Repeat vs ReplicateM
 
-P/903 to implement a "roll-n" solution...
-`repeat <$> <state>` will repeat a **static value**; replicateM():
+P/903 to implement a "roll n times" solution...
+`repeat <$> <state>` will ONLY repeat a **static value**;
+whereas replicateM does the right thing:
 `replicateM n act performs the action n times, gathering the results.`
+
+### State Functor
+
+P/905
+
+recall **a function is also a structure**;
+
+lift f and apply it to the existing value inside the structure;
+the structure is a function-application of (g s);
+the value is the first element of the result of (g s);

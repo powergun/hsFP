@@ -1,6 +1,7 @@
 import qualified FirstPrinciples.IsomorphismCheck
 import qualified FirstPrinciples.Random
 import qualified FirstPrinciples.RollDiceState
+import qualified FirstPrinciples.StateFromScratch
 import qualified TestCommands
 import qualified TestFibonacci
 import qualified TestGameState
@@ -18,3 +19,4 @@ main = do
   FirstPrinciples.Random.demo
   FirstPrinciples.IsomorphismCheck.demo
   FirstPrinciples.RollDiceState.demo
+  FirstPrinciples.StateFromScratch.demo
