@@ -54,7 +54,7 @@ P/903 to implement a "roll n times" solution...
 whereas replicateM does the right thing:
 `replicateM n act performs the action n times, gathering the results.`
 
-### State Functor
+### State Functor, Applicative and Monad
 
 P/905
 
@@ -63,3 +63,14 @@ recall **a function is also a structure**;
 lift f and apply it to the existing value inside the structure;
 the structure is a function-application of (g s);
 the value is the first element of the result of (g s);
+
+see: `src/FirstPrinciples/StateFromScratch.hs`
+
+this is also another good exercise to implement getter, setter,
+eval and exec functions.
+
+### Using State from transformers package
+
+P/908
+
+see: `src/FirstPrinciples/Fizzfuzz.hs`

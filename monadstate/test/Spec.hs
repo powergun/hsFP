@@ -1,3 +1,4 @@
+import qualified FirstPrinciples.Fizzfuzz
 import qualified FirstPrinciples.IsomorphismCheck
 import qualified FirstPrinciples.Random
 import qualified FirstPrinciples.RollDiceState
@@ -20,3 +21,4 @@ main = do
   FirstPrinciples.IsomorphismCheck.demo
   FirstPrinciples.RollDiceState.demo
   FirstPrinciples.StateFromScratch.demo
+  FirstPrinciples.Fizzfuzz.demo

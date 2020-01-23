@@ -26,6 +26,21 @@ instance Monad (Moi s) where
               in runMoi (f x') s' -- (f x') produces mb
     in Moi g
 
+get :: Moi a a
+get = Moi (\s -> (s, s))
+
+put :: s -> Moi s ()
+put s = Moi (\_ -> ((), s))
+
+exec :: Moi s a -> s -> s
+exec (Moi sa) s = snd . sa $ s
+
+eval :: Moi s a -> s -> a
+eval (Moi sa) s = fst . sa $ s
+
+modify :: (s -> s) -> Moi s ()
+modify f = Moi (\s -> ((), f s))
+
 demoStateFunctor :: IO ()
 demoStateFunctor = do
   let g :: String -> ([Int], String)
@@ -85,11 +100,47 @@ demoStateMonad = do
       -- ma = return . Right $ 3
       -- mb :: Moi String (Either String Int)
       -- mb = ma >>= f
+  print $ runMoi ((return . Right $ 3) >>=f ) ""
   print $ runMoi ((return . Right $ 3) >>= f >>= f) ""
-  -- print $ runMoi ((return . Right $ 13) >>= f) ""
+
+demoGet :: IO ()
+demoGet = do
+  print $ runMoi get "there is a cow"
+
+demoPut :: IO ()
+demoPut = do
+  print $ runMoi (put "IDDQD") "....."
+
+demoExecEval :: IO ()
+demoExecEval = do
+  let st :: Moi String [Int]
+      st = do
+        payload <- get
+        let parsed :: Maybe [Int]
+            parsed = readMaybe payload
+        case parsed of
+          Nothing -> return [0]
+          Just xs -> do
+            put ""
+            return xs
+  print $ exec st "[1, 2]"
+  print $ eval st "[1, 2]"
+  print $ exec st "a, b, c"
+  print $ eval st "a, b, c"
+
+demoModify :: IO ()
+demoModify = do
+  print $ runMoi (modify (+1)) 0
+  print $ runMoi (modify (+1) >> modify (+1)) 0
 
 demo :: IO ()
 demo = do
   demoStateFunctor
   demoStateApplicative
   demoStateMonad
+  demoGet
+  demoPut
+  demoExecEval
+  demoModify
+
+
