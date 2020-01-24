@@ -1,10 +1,14 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes       #-}
 
-module FirstPrinciples.INIParser (demo) where
+module FirstPrinciples.INIParser ( demo
+                                 , parseAssignment
+                                 , parseHeader
+                                 , parseConfig
+                                 , parseSection ) where
 
 import           Control.Applicative ((<|>))
-import           Data.Map            (Map, fromList)
+import           Data.Map            (Map, fromList, insert)
 import           Text.RawString.QQ   (r)
 import           Text.Trifecta
 
@@ -13,6 +17,7 @@ type Name = String
 type Value = String
 type Comment = [String]
 data Section = Section Header (Map Name Value) deriving (Show, Eq)
+data Config = Config (Map String Section) deriving (Show, Eq)
 
 parseBracketPair :: Parser a -> Parser a
 parseBracketPair p = char '[' *> p <* char ']'
@@ -78,10 +83,36 @@ alias=claw
 |]
   print $ parseString parseSection mempty testINI
 
+parseConfig :: Parser Config
+parseConfig = do
+  secs <- many (parseSection <* skipEOL)
+  return $ fromSections secs
+  where
+    fromSections :: [Section] -> Config
+    fromSections secs =
+      let initMap = (fromList []) :: Map String Section
+          -- (a -> b -> b) -> b -> t a -> b
+          secMap = foldr update initMap secs
+          update :: Section -> Map String Section -> Map String Section
+          update sec@(Section (Header s) m) mss =
+            insert s sec mss
+      in Config secMap
+
+demoParseConfig :: IO ()
+demoParseConfig = do
+  let testINI :: String
+      testINI = [r|[first]
+host=wikipedia.org
+alias=claw
+[second]
+map=e1m1
+|]
+  print $ parseString parseConfig mempty testINI
+
 demo :: IO ()
 demo = do
   demoParseBracketPair
   demoParseAssignment
   demoParseComments
   demoParseSection
-
+  demoParseConfig

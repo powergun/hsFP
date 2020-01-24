@@ -78,3 +78,14 @@ back to where it started ad fails if we didn't consume input
 > `many` is `zero or more` and `some` is `one or more`
 
 (recall the hand-rolled conjunction operator `<&&>`)
+
+### INI-Parser
+
+P/952
+
+Note: for a production-ready INI-Parser, see `hsDataMunging/ini-config`,
+which uses the `ini` package;
+
+testing the parser is mainly based on HSpec; create a "Result to Maybe"
+converter in order to inspect (and to create the expected value for) the
+output from `parseByteString`
