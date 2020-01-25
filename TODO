@@ -1,9 +1,2 @@
-TODO: the parser chapter also reminds me parsec v.s. attoparsec, see
-https://stackoverflow.com/questions/19208231/attoparsec-or-parsec-in-haskell
-document the "different niches"
-
-TODO: I skipped the parser chapter configuration file example; revisit it
-note that I categorized the Aeson section to hsDataMunging project;
-
 TODO: I quickly skim-through the monad transformers chapter; revisit it;
 this chapter is really important.
