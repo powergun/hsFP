@@ -196,3 +196,25 @@ P/1004
 > combine it with any other type that has a Monad instance.
 > In general, in order to make the types fit, we will need some way to
 > fold and reconstruct the type we have concrete information for.
+
+### Handcrafted MaybeT Transformer
+
+P/1008, see: `src/FirstPrinciples/MaybeTMonad.hs`
+
+> (implement the Applicative instance for MaybeT)
+> The idea here is that we have to lift an Applicative "apply" over
+> the outer structure f to get the g (a -> b) in to g a -> g b so that
+> the Applicative instance for f can be leveraged.
+
+P/1011, **implement the Monad instance for MaybeT**
+
+see how the effect (Nothing causes Nothing, aka short circuit) is threaded
+in the impl of `>>=` (the **case-matching** part)
+
+note again that the `return` statement has different meaning due to context-
+shift: in the `do` notation, the `return Nothing` part works in the context
+of m (Maybe a), the `return` statement honors m, which is has a Monad instance
+
+### Handcrafted EitherT Transformer
+
+P/1012
