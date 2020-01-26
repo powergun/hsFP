@@ -5,6 +5,7 @@ import qualified FirstPrinciples.EitherTMonad
 import qualified FirstPrinciples.ReaderTMonad
 import qualified FirstPrinciples.StateTMonad
 import qualified FirstPrinciples.RWSTMonad
+import qualified FirstPrinciples.Unwrap
 import qualified TestDirWalker
 import qualified TestFoldStopEarly
 import qualified TestMaybeTrans
@@ -24,4 +25,5 @@ main = do
     FirstPrinciples.ReaderTMonad.demo
     FirstPrinciples.StateTMonad.demo
     FirstPrinciples.RWSTMonad.demo
+    FirstPrinciples.Unwrap.demo
 

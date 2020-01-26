@@ -271,3 +271,64 @@ P/1018
 use RWST from `transformers` library:
 `newtype RWST r w s m a = RWST { runRWST :: r -> s -> m (a, s, w) }`
 see: `src/FirstPrinciples/RWSTMonad.hs`
+
+P/1020
+
+WriterT is not memory-performant;
+
+### Why ListT is not needed
+
+P/1020
+
+streaming libraries like `pipes` and `conduit` do it better for most
+use-cases
+
+### Recover an ordinary type from a transformer (why Identity type is useful)
+
+P/1020
+
+> if you have a transformer variant of a type and want to use it as if
+> it was the non-transformer version, you need some `m` structure that
+> doesn't really do anything - `Identity`
+
+P/1021
+
+> However, if you're writing something with, say, Scotty, where a ReaderT
+> is part of the environment, you can't easily retrieve the Reader type out
+> of that because Reader is not a type that exists on its own and you can't
+> modify that ReaderT without essentially rewriting all of Scotty
+
+### Lexically inner is structurally outer
+
+see: `src/FirstPrinciples/Unwrap.hs`
+
+> A necessary byproduct of how transformers work is that the additional
+> structure `m` is always wrapped around our value.
+> The consequence of this is that a series of monad transformers in a type
+> will begin with the innermost type structurally speaking.
+
+P/1024
+
+> A terminological point to keep in mind when reading about monad
+> transformers is that when Haskellers say "base monad" they
+> usually mean what is structurally outermost.
+
+```haskell
+type MyType a = IO [Maybe a]
+```
+
+in MyType, the `base monad` is IO
+
+### MonadTrans
+
+P/1024, the spiritual descendant of Functor (fmap)
+
+P/1025
+
+> In some cases, we want to talk about more or different structure
+> than these types permit. In other cases, we want something that does
+> as much lifting as is necessary to reach some (structurally) outermost
+> position in a stack of monad transformers.
+
+`MonadTrans` typeclass and lift: Lift a computation from the argument
+monad to the constructed monad
