@@ -4,6 +4,7 @@ import qualified FirstPrinciples.TypeComposition
 import qualified FirstPrinciples.EitherTMonad
 import qualified FirstPrinciples.ReaderTMonad
 import qualified FirstPrinciples.StateTMonad
+import qualified FirstPrinciples.RWSTMonad
 import qualified TestDirWalker
 import qualified TestFoldStopEarly
 import qualified TestMaybeTrans
@@ -22,4 +23,5 @@ main = do
     FirstPrinciples.EitherTMonad.demo
     FirstPrinciples.ReaderTMonad.demo
     FirstPrinciples.StateTMonad.demo
+    FirstPrinciples.RWSTMonad.demo
 

@@ -263,3 +263,11 @@ see: <https://stackoverflow.com/questions/18673525/is-it-possible-to-implement-a
 
 covers the impl that drops the first OR second intermediate state:
 <https://github.com/data61/fp-course/issues/134>
+
+### Why WriterT is not needed
+
+P/1018
+
+use RWST from `transformers` library:
+`newtype RWST r w s m a = RWST { runRWST :: r -> s -> m (a, s, w) }`
+see: `src/FirstPrinciples/RWSTMonad.hs`
