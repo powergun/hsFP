@@ -244,3 +244,22 @@ P/1016
 
 note the use of `first from Data.Bifunctor` (cheat mode) or a handcraft
 intermediate function to apply `f` to the `a` in (a, s)
+
+P/1017
+
+(why a Monad constraint is a must to impl the Applicative instance)
+
+> In essence, the issue is that without Monad, you're just feeding the
+> initial state to each computation in StateT rather than threading it
+> through as you go. This is a general pattern contrasting Applicative and
+> Monad and is worth contemplating.
+
+this is misleading in Haskell Cookbook, which suggests
+`t (f, s) (a, _) = (f a, s)`
+without explaining that it is also possible to drop the first intermediate
+state
+
+see: <https://stackoverflow.com/questions/18673525/is-it-possible-to-implement-applicative-m-applicative-statet-s-m>
+
+covers the impl that drops the first OR second intermediate state:
+<https://github.com/data61/fp-course/issues/134>

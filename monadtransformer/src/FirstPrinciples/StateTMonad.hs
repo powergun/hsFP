@@ -22,16 +22,24 @@ instance (Functor m) => Functor (StateT s m) where
         mbs = fmap t mas
     in  mbs
 
-instance (Applicative m) => Applicative (StateT s m) where
+-- instance (Applicative m) => Applicative (StateT s m) where
+--   pure x = StateT $ \s -> pure (x, s)
+
+-- -- given t    (f, s)     (a, s)  =   (f a, s)
+-- -- want: t (m (f, s)) (m (a, s)) = m (f a, s)
+--   (StateT smfs) <*> (StateT smas) = StateT $ \s ->
+--     let mfs = smfs s -- m (f, s)
+--         mas = smas s -- m (a, s)
+--         t (f, _) (a, s) = (f a, s)
+--     in  t <$> mfs <*> mas
+
+instance (Monad m) => Applicative (StateT s m) where
   pure x = StateT $ \s -> pure (x, s)
 
--- given t    (f, s)     (a, s)  =   (f a, s)
--- want: t (m (f, s)) (m (a, s)) = m (f a, s)
-  (StateT smfs) <*> (StateT smas) = StateT $ \s ->
-    let mfs = smfs s -- m (f, s)
-        mas = smas s -- m (a, s)
-        t (f, s) (a, _) = (f a, s)
-    in  t <$> mfs <*> mas
+  (StateT smfs) <*> (StateT smas) = StateT $ \s -> do -- m (a, s)
+    (f, s' ) <- smfs s
+    (a, s'') <- smas s'
+    runStateT (return . f $ a) s''
 
 instance (Monad m) => Monad (StateT s m) where
   return = pure
@@ -57,9 +65,12 @@ demoApplicative = do
       ma' = StateT (const Nothing) :: StateT String Maybe Int
       ma3 = StateT (\s -> Just (1, s)) :: StateT String Maybe Int
       mf' = pure (+ 1000) :: StateT String Maybe (Int -> Int)
+  print "------------------"
   print $ runStateT (mf <*> ma) "imp"
   print $ runStateT (mf' <*> ma') "imp alpha"
   print $ runStateT (mf' <*> ma3) "imp cyborg"
+  print $ runStateT (mf' <*> ma3 <* ma') "imp cyborg"
+  print "------------------"
 
 demoMonad :: IO ()
 demoMonad = do
