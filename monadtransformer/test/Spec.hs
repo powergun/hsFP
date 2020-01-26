@@ -3,6 +3,7 @@ import qualified FirstPrinciples.MaybeTMonad
 import qualified FirstPrinciples.TypeComposition
 import qualified FirstPrinciples.EitherTMonad
 import qualified FirstPrinciples.ReaderTMonad
+import qualified FirstPrinciples.StateTMonad
 import qualified TestDirWalker
 import qualified TestFoldStopEarly
 import qualified TestMaybeTrans
@@ -20,4 +21,5 @@ main = do
     FirstPrinciples.MaybeTMonad.demo
     FirstPrinciples.EitherTMonad.demo
     FirstPrinciples.ReaderTMonad.demo
+    FirstPrinciples.StateTMonad.demo
 

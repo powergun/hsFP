@@ -237,3 +237,10 @@ note that impl of Monad instance: `ReaderT $ \r -> do`; it can use
 do notation because the function `\r -> m a` returns `m a` which is
 in a monad context; `a <- rma r` respects this monad context because
 `rma r` returns `m a`
+
+### Handcrafted StateT Transformer
+
+P/1016
+
+note the use of `first from Data.Bifunctor` (cheat mode) or a handcraft
+intermediate function to apply `f` to the `a` in (a, s)

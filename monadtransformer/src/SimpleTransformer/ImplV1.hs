@@ -28,13 +28,10 @@ newtype StateT s m a = StateT {
 }
 
 instance Functor m => Functor (StateT s m) where
-  fmap f sta =
-    let newStateFunc s =
-            let t (xa, xs) = (f xa, xs)  -- compute()
-                ma = runStateT sta s  -- get_current_state()
-            in  t <$> ma  -- do compute() with current_state
-    in  StateT newStateFunc
-
+  fmap f (StateT smas) = StateT $ \s ->
+    let t (xa, xs) = (f xa, xs)  -- compute()
+        ma = smas s  -- get_current_state()
+    in  t <$> ma  -- do compute() with current_state
 -- we make use of the fact taht the embedded monad is also an
 -- insatnce of Applicative and use it to lift the embedded
 -- Applicative instance, that is, m (a -> b) -> m a -> m b
@@ -67,7 +64,7 @@ instance Applicative m => Applicative (StateT s m) where
                 -- NOTE: simplified from:
                 -- t (fab, _) = \(a, s) -> (fab a, s)
                 t (fab, _) (a, s) = (fab a, s)
-            in  (t <$> mf) <*> ma
+            in  t <$> mf <*> ma
     in  StateT newStateFunc
 
 instance Monad m => Monad (StateT s m) where
