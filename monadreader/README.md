@@ -87,7 +87,7 @@ fully immutable.
 
 source: First Principles P/872; see: src/FirstPrinciples/Reader.hs
 
-> usually when you see or hear the team Reader, it will be referring
+> usually when you see or hear the term Reader, it will be referring
 > to the Monad or Applicative instances
 
 must read: P/875 - a step by step transformation from function-composition

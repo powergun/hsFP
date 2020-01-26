@@ -218,3 +218,22 @@ of m (Maybe a), the `return` statement honors m, which is has a Monad instance
 ### Handcrafted EitherT Transformer
 
 P/1012
+
+see: `src/FirstPrinciples/EitherTMonad.hs`
+
+note the impl of `swapEitherT`, that uses `fmap` to empower the base
+version `swapEither`; so does the relation between `either` and `eitherT`
+
+### Handcrafted ReaderT Transformer
+
+P/1014
+
+> ReaderT is one of the most commonly used transformers in conventional
+> Haskell applications. It is just like Reader, except in the transformer
+> variant we’re generating additional structure in the return type of
+> the function
+
+note that impl of Monad instance: `ReaderT $ \r -> do`; it can use
+do notation because the function `\r -> m a` returns `m a` which is
+in a monad context; `a <- rma r` respects this monad context because
+`rma r` returns `m a`
