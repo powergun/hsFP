@@ -332,3 +332,32 @@ P/1025
 
 `MonadTrans` typeclass and lift: Lift a computation from the argument
 monad to the constructed monad
+
+P/1028
+
+(on the motivation of `lift`)
+
+> Our ActionT type eventually reaches IO, but there's additional structure
+> we need to lift over first.
+
+P/1032
+
+> Typically a MonadTrans instance lifts over only one layer at a time, but
+> Scotty abstracts away the underlying structure so that you don't have to
+> care. That's why it goes ahead and does the next three lifts for you. The
+> critical thing to realize here is that lifting means you're embedding an
+> expression in a larger context by adding structure that doesn't do anything.
+
+P/1033
+
+> The general pattern with MonadTrans instances demonstrated by MaybeT is
+> that you're usually going to lift the injection of the known structure
+> (with MaybeT, the known structure is Maybe) over some Monad.
+
+P/1037
+
+(on good API design: abstraction and encapsulation)
+
+> Note that we only had to use lift once to perform an IO action in ActionM
+> even though the underlying implementation has more than one transformer
+> flying around.
