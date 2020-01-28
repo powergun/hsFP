@@ -3,10 +3,10 @@ module FirstPrinciples.Unwrap
   )
 where
 
+import           Control.Monad.Trans        (lift)
 import           Control.Monad.Trans.Except
 import           Control.Monad.Trans.Maybe
 import           Control.Monad.Trans.Reader
-import           Control.Monad.Trans            ( lift )
 
 embedded :: MaybeT (ExceptT String (ReaderT () IO)) Int
 embedded = return 1
@@ -27,8 +27,11 @@ MaybeT (ExceptT String (ReaderT () (Either a0))) Int
 Expected type: () -> () -> IO (Either String (Maybe Int))
   Actual type: () -> () -> Either String (Maybe Int)
 -}
--- embedded' :: MaybeT (ExceptT String (ReaderT () IO)) Int
--- embedded' = MaybeT . ExceptT . ReaderT $ (return (const . Right . Just $ 1) ())
+embedded' :: MaybeT (ExceptT String (ReaderT () IO)) Int
+embedded' = MaybeT . ExceptT . ReaderT $ return . (const . Right . Just $ 1)
+
+assert' :: () -> Either String (Maybe Int)
+assert' = (const . Right . Just $ 1)
 
 demo :: IO ()
 demo = do
