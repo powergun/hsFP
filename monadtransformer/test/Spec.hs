@@ -1,10 +1,11 @@
+import qualified FirstPrinciples.EitherTMonad
+import qualified FirstPrinciples.ExtendStructure
 import qualified FirstPrinciples.IdentityTMonad
 import qualified FirstPrinciples.MaybeTMonad
-import qualified FirstPrinciples.TypeComposition
-import qualified FirstPrinciples.EitherTMonad
 import qualified FirstPrinciples.ReaderTMonad
-import qualified FirstPrinciples.StateTMonad
 import qualified FirstPrinciples.RWSTMonad
+import qualified FirstPrinciples.StateTMonad
+import qualified FirstPrinciples.TypeComposition
 import qualified FirstPrinciples.Unwrap
 import qualified TestDirWalker
 import qualified TestFoldStopEarly
@@ -26,4 +27,5 @@ main = do
     FirstPrinciples.StateTMonad.demo
     FirstPrinciples.RWSTMonad.demo
     FirstPrinciples.Unwrap.demo
+    FirstPrinciples.ExtendStructure.demo
 

@@ -307,6 +307,8 @@ see: `src/FirstPrinciples/Unwrap.hs`
 > The consequence of this is that a series of monad transformers in a type
 > will begin with the innermost type structurally speaking.
 
+`m` wraps around the value we can have but not the value we may need
+
 P/1024
 
 > A terminological point to keep in mind when reading about monad
