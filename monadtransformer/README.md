@@ -363,3 +363,13 @@ P/1037
 > Note that we only had to use lift once to perform an IO action in ActionM
 > even though the underlying implementation has more than one transformer
 > flying around.
+
+### Monad Transformers in use
+
+P/1041
+
+one use case is Temporary extension of structure
+see: `src/FirstPrinciples/ExtendStructure.hs`
+
+this example takes advantage of Maybe/MaybeT and Either/EitherT
+to reduce boilerplate code, and to implement short circuit function
