@@ -373,3 +373,12 @@ see: `src/FirstPrinciples/ExtendStructure.hs`
 
 this example takes advantage of Maybe/MaybeT and Either/EitherT
 to reduce boilerplate code, and to implement short circuit function
+
+### Monads do not commute
+
+P/1049
+
+see: `src/FirstPrinciples/NoCommute`
+
+note the use of `lift` and different evaluation scenario: runReaderT first
+or runMaybeT first;

@@ -1,7 +1,9 @@
 import qualified FirstPrinciples.EitherTMonad
+import qualified FirstPrinciples.Exercises
 import qualified FirstPrinciples.ExtendStructure
 import qualified FirstPrinciples.IdentityTMonad
 import qualified FirstPrinciples.MaybeTMonad
+import qualified FirstPrinciples.NoCommute
 import qualified FirstPrinciples.ReaderTMonad
 import qualified FirstPrinciples.RWSTMonad
 import qualified FirstPrinciples.StateTMonad
@@ -28,4 +30,5 @@ main = do
     FirstPrinciples.RWSTMonad.demo
     FirstPrinciples.Unwrap.demo
     FirstPrinciples.ExtendStructure.demo
-
+    FirstPrinciples.NoCommute.demo
+    FirstPrinciples.Exercises.demo
