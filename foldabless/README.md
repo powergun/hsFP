@@ -18,6 +18,13 @@ source: <https://wiki.haskell.org/Catamorphisms>
 
 > Catamorphisms are generalizations of the concept of a fold in functional programming. A catamorphism **deconstructs** a data structure with an F-algebra for its underlying functor.
 
+see also: P/376
+
+> "Cata-" means "down" or "against", as in "catacombs." Catamorphisms are a means of
+> deconstructing data.
+> If the spine of a list is the structure of a list, then a fold is what can reduce
+> that structure
+
 P/835
 
 > we need to apply the folding function to the value and, again, **dispose of the structure**
