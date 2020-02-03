@@ -253,3 +253,7 @@ source: First Principles P/811; see FirstPrinciples/LiftA2ForBoolean.hs
 
 see above: how to understand `f <$> g <*> h $ arg`;
 also recall: **Function is Structure**
+
+### Explain Applicative using IO
+
+see: `io-sinbin`; emphasis on the both effects (of f and arg)

@@ -124,6 +124,10 @@ types
 
 > Syntactically, it lets us avoid talking about a in the type of Nat, which is what we want, we shouldn’t have any specific information about the contents of f and g because we’re supposed to be only performing a structural transformation, not a fold.
 
+### Explain Functor using IO
+
+see: `io-sinbin` (emphasis on the same effect)
+
 ## Function Composition via fmap(): First Principles P/866
 
 beside normal composition via operator: `(+1) . (*2)`, composing

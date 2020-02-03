@@ -283,3 +283,7 @@ see: src/FirstPrinciples/KleisliComposition.hs
 ### What Monad is Not (Haskell Wiki)
 
 <https://wiki.haskell.org/What_a_Monad_is_not>
+
+### Explain Join using IO
+
+see: `io-sinbin`; emphasis on merging the nested effects
