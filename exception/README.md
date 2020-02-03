@@ -34,9 +34,7 @@ Right "iddqd"
 
 ## "Reading two files problem"
 
-source:
-
-https://thoughtbot.com/blog/refactoring-to-a-monad-transformer-stack
+source: <https://thoughtbot.com/blog/refactoring-to-a-monad-transformer-stack>
 
 ExceptT takes this further by allowing the developer to throwError;
 when using bind, if the monad throws an error, **it will halt further
@@ -50,9 +48,7 @@ the naive impl uses a nested approach, pattern-match the result of safeReadFile 
 
 ## Exceptions best practices in Haskell
 
-source:
-
-https://www.fpcomplete.com/blog/2016/11/exceptions-best-practices-haskell
+source: <https://www.fpcomplete.com/blog/2016/11/exceptions-best-practices-haskell>
 
 see [BestPractices](./src/BestPractices/ReadException.hs)
 
@@ -78,4 +74,6 @@ is invalid; parsing error etc...)
 this demo shows that, using ExceptT pattern learned from `hsSysAdmin/thecli`, I can gracefully handle the error, without
 compromising the readability and scalability
 
-Note, the safe-read technique (learned from https://stackoverflow.com/questions/5121371/how-to-catch-a-no-parse-exception-from-the-read-function-in-haskell) is documented in `SafeRead.hs` in this directory
+Note, the safe-read technique (learned from <https://stackoverflow.com/questions/5121371/how-to-catch-a-no-parse-exception-from-the-read-function-in-haskell>) is documented in `SafeRead.hs` in this directory
+
+## Re-discover Exception, First Principles P/1176
