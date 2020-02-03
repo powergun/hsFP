@@ -81,3 +81,18 @@ function and value arguments**, applying the function to the value
 `join`: **merge the effects of a nested** IO action
 
 `join :: IO (IO a) -> IO a`
+
+### Explaining monad using IO
+
+> In order to merge those effects and get a single IO a which will print a result in GHCi, we need join
+
+see: `src/IOAndMonad.hs`
+
+P/1169
+
+> What sets the IO monad apart from the Applicative is that the effects
+> performed by the outer IO action can influence what recipe you get in the
+> inner part. The nesting also lets us express order dependence
+> The IO action we return here is contingent on having performed effects
+> and observed whether the day of the month was an even number or an odd one.
+> Note **this is inexpressible with Applicative**
