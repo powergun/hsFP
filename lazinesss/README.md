@@ -35,6 +35,23 @@ undefined `seq` y `seq` x
 > forcing y necessarily forces undefined
 > if you want to get him, you gotta get through me!
 
+High Perf Haskell P/38
+
+`seq` evaluates its argument to WHNF only; observe the second `sprint`
+that only prints UP TO the first data ctor
+
+```haskell
+hs> t = const (Just 1) () :: Maybe Int
+hs> :sprint t
+t = _
+hs> t `seq` ()
+()
+hs> :sprint t
+t = Just _
+```
+
+use `$!` (see hoogle), strict call by value application operator
+
 ### Weak head normal form (WHNF)
 
 > WHNF evaluation means it stops at the first data constructor or lambda.
