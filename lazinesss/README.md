@@ -151,3 +151,10 @@ CallStack (from HasCallStack):
 ```haskell
 blah x = x `seq` 1
 ```
+
+## Lazy Pattern, High Perf Haskell P/155
+
+> We'll start with lazy patterns. Where strict pattern annotations
+> use bangs and mean "Evaluate this argument to WHNF immediately,"
+> lazy pattern annotations use tildes and imply "Don't even bother
+> pattern-matching unless a binding is really requested."
