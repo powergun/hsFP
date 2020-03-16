@@ -1,2 +1,5 @@
+import qualified LensTut.Atom
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = do
+    LensTut.Atom.demo
