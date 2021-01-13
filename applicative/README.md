@@ -4,6 +4,23 @@ source:
 
 <https://mmhaskell.com/monads/applicatives>
 
+## Review: Applicative, `*>` and zipLeft
+
+Applicative is more useful in Haskell because of its great support to
+currying (all functions by default can curry); 
+
+> in essense, Applicative conflates an abstraction with a particular
+> expression (`<$> <*> <*>`) that happens to be useful in haskell
+
+but in Scala, Applicative appears to be less convenient and even useless
+
+good read from the author of ZIO:
+<https://www.reddit.com/r/scala/comments/afor0h/scalaz_8_timeline/eeac71m/>
+
+ZIO's `zip, zipRight and zipLeft` is the incarnation of Applicative in ZIO that
+does not suffer from the lack of currying; it is also more loyal to
+the original category theory definition (lex monoid)
+
 ## ParserMonad
 
 a monadic parsing example; it implements a mini-parsec from scratch
