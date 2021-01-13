@@ -21,6 +21,12 @@ ZIO's `zip, zipRight and zipLeft` is the incarnation of Applicative in ZIO that
 does not suffer from the lack of currying; it is also more loyal to
 the original category theory definition (lex monoid)
 
+another good article:
+
+<https://justinhj.github.io/2020/08/02/whats-ap-with-zio-prelude.html>
+
+
+
 ## ParserMonad
 
 a monadic parsing example; it implements a mini-parsec from scratch
