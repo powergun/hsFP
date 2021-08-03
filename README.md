@@ -18,3 +18,10 @@ fold-with-early-termination
 maybe transformer
 
 etc.
+
+## Lens
+
+see: <https://hackage.haskell.org/package/lens-tutorial-1.0.4/docs/Control-Lens-Tutorial.html>
+
+also: <http://oleg.fi/gists/posts/2017-04-18-glassery.html>
+
